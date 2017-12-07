@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Thrzn41.CiscoSpark</AssemblyName>
+    <RootNamespace>Thrzn41.CiscoSpark</RootNamespace>
+    <Version>0.1.0</Version>
+    <Copyright>Copyright (c) 2017 thrzn41</Copyright>
+    <Authors>thrzn41</Authors>
+    <Company />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetCore.Thrzn41.Util\DotNetCore.Thrzn41.Util.csproj" />
+  </ItemGroup>
+
+</Project>

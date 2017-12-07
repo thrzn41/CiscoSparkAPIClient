@@ -1,13 +1,12 @@
 # Cisco Spark API client
 ---
 
-For now this is experimental version and has only create a message feature.  
-More features will be implemented shortly.
+現在、実験中のバージョンで、メッセージ作成の単純な機能のみ実装されています。  
+多くの機能も間もなく実装予定です。
 
+## 使い方
 
-## Usage
-
-### Save encrypted token to storage
+### Tokenを暗号化して保存する
 
 ``` csharp
 char[] tokens = GetTokensFromUser();
@@ -19,11 +18,11 @@ Save("token.dat",   protectedToken.EncryptedData);
 Save("entropy.dat", protectedToken.Entropy);
 ```
 
-**NOTE: ProtectedString does not provide in-memory protection.  
-This is intended to use to save and load encrypted token.**
+**NOTE: ProtectedStringは、メモリ内での暗号化を提供していません。  
+暗号化したTokenを保存したり、読み込んだりすることを意図しています。**
 
 
-### Load encrypted token from storage
+### 暗号化したTokenを読み込む
 
 ``` csharp
 byte[] encryptedData = Load("token.dat");
@@ -33,7 +32,7 @@ var protectedToken = ProtectedString.FromEncryptedData(encryptedData, entropy);
 ```
 
 
-### Post a message to a Cisco Spark Space.
+### Cisco Sparkのスペースにメッセージを投稿する
 
 ``` csharp
 
@@ -49,7 +48,7 @@ if(result.IsSuccessStatus)
 ```
 
 
-### Post a message to a Cisco Spark 1:1 Space.
+### Cisco Sparkの1:1スペースにメッセージを投稿する
 
 ``` csharp
 
