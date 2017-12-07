@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCore.Thrzn41.Util", "DotNetCore.Thrzn41.Util\DotNetCore.Thrzn41.Util.csproj", "{1A843C8D-FE8A-47B8-AD9C-E0C482F45F74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest.DotNetCore.Thrzn41.Util", "UnitTest.DotNetCore.Thrzn41.Util\UnitTest.DotNetCore.Thrzn41.Util.csproj", "{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetFramework.Thrzn41.Util", "DotNetFramework.Thrzn41.Util\DotNetFramework.Thrzn41.Util.csproj", "{568F133B-BB3A-4351-8B26-A08154FEE49A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestTool.EncryptCiscoSparkTokenForm", "UnitTestTool.EncryptCiscoSparkTokenForm\UnitTestTool.EncryptCiscoSparkTokenForm.csproj", "{EBF8922C-0489-4467-9C80-624A3FAAFD94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCore.Thrzn41.CiscoSpark", "DotNetCore.Thrzn41.CiscoSpark\DotNetCore.Thrzn41.CiscoSpark.csproj", "{65CFD98F-9660-49E1-A732-65DA8E56A012}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A843C8D-FE8A-47B8-AD9C-E0C482F45F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A843C8D-FE8A-47B8-AD9C-E0C482F45F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A843C8D-FE8A-47B8-AD9C-E0C482F45F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A843C8D-FE8A-47B8-AD9C-E0C482F45F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{568F133B-BB3A-4351-8B26-A08154FEE49A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{568F133B-BB3A-4351-8B26-A08154FEE49A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{568F133B-BB3A-4351-8B26-A08154FEE49A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{568F133B-BB3A-4351-8B26-A08154FEE49A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBF8922C-0489-4467-9C80-624A3FAAFD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBF8922C-0489-4467-9C80-624A3FAAFD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBF8922C-0489-4467-9C80-624A3FAAFD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBF8922C-0489-4467-9C80-624A3FAAFD94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65CFD98F-9660-49E1-A732-65DA8E56A012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65CFD98F-9660-49E1-A732-65DA8E56A012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65CFD98F-9660-49E1-A732-65DA8E56A012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65CFD98F-9660-49E1-A732-65DA8E56A012}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB849848-AE65-4264-9D0E-2AE06B715A7D}
+	EndGlobalSection
+EndGlobal
