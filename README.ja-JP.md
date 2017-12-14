@@ -5,13 +5,15 @@
 ### 基本機能
 
 | Sparkのリソース名 | 利用可能な機能                | 説明 |
-| :-------------- | :---------------------------- | :----------------------- |
-| Person/People   | List/Get/Delete               | Get Meも利用可能          |
-| Space/Room      | List/Create/Get/Update/Delete | -                        |
-| SpaceMembership | List/Create/Get/Update/Delete | -                        |
-| Team            | List/Create/Get/Update/Delete | -                        |
-| TeamMembership  | List/Create/Get/Update/Delete | -                        |
-| Webhook         | List/Create/Get/Update/Delete | -                        |
+| :-------------- | :---------------------------- | :---------------------------------- |
+| Person/People   | List/Get/Delete               | Get Meも利用可能                     |
+| Space/Room      | List/Create/Get/Update/Delete | -                                   |
+| SpaceMembership | List/Create/Get/Update/Delete | -                                   |
+| Message         | List/Create/Get/Delete        | ローカルのstreamからファイル添付も可能 |
+| Team            | List/Create/Get/Update/Delete | -                                   |
+| TeamMembership  | List/Create/Get/Update/Delete | -                                   |
+| Webhook         | List/Create/Get/Update/Delete | -                                   |
+| File            | GetInfo/GetData/Upload        | -                                   |
 
 現時点では、Cisco Spark API Clientでは、Admin/Event APIは利用可能ではありません。  
 将来的には実装予定です。
@@ -94,6 +96,21 @@ var result = await spark.CreateMessageAsync("xyz_space_id", "こんにちは, Sp
 if(result.IsSuccessStatus)
 {
    Console.WriteLine("メッセージが投稿されました: id = {0}", result.Data.Id);
+}
+```
+
+### Cisco Sparkのスペースに添付ファイル付きでメッセージを投稿する
+
+``` csharp
+using (var fs   = new FileStream("path/myfile.png", FileMode.Open, FileAccess.Read, FileShare.Read))
+using (var data = new SparkFileData(fs, "imagefile.png", SparkMediaType.ImagePNG))
+{
+    var result = spark.CreateMessageAsync("xyz_space_id", "添付ファイル付き", data);
+
+    if(result.IsSuccessStatus)
+    {
+       Console.WriteLine("添付ファイル付きでメッセージが投稿されました: id = {0}", result.Data.Id);
+    }
 }
 ```
 

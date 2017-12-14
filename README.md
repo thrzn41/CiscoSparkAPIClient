@@ -5,13 +5,15 @@
 ### Basic features
 
 | Spark Resource | Available Feature | Description |
-| :-------------- | :---------------------------- | :----------------------- |
-| Person/People   | List/Get/Delete               | Get Me is also available |
-| Space/Room      | List/Create/Get/Update/Delete | -                        |
-| SpaceMembership | List/Create/Get/Update/Delete | -                        |
-| Team            | List/Create/Get/Update/Delete | -                        |
-| TeamMembership  | List/Create/Get/Update/Delete | -                        |
-| Webhook         | List/Create/Get/Update/Delete | -                        |
+| :-------------- | :---------------------------- | :---------------------------------------------- |
+| Person/People   | List/Get/Delete               | Get Me is also available                        |
+| Space/Room      | List/Create/Get/Update/Delete | -                                               |
+| SpaceMembership | List/Create/Get/Update/Delete | -                                               |
+| Message         | List/Create/Get/Delete        | Attach file from local stream is also available |
+| Team            | List/Create/Get/Update/Delete | -                                               |
+| TeamMembership  | List/Create/Get/Update/Delete | -                                               |
+| Webhook         | List/Create/Get/Update/Delete | -                                               |
+| File            | GetInfo/GetData/Upload        | -                                               |
 
 For now, Admin or Event APIs are not available in the Cisco Spark API Client.  
 It will be available in the future.
@@ -92,6 +94,21 @@ var result = await spark.CreateMessageAsync("xyz_space_id", "Hello, Spark!");
 if(result.IsSuccessStatus)
 {
    Console.WriteLine("Message was posted: id = {0}", result.Data.Id);
+}
+```
+
+### Post a message with attachment to a Cisco Spark Space
+
+``` csharp
+using (var fs   = new FileStream("path/myfile.png", FileMode.Open, FileAccess.Read, FileShare.Read))
+using (var data = new SparkFileData(fs, "imagefile.png", SparkMediaType.ImagePNG))
+{
+    var result = spark.CreateMessageAsync("xyz_space_id", "With Attachment", data);
+
+    if(result.IsSuccessStatus)
+    {
+       Console.WriteLine("Message was posted with attachment: id = {0}", result.Data.Id);
+    }
 }
 ```
 
