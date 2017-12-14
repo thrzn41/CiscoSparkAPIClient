@@ -65,6 +65,37 @@ namespace Thrzn41.CiscoSpark
             return new Thrzn41.CiscoSpark.Version1.SparkAPIClient(tokenString);
         }
 
+
+        /// <summary>
+        /// Creates Spark Admin API client for v1 API.
+        /// </summary>
+        /// <param name="tokenProtected">spark token of <see cref="ProtectedString"/></param>
+        /// <returns>Spark Admin API client for v1 API.</returns>
+        public static Thrzn41.CiscoSpark.Version1.Admin.SparkAdminAPIClient CreateVersion1AdminClient(ProtectedString tokenProtected)
+        {
+            return CreateVersion1AdminClient(tokenProtected.DecryptToString());
+        }
+
+        /// <summary>
+        /// Creates Spark Admin API client for v1 API.
+        /// </summary>
+        /// <param name="tokenChars">spark token of char array.</param>
+        /// <returns>Spark Admin API client for v1 API.</returns>
+        public static Thrzn41.CiscoSpark.Version1.Admin.SparkAdminAPIClient CreateVersion1AdminClient(char[] tokenChars)
+        {
+            return CreateVersion1AdminClient(new String(tokenChars));
+        }
+
+        /// <summary>
+        /// Creates Spark Admin API client for v1 API.
+        /// </summary>
+        /// <param name="tokenString">spark token of string.</param>
+        /// <returns>Spark Admin API client for v1 API.</returns>
+        public static Thrzn41.CiscoSpark.Version1.Admin.SparkAdminAPIClient CreateVersion1AdminClient(string tokenString)
+        {
+            return new Thrzn41.CiscoSpark.Version1.Admin.SparkAdminAPIClient(tokenString);
+        }
+
     }
 
 }

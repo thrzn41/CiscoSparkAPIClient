@@ -36,6 +36,18 @@ namespace Thrzn41.CiscoSpark.Version1
     [JsonObject(MemberSerialization.OptIn)]
     public class SparkObject : Thrzn41.CiscoSpark.SparkObject
     {
+
+        /// <summary>
+        /// Indicates whether the object has error or not.
+        /// </summary>
+        public bool HasErrors
+        {
+            get
+            {
+                return (this.JsonExtensionData != null && this.JsonExtensionData.ContainsKey("errors"));
+            }
+        }
+
     }
 
 }

@@ -21,24 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Thrzn41.CiscoSpark.Version1
+namespace Thrzn41.CiscoSpark.Version1.Admin
 {
 
     /// <summary>
-    /// Message text type enum.
+    /// Cisco Spark Admin API Client for API version 1.
     /// </summary>
-    public enum MessageTextType
+    public class SparkAdminAPIClient : SparkAPIClient
     {
-        /// <summary>
-        /// The message is posted by markdown style.
-        /// </summary>
-        Markdown,
 
         /// <summary>
-        /// The message is posted by raw text.
+        /// Constructor of SparkAdminAPIClient.
         /// </summary>
-        Text,
+        /// <param name="token">token of Spark API.</param>
+        internal SparkAdminAPIClient(string token)
+            : base(token)
+        {
+        }
+
     }
 
 }

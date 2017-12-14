@@ -70,6 +70,15 @@ namespace Thrzn41.Util.ResourceMessage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to charLength is less than 0..
+        /// </summary>
+        internal static string CharLengthLessThanZero {
+            get {
+                return ResourceManager.GetString("CharLengthLessThanZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to maxValue is less than 0..
         /// </summary>
         internal static string MaxValueLessThanZero {

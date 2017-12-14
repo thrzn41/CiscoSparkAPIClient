@@ -21,24 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Message text type enum.
+    /// Spark v1 list object.
     /// </summary>
-    public enum MessageTextType
+    /// <typeparam name="TSparkObject">Spark Object that is contained in the list.</typeparam>
+    [JsonObject(MemberSerialization.OptIn)]
+    public class SparkListObject<TSparkObject> : SparkObject
+        where TSparkObject : SparkObject, new()
     {
-        /// <summary>
-        /// The message is posted by markdown style.
-        /// </summary>
-        Markdown,
 
         /// <summary>
-        /// The message is posted by raw text.
+        /// Item list.
         /// </summary>
-        Text,
+        [JsonProperty(PropertyName = "items")]
+        public TSparkObject[] Items { get; set; }
+
+        /// <summary>
+        /// Indicates the object contains items or not.
+        /// </summary>
+        public bool HasItems
+        {
+            get
+            {
+                return (this.Items != null && this.Items.Length > 0);
+            }
+        }
+
+        /// <summary>
+        /// Item count.
+        /// </summary>
+        public int ItemCount
+        {
+            get
+            {
+                return ((this.Items != null) ? this.Items.Length : 0);
+            }
+        }
+
+
     }
 
 }

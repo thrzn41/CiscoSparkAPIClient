@@ -26,19 +26,24 @@ namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Message text type enum.
+    /// Person Id type enum.
     /// </summary>
-    public enum MessageTextType
+    public enum PersonIdType
     {
         /// <summary>
-        /// The message is posted by markdown style.
+        /// The person id will be detected.
         /// </summary>
-        Markdown,
+        Detect,
 
         /// <summary>
-        /// The message is posted by raw text.
+        /// The person id is id. 
         /// </summary>
-        Text,
+        Id,
+
+        /// <summary>
+        /// The person id is email.
+        /// </summary>
+        Email,
     }
 
 }

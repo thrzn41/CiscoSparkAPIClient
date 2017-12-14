@@ -21,24 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Message text type enum.
+    /// <see cref="SpaceMembership"/> list.
     /// </summary>
-    public enum MessageTextType
+    [JsonObject(MemberSerialization.OptIn)]
+    public class SpaceMembershipList : SparkListObject<SpaceMembership>
     {
-        /// <summary>
-        /// The message is posted by markdown style.
-        /// </summary>
-        Markdown,
-
-        /// <summary>
-        /// The message is posted by raw text.
-        /// </summary>
-        Text,
     }
-
 }

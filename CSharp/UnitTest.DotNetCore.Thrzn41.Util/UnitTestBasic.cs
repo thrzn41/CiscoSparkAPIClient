@@ -102,6 +102,14 @@ namespace UnitTest.DotNetCore.Thrzn41.Util
             Assert.AreEqual("a%20b=b%26c&d%25e=f%24g", HttpUtils.BuildQueryParameters(nvc4));
 
 
+            var nvc5 = new NameValueCollection();
+
+            nvc5.Add("a", "b");
+            nvc5.Add("c", null);
+            nvc5.Add("d", "e");
+
+            Assert.AreEqual("a=b&d=e", HttpUtils.BuildQueryParameters(nvc5));
+
         }
 
 
