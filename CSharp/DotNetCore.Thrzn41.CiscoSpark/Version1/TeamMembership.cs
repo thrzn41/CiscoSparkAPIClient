@@ -21,69 +21,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 
-namespace Thrzn41.CiscoSpark
+namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// The result of Cisco API request.
+    /// Cisco Spark TeamMembership object.
     /// </summary>
-    /// <typeparam name="TSparkObject">Spark Object that is returned on API request.</typeparam>
-    public class SparkResult<TSparkObject>
-        where TSparkObject : SparkObject, new()
+    [JsonObject(MemberSerialization.OptIn)]
+    public class TeamMembership : SparkObject
     {
 
         /// <summary>
-        /// The Spark Object data that is returned on the API request.
+        /// Id of the membership.
         /// </summary>
-        public TSparkObject Data { get; internal set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; internal set; }
 
         /// <summary>
-        /// Indicats the request has been succeeded or not.
+        /// Team id of the membership.
         /// </summary>
-        public bool IsSuccessStatus { get; internal set; }
+        [JsonProperty(PropertyName = "teamId")]
+        public string TeamId { get; internal set; }
 
         /// <summary>
-        /// Http status code returned on the API request.
+        /// Person id of the membership.
         /// </summary>
-        public HttpStatusCode HttpStatusCode { get; internal set; }
+        [JsonProperty(PropertyName = "personId")]
+        public string PersonId { get; internal set; }
 
         /// <summary>
-        /// Tracking id of the request.
-        /// This id can be used for technical support.
+        /// Person email of the membership.
         /// </summary>
-        public string TrackingId { get; internal set; }
+        [JsonProperty(PropertyName = "personEmail")]
+        public string PersonEmail { get; internal set; }
 
         /// <summary>
-        /// Indicates whether the result has tracking id or not.
+        /// Person display name of the membership.
         /// </summary>
-        public bool HasTrackingId
-        {
-            get
-            {
-                return ( !String.IsNullOrEmpty(this.TrackingId) );
-            }
-        }
+        [JsonProperty(PropertyName = "personDisplayName")]
+        public string PersonDisplayName { get; internal set; }
 
         /// <summary>
-        /// Retry-After header value.
+        /// Person organization of the membership.
         /// </summary>
-        public RetryConditionHeaderValue RetryAfter { get; internal set; }
+        [JsonProperty(PropertyName = "personOrgId")]
+        public string PersonOrganizationId { get; internal set; }
 
         /// <summary>
-        /// Indicates the request has Retry-After header value.
+        /// Indicates the membership person is moderator or not.
         /// </summary>
-        public bool HasRetryAfter {
-            get
-            {
-                return (this.RetryAfter != null);
-            }
-        }
+        [JsonProperty(PropertyName = "isModerator")]
+        public bool? IsModerator { get; internal set; }
+
+        /// <summary>
+        /// <see cref="DateTime"/> when the membership was created.
+        /// </summary>
+        [JsonProperty(PropertyName = "created")]
+        public DateTime? Created { get; internal set; }
 
     }
 

@@ -21,24 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Thrzn41.CiscoSpark.Version1
+namespace Thrzn41.CiscoSpark
 {
 
     /// <summary>
-    /// Message text type enum.
+    /// File info to/from Cisco Spark.
     /// </summary>
-    public enum MessageTextType
+    [JsonObject(MemberSerialization.OptIn)]
+    public class SparkFileInfo : SparkObject
     {
-        /// <summary>
-        /// The message is posted by markdown style.
-        /// </summary>
-        Markdown,
 
         /// <summary>
-        /// The message is posted by raw text.
+        /// File name.
         /// </summary>
-        Text,
+        [JsonProperty(PropertyName = "fileName")]
+        public string FileName { get; internal set; }
+
+        /// <summary>
+        /// File size.
+        /// </summary>
+        [JsonProperty(PropertyName = "size")]
+        public long? Size { get; internal set; }
+
+        /// <summary>
+        /// Media type name of the file.
+        /// </summary>
+        [JsonProperty(PropertyName = "mediaType")]
+        public string MediaTypeName { get; internal set; }
+
+        /// <summary>
+        /// Media type of the file.
+        /// </summary>
+        [JsonIgnore]
+        public SparkMediaType MediaType
+        {
+            get
+            {
+                return SparkMediaType.Parse(this.MediaTypeName);
+            }
+        }
+
     }
 
 }

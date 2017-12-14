@@ -26,19 +26,24 @@ namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Message text type enum.
+    /// Message target enum.
     /// </summary>
-    public enum MessageTextType
+    public enum MessageTarget
     {
         /// <summary>
-        /// The message is posted by markdown style.
+        /// Message is posted to the space.
         /// </summary>
-        Markdown,
+        SpaceId,
 
         /// <summary>
-        /// The message is posted by raw text.
+        /// Message is posted to 1:1 space of the person.
         /// </summary>
-        Text,
+        PersonId,
+
+        /// <summary>
+        /// Message is posted to 1:1 space of the person.
+        /// </summary>
+        PersonEmail,
     }
 
 }

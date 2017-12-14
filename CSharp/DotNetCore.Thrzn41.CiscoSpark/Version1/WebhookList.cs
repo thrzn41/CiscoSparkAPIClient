@@ -21,24 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Message text type enum.
+    /// <see cref="Webhook"/> list.
     /// </summary>
-    public enum MessageTextType
+    [JsonObject(MemberSerialization.OptIn)]
+    public class WebhookList : SparkListObject<Webhook>
     {
-        /// <summary>
-        /// The message is posted by markdown style.
-        /// </summary>
-        Markdown,
-
-        /// <summary>
-        /// The message is posted by raw text.
-        /// </summary>
-        Text,
     }
 
 }

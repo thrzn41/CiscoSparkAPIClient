@@ -49,10 +49,22 @@ namespace Thrzn41.CiscoSpark.Version1
         public string SpaceId { get; internal set; }
 
         /// <summary>
-        /// Type of Spark space that this message exists in.
+        /// Type name of Spark space that this message exists in.
         /// </summary>
         [JsonProperty(PropertyName = "roomType")]
-        public string SpaceType { get; internal set; }
+        public string SpaceTypeName { get; internal set; }
+
+        /// <summary>
+        /// Type of Spark space that this message exists in.
+        /// </summary>
+        [JsonIgnore]
+        public SpaceType SpaceType
+        {
+            get
+            {
+                return SpaceType.Parse(this.SpaceTypeName);
+            }
+        }
 
         /// <summary>
         /// Id of person that this message to be posted.
@@ -83,7 +95,56 @@ namespace Thrzn41.CiscoSpark.Version1
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public string[] Files { get; internal set; }
-        
+
+        /// <summary>
+        /// Indicates the message has files attached.
+        /// </summary>
+        [JsonIgnore]
+        public bool HasFiles
+        {
+            get
+            {
+                return (this.Files != null && this.Files.Length > 0);
+            }
+        }
+
+        /// <summary>
+        /// Attached file count of the message.
+        /// </summary>
+        [JsonIgnore]
+        public int FileCount
+        {
+            get
+            {
+                return ((this.Files != null) ? this.Files.Length : 0);
+            }
+        }
+
+        /// <summary>
+        /// File Uri list that are attached to the message.
+        /// </summary>
+        public Uri[] FileUris
+        {
+            get
+            {
+                Uri[] result = null;
+
+                if(this.HasFiles)
+                {
+                    string[] files = this.Files;
+
+                    result = new Uri[files.Length];
+
+                    for (int i = 0; i < result.Length; i++)
+                    {
+                        result[i] = new Uri(files[i]);
+                    }
+                }
+
+                return result;
+            }
+        }
+
         /// <summary>
         /// Id of person who owns the message.
         /// </summary>
@@ -100,13 +161,78 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <see cref="DateTime"/> when the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "created")]
-        public DateTime Created { get; internal set; }
+        public DateTime? Created { get; internal set; }
 
         /// <summary>
-        /// Id list of people who are mentioned in the message.
+        /// Id list of person who are mentioned in the message.
         /// </summary>
         [JsonProperty(PropertyName = "mentionedPeople")]
-        public string[] MentionedPeople { get; set; }
+        public string[] MentionedPersons { get; internal set; }
+
+        /// <summary>
+        /// Id list of person who are mentioned in the message.
+        /// </summary>
+        [JsonIgnore]
+        public string[] MentionedPeople {
+            get
+            {
+                return this.MentionedPersons;
+            }
+        }
+
+        /// <summary>
+        /// Indicates the message has mentioned people or not.
+        /// </summary>
+        [JsonIgnore]
+        public bool HasMentionedPersons
+        {
+            get
+            {
+                return (this.MentionedPersons != null && this.MentionedPersons.Length > 0);
+            }
+        }
+
+        /// <summary>
+        /// Indicates the message has mentioned people or not.
+        /// </summary>
+        [JsonIgnore]
+        public bool HasMentionedPeople
+        {
+            get
+            {
+                return this.HasMentionedPersons;
+            }
+        }
+
+        /// <summary>
+        /// Mentioned person count.
+        /// </summary>
+        [JsonIgnore]
+        public int MentionedPersonCount
+        {
+            get
+            {
+                return ((this.MentionedPersons != null) ? this.MentionedPersons.Length : 0);
+            }
+        }
+
+        /// <summary>
+        /// Html text that is posted.
+        /// </summary>
+        [JsonProperty(PropertyName = "html")]
+        public string Html { get; internal set; }
+
+        /// <summary>
+        /// Indicates this message has html or not.
+        /// </summary>
+        [JsonIgnore]
+        public bool HasHtml
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(this.Html);
+            }
+        }
 
     }
 

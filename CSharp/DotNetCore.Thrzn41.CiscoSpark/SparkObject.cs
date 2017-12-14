@@ -43,9 +43,9 @@ namespace Thrzn41.CiscoSpark
         /// </summary>
         [JsonIgnore]
         private static readonly JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings
-            {
-                DefaultValueHandling = DefaultValueHandling.Ignore,
-            };
+        {
+            NullValueHandling = NullValueHandling.Ignore,
+        };
 
         /// <summary>
         /// Settings for Json deserializer.
@@ -54,6 +54,12 @@ namespace Thrzn41.CiscoSpark
         private static readonly JsonSerializerSettings DESERIALIZER_SETTINGS = new JsonSerializerSettings
         {
         };
+
+
+        /// <summary>
+        /// Indicats the Spark Object has values or not.
+        /// </summary>
+        public bool HasValues { get; internal set; } = true;
 
 
         /// <summary>

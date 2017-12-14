@@ -23,66 +23,73 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Thrzn41.CiscoSpark
 {
 
     /// <summary>
-    /// The result of Cisco API request.
+    /// The result of Cisco API list request.
     /// </summary>
     /// <typeparam name="TSparkObject">Spark Object that is returned on API request.</typeparam>
-    public class SparkResult<TSparkObject>
+    public class SparkListResult<TSparkObject> : SparkResult<TSparkObject>
         where TSparkObject : SparkObject, new()
     {
 
         /// <summary>
-        /// The Spark Object data that is returned on the API request.
+        /// <see cref="SparkHttpClient"/> to get next result.
         /// </summary>
-        public TSparkObject Data { get; internal set; }
+        internal SparkHttpClient SparkHttpClient { get; set; }
 
         /// <summary>
-        /// Indicats the request has been succeeded or not.
+        /// Uri to get next result;
         /// </summary>
-        public bool IsSuccessStatus { get; internal set; }
+        internal Uri NextUri { get; set; }
 
         /// <summary>
-        /// Http status code returned on the API request.
+        /// Indicates the next result exists or not.
         /// </summary>
-        public HttpStatusCode HttpStatusCode { get; internal set; }
-
-        /// <summary>
-        /// Tracking id of the request.
-        /// This id can be used for technical support.
-        /// </summary>
-        public string TrackingId { get; internal set; }
-
-        /// <summary>
-        /// Indicates whether the result has tracking id or not.
-        /// </summary>
-        public bool HasTrackingId
+        public bool HasNext
         {
             get
             {
-                return ( !String.IsNullOrEmpty(this.TrackingId) );
+                return (this.SparkHttpClient != null && this.NextUri != null);
             }
         }
 
-        /// <summary>
-        /// Retry-After header value.
-        /// </summary>
-        public RetryConditionHeaderValue RetryAfter { get; internal set; }
+
+
 
         /// <summary>
-        /// Indicates the request has Retry-After header value.
+        /// Lists result.
         /// </summary>
-        public bool HasRetryAfter {
-            get
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
+        /// <returns><see cref="SparkListResult{TSparkObject}"/> to get result.</returns>
+        public async Task< SparkListResult<TSparkObject> > ListNextAsync(CancellationToken? cancellationToken = null)
+        {
+            SparkListResult<TSparkObject> result = null;
+
+            if (this.HasNext)
             {
-                return (this.RetryAfter != null);
+                result = await this.SparkHttpClient.RequestJsonAsync<SparkListResult<TSparkObject>, TSparkObject>(
+                                    HttpMethod.Get,
+                                    this.NextUri,
+                                    null,
+                                    null,
+                                    cancellationToken);
             }
+            else
+            {
+                result = new SparkListResult<TSparkObject>();
+
+                result.Data = new TSparkObject();
+                result.Data.HasValues = false;
+            }
+
+            return result;
         }
 
     }

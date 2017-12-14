@@ -21,29 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// enum for message target type.
+    /// <see cref="Team"/> list.
     /// </summary>
-    public enum MessageTargetType
+    [JsonObject(MemberSerialization.OptIn)]
+    public class TeamList : SparkListObject<Team>
     {
-        /// <summary>
-        /// Message is posted to the space.
-        /// </summary>
-        SpaceId,
-
-        /// <summary>
-        /// Message is posted to 1:1 space of the person.
-        /// </summary>
-        PersonId,
-
-        /// <summary>
-        /// Message is posted to 1:1 space of the person.
-        /// </summary>
-        PersonEmail,
     }
 
 }

@@ -120,6 +120,9 @@
   <data name="ByteLengthLessThanZero" xml:space="preserve">
     <value>byteLength is less than 0.</value>
   </data>
+  <data name="CharLengthLessThanZero" xml:space="preserve">
+    <value>charLength is less than 0.</value>
+  </data>
   <data name="MaxValueLessThanZero" xml:space="preserve">
     <value>maxValue is less than 0.</value>
   </data>

@@ -54,13 +54,17 @@ namespace Thrzn41.Util
             foreach (var key in queryParameters.AllKeys)
             {
                 var encodedKey = Uri.EscapeDataString(key);
+                var values     = queryParameters.GetValues(key);
 
-                foreach (var item in queryParameters.GetValues(key))
+                if (values != null)
                 {
-                    if (item != null)
+                    foreach (var item in values)
                     {
-                        strs.AppendFormat("{0}{1}={2}", separator, encodedKey, Uri.EscapeDataString(item));
-                        separator = "&";
+                        if (item != null)
+                        {
+                            strs.AppendFormat("{0}{1}={2}", separator, encodedKey, Uri.EscapeDataString(item));
+                            separator = "&";
+                        }
                     }
                 }
             }
