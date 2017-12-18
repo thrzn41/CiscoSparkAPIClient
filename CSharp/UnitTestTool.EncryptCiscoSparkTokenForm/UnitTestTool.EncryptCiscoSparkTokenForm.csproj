@@ -92,9 +92,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetFramework.Thrzn41.Util\DotNetFramework.Thrzn41.Util.csproj">
-      <Project>{568f133b-bb3a-4351-8b26-a08154fee49a}</Project>
-      <Name>DotNetFramework.Thrzn41.Util</Name>
+    <ProjectReference Include="..\MultiTarget.Thrzn41.Util\MultiTarget.Thrzn41.Util.csproj">
+      <Project>{086b0337-2c29-4a04-8f97-ffaf9a72cf89}</Project>
+      <Name>MultiTarget.Thrzn41.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
