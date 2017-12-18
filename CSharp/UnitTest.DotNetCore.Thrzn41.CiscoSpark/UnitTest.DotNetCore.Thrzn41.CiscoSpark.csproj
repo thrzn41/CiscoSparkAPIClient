@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetCore.Thrzn41.CiscoSpark\DotNetCore.Thrzn41.CiscoSpark.csproj" />
-    <ProjectReference Include="..\DotNetCore.Thrzn41.Util\DotNetCore.Thrzn41.Util.csproj" />
+    <ProjectReference Include="..\MultiTarget.Thrzn41.CiscoSpark\MultiTarget.Thrzn41.CiscoSpark.csproj" />
+    <ProjectReference Include="..\MultiTarget.Thrzn41.Util\MultiTarget.Thrzn41.Util.csproj" />
   </ItemGroup>
 
 </Project>
