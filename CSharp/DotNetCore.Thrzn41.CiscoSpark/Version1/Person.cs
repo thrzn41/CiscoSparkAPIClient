@@ -33,7 +33,7 @@ namespace Thrzn41.CiscoSpark.Version1
     /// Cisco Spark Person object.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Person : SparkObject
+    public class Person : SparkData
     {
 
         /// <summary>

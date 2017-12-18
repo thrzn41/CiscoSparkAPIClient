@@ -103,7 +103,7 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             EventResource personStatus = null;
 
-            if ( !EVENT_RESOUCES.TryGetValue(name, out personStatus) )
+            if ( name == null || !EVENT_RESOUCES.TryGetValue(name, out personStatus) )
             {
                 personStatus = new EventResource(name);
             }

@@ -93,7 +93,7 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             SpaceSortBy spaceSortByType = null;
 
-            if ( !SPACE_SORT_BY_TYPES.TryGetValue(name, out spaceSortByType) )
+            if ( name == null || !SPACE_SORT_BY_TYPES.TryGetValue(name, out spaceSortByType) )
             {
                 spaceSortByType = new SpaceSortBy(name);
             }

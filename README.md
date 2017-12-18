@@ -6,7 +6,7 @@
 
 | Spark Resource | Available Feature | Description |
 | :-------------- | :---------------------------- | :---------------------------------------------- |
-| Person/People   | List/Get/Delete               | Get Me is also available                        |
+| Person/People   | List/Get                      | Get Me is also available                        |
 | Space/Room      | List/Create/Get/Update/Delete | -                                               |
 | SpaceMembership | List/Create/Get/Update/Delete | -                                               |
 | Message         | List/Create/Get/Delete        | Attach file from local stream is also available |
@@ -103,7 +103,7 @@ if(result.IsSuccessStatus)
 using (var fs   = new FileStream("path/myfile.png", FileMode.Open, FileAccess.Read, FileShare.Read))
 using (var data = new SparkFileData(fs, "imagefile.png", SparkMediaType.ImagePNG))
 {
-    var result = spark.CreateMessageAsync("xyz_space_id", "With Attachment", data);
+    var result = await spark.CreateMessageAsync("xyz_space_id", "With Attachment", data);
 
     if(result.IsSuccessStatus)
     {

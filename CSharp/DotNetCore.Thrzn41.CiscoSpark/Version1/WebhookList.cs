@@ -33,7 +33,7 @@ namespace Thrzn41.CiscoSpark.Version1
     /// <see cref="Webhook"/> list.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class WebhookList : SparkListObject<Webhook>
+    public class WebhookList : SparkListData<Webhook>
     {
     }
 

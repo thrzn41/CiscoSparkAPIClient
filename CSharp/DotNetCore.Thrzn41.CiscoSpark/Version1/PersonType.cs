@@ -91,7 +91,7 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             PersonType personType = null;
 
-            if ( !PERSON_TYPES.TryGetValue(name, out personType) )
+            if ( name == null || !PERSON_TYPES.TryGetValue(name, out personType) )
             {
                 personType = new PersonType(name);
             }

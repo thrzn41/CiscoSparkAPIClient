@@ -33,7 +33,7 @@ namespace Thrzn41.CiscoSpark.Version1
     /// <see cref="SpaceMembership"/> list.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SpaceMembershipList : SparkListObject<SpaceMembership>
+    public class SpaceMembershipList : SparkListData<SpaceMembership>
     {
     }
 }
