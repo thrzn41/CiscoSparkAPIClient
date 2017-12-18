@@ -34,7 +34,7 @@ namespace Thrzn41.CiscoSpark.Version1
     /// Some v1 specific features will be implemented.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SparkObject : Thrzn41.CiscoSpark.SparkObject
+    public class SparkData : Thrzn41.CiscoSpark.SparkObject
     {
 
         /// <summary>

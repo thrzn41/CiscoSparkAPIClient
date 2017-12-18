@@ -103,7 +103,7 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             EventType personStatus = null;
 
-            if ( !EVENT_TYPES.TryGetValue(name, out personStatus) )
+            if ( name == null || !EVENT_TYPES.TryGetValue(name, out personStatus) )
             {
                 personStatus = new EventType(name);
             }

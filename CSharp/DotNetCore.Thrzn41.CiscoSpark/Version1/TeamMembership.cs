@@ -33,7 +33,7 @@ namespace Thrzn41.CiscoSpark.Version1
     /// Cisco Spark TeamMembership object.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class TeamMembership : SparkObject
+    public class TeamMembership : SparkData
     {
 
         /// <summary>

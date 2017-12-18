@@ -34,8 +34,8 @@ namespace Thrzn41.CiscoSpark.Version1
     /// </summary>
     /// <typeparam name="TSparkObject">Spark Object that is contained in the list.</typeparam>
     [JsonObject(MemberSerialization.OptIn)]
-    public class SparkListObject<TSparkObject> : SparkObject
-        where TSparkObject : SparkObject, new()
+    public class SparkListData<TSparkObject> : SparkData
+        where TSparkObject : SparkData, new()
     {
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             SpaceType spaceType = null;
 
-            if( !SPACE_TYPES.TryGetValue(name, out spaceType) )
+            if ( name == null || !SPACE_TYPES.TryGetValue(name, out spaceType) )
             {
                 spaceType = new SpaceType(name);
             }

@@ -130,11 +130,11 @@
     <Compile Include="..\DotNetCore.Thrzn41.CiscoSpark\Version1\SparkAPIClient.cs">
       <Link>Version1\SparkAPIClient.cs</Link>
     </Compile>
-    <Compile Include="..\DotNetCore.Thrzn41.CiscoSpark\Version1\SparkListObject.cs">
-      <Link>Version1\SparkListObject.cs</Link>
+    <Compile Include="..\DotNetCore.Thrzn41.CiscoSpark\Version1\SparkData.cs">
+      <Link>Version1\SparkData.cs</Link>
     </Compile>
-    <Compile Include="..\DotNetCore.Thrzn41.CiscoSpark\Version1\SparkObject.cs">
-      <Link>Version1\SparkObject.cs</Link>
+    <Compile Include="..\DotNetCore.Thrzn41.CiscoSpark\Version1\SparkListData.cs">
+      <Link>Version1\SparkListData.cs</Link>
     </Compile>
     <Compile Include="..\DotNetCore.Thrzn41.CiscoSpark\Version1\Team.cs">
       <Link>Version1\Team.cs</Link>

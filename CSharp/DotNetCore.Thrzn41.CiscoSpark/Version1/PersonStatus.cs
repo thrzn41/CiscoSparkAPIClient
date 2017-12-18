@@ -103,7 +103,7 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             PersonStatus personStatus = null;
 
-            if ( !PERSON_STATUSES.TryGetValue(name, out personStatus) )
+            if ( name == null || !PERSON_STATUSES.TryGetValue(name, out personStatus) )
             {
                 personStatus = new PersonStatus(name);
             }

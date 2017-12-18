@@ -7,7 +7,7 @@ namespace Thrzn41.CiscoSpark.Version1
 {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class NoContent : SparkObject
+    public class NoContent : SparkData
     {
 
         public NoContent()

@@ -6,7 +6,7 @@
 
 | Sparkのリソース名 | 利用可能な機能                | 説明 |
 | :-------------- | :---------------------------- | :---------------------------------- |
-| Person/People   | List/Get/Delete               | Get Meも利用可能                     |
+| Person/People   | List/Get                      | Get Meも利用可能                     |
 | Space/Room      | List/Create/Get/Update/Delete | -                                   |
 | SpaceMembership | List/Create/Get/Update/Delete | -                                   |
 | Message         | List/Create/Get/Delete        | ローカルのstreamからファイル添付も可能 |
@@ -105,7 +105,7 @@ if(result.IsSuccessStatus)
 using (var fs   = new FileStream("path/myfile.png", FileMode.Open, FileAccess.Read, FileShare.Read))
 using (var data = new SparkFileData(fs, "imagefile.png", SparkMediaType.ImagePNG))
 {
-    var result = spark.CreateMessageAsync("xyz_space_id", "添付ファイル付き", data);
+    var result = await spark.CreateMessageAsync("xyz_space_id", "添付ファイル付き", data);
 
     if(result.IsSuccessStatus)
     {

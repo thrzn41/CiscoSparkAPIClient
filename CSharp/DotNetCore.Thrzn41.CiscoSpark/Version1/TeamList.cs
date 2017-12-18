@@ -33,7 +33,7 @@ namespace Thrzn41.CiscoSpark.Version1
     /// <see cref="Team"/> list.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class TeamList : SparkListObject<Team>
+    public class TeamList : SparkListData<Team>
     {
     }
 
