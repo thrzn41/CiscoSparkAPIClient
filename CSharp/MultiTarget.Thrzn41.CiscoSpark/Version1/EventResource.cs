@@ -101,14 +101,14 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <returns><see cref="EventResource"/> for the name.</returns>
         public static EventResource Parse(string name)
         {
-            EventResource personStatus = null;
+            EventResource eventResource = null;
 
-            if ( name == null || !EVENT_RESOUCES.TryGetValue(name, out personStatus) )
+            if ( name == null || !EVENT_RESOUCES.TryGetValue(name, out eventResource) )
             {
-                personStatus = new EventResource(name);
+                eventResource = new EventResource(name);
             }
 
-            return personStatus;
+            return eventResource;
         }
 
 

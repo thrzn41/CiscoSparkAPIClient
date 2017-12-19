@@ -29,45 +29,43 @@ namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Space sortBy type of Cisco Spark.
+    /// Event owner type of Cisco Spark.
     /// </summary>
-    public class SpaceSortBy
+    public class EventOwnerType
     {
 
         /// <summary>
-        /// Sort by id.
+        /// The owner is creator.
         /// </summary>
-        public static readonly SpaceSortBy Id = new SpaceSortBy("id");
+        public static readonly EventOwnerType Creator = new EventOwnerType("creator");
 
         /// <summary>
-        /// Sort by lastActivity.
+        /// The owner is organizaiton.
         /// </summary>
-        public static readonly SpaceSortBy LastActivity = new SpaceSortBy("lastActivity");
+        public static readonly EventOwnerType Organization = new EventOwnerType("org");
 
-        /// <summary>
-        /// Sort by created.
-        /// </summary>
-        public static readonly SpaceSortBy Created = new SpaceSortBy("created");
+
 
 
         /// <summary>
-        /// Dictionary for space type.
+        /// Dictionary for event owner type.
         /// </summary>
-        private static readonly Dictionary<string, SpaceSortBy> SPACE_SORT_BY_TYPES;
+        private static readonly Dictionary<string, EventOwnerType> EVENT_OWNER_TYPES;
 
         /// <summary>
         /// Static constuctor.
         /// </summary>
-        static SpaceSortBy()
+        static EventOwnerType()
         {
-            SPACE_SORT_BY_TYPES = new Dictionary<string, SpaceSortBy>();
+            EVENT_OWNER_TYPES = new Dictionary<string, EventOwnerType>();
 
-            SPACE_SORT_BY_TYPES.Add(Id.Name, Id);
+            EVENT_OWNER_TYPES.Add(Creator.Name,      Creator);
+            EVENT_OWNER_TYPES.Add(Organization.Name, Organization);
         }
 
 
         /// <summary>
-        /// Name of the space type.
+        /// Name of the event type.
         /// </summary>
         public string Name { get; private set; }
 
@@ -77,37 +75,37 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="name">Name of the space type.</param>
-        private SpaceSortBy(string name)
+        /// <param name="name">Name of the event type.</param>
+        private EventOwnerType(string name)
         {
             this.Name = name;
         }
 
 
         /// <summary>
-        /// Parse space sortBy type.
+        /// Parse event owner type.
         /// </summary>
-        /// <param name="name">Name of the spaceSortBy type.</param>
-        /// <returns><see cref="SpaceSortBy"/> for the name.</returns>
-        public static SpaceSortBy Parse(string name)
+        /// <param name="name">Name of the event owner type.</param>
+        /// <returns><see cref="EventOwnerType"/> for the name.</returns>
+        public static EventOwnerType Parse(string name)
         {
-            SpaceSortBy spaceSortBy = null;
+            EventOwnerType eventOwnerType = null;
 
-            if ( name == null || !SPACE_SORT_BY_TYPES.TryGetValue(name, out spaceSortBy) )
+            if ( name == null || !EVENT_OWNER_TYPES.TryGetValue(name, out eventOwnerType) )
             {
-                spaceSortBy = new SpaceSortBy(name);
+                eventOwnerType = new EventOwnerType(name);
             }
 
-            return spaceSortBy;
+            return eventOwnerType;
         }
 
 
         /// <summary>
-        /// Determines whether this instance and another specified <see cref="SpaceSortBy"/> object have the same value.
+        /// Determines whether this instance and another specified <see cref="EventOwnerType"/> object have the same value.
         /// </summary>
-        /// <param name="value">The space type to compare to this instance.</param>
+        /// <param name="value">The event owner type to compare to this instance.</param>
         /// <returns>true if the value of the parameter is the same as the value of this instance; otherwise, false. If value is null, the method returns false.</returns>
-        public bool Equals(SpaceSortBy value)
+        public bool Equals(EventOwnerType value)
         {
             if ( Object.ReferenceEquals(value, null) )
             {
@@ -123,17 +121,17 @@ namespace Thrzn41.CiscoSpark.Version1
         }
 
         /// <summary>
-        /// Determines whether this instance and a specified object, which must also be a <see cref="SpaceSortBy"/> object, have the same value.
+        /// Determines whether this instance and a specified object, which must also be a <see cref="EventOwnerType"/> object, have the same value.
         /// </summary>
-        /// <param name="obj">The space sortBy type to compare to this instance.</param>
-        /// <returns>true if obj is a <see cref="SpaceSortBy"/> and its value is the same as this instance; otherwise, false. If obj is null, the method returns false.</returns>
+        /// <param name="obj">The event owner type to compare to this instance.</param>
+        /// <returns>true if obj is a <see cref="EventOwnerType"/> and its value is the same as this instance; otherwise, false. If obj is null, the method returns false.</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as SpaceSortBy);
+            return Equals(obj as EventOwnerType);
         }
 
         /// <summary>
-        /// Returns the hash code for this space type.
+        /// Returns the hash code for this event owner type.
         /// </summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
@@ -143,12 +141,12 @@ namespace Thrzn41.CiscoSpark.Version1
 
 
         /// <summary>
-        /// Determines whether two specified space sortBy types have the same value.
+        /// Determines whether two specified event owner type have the same value.
         /// </summary>
         /// <param name="lhs">Left hand side value.</param>
         /// <param name="rhs">Right hand side value.</param>
         /// <returns>true if the two values have the same value.</returns>
-        public static bool operator ==(SpaceSortBy lhs, SpaceSortBy rhs)
+        public static bool operator ==(EventOwnerType lhs, EventOwnerType rhs)
         {
             if ( Object.ReferenceEquals(lhs, null) )
             {
@@ -164,12 +162,12 @@ namespace Thrzn41.CiscoSpark.Version1
         }
 
         /// <summary>
-        /// Determines whether two specified space sortBy types have the different value.
+        /// Determines whether two specified event owner type have the different value.
         /// </summary>
         /// <param name="lhs">Left hand side value.</param>
         /// <param name="rhs">Right hand side value.</param>
         /// <returns>true if the two values have the different value.</returns>
-        public static bool operator !=(SpaceSortBy lhs, SpaceSortBy rhs)
+        public static bool operator !=(EventOwnerType lhs, EventOwnerType rhs)
         {
             return !(lhs == rhs);
         }

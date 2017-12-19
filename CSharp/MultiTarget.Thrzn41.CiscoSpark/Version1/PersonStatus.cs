@@ -54,6 +54,11 @@ namespace Thrzn41.CiscoSpark.Version1
         /// </summary>
         public static readonly PersonStatus DoNotDisturb = new PersonStatus("DoNotDisturb");
 
+        /// <summary>
+        /// Person is unknown status.
+        /// </summary>
+        public static readonly PersonStatus Unknown = new PersonStatus("unknown");
+
 
 
 
@@ -103,7 +108,11 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             PersonStatus personStatus = null;
 
-            if ( name == null || !PERSON_STATUSES.TryGetValue(name, out personStatus) )
+            if(name == null)
+            {
+                personStatus = PersonStatus.Unknown;
+            }
+            if ( !PERSON_STATUSES.TryGetValue(name, out personStatus) )
             {
                 personStatus = new PersonStatus(name);
             }
