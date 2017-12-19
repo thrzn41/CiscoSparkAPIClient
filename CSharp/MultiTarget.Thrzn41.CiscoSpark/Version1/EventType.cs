@@ -29,7 +29,7 @@ namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Event resouce of Cisco Spark.
+    /// Event type of Cisco Spark.
     /// </summary>
     public class EventType
     {
@@ -58,7 +58,7 @@ namespace Thrzn41.CiscoSpark.Version1
 
 
         /// <summary>
-        /// Dictionary for event resouce.
+        /// Dictionary for event type.
         /// </summary>
         private static readonly Dictionary<string, EventType> EVENT_TYPES;
 
@@ -101,14 +101,14 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <returns><see cref="EventType"/> for the name.</returns>
         public static EventType Parse(string name)
         {
-            EventType personStatus = null;
+            EventType eventType = null;
 
-            if ( name == null || !EVENT_TYPES.TryGetValue(name, out personStatus) )
+            if ( name == null || !EVENT_TYPES.TryGetValue(name, out eventType) )
             {
-                personStatus = new EventType(name);
+                eventType = new EventType(name);
             }
 
-            return personStatus;
+            return eventType;
         }
 
 

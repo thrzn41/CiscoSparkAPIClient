@@ -40,7 +40,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// Id of the webhook.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string id { get; internal set; }
+        public string Id { get; internal set; }
 
         /// <summary>
         /// Name of the webhook.
@@ -93,17 +93,17 @@ namespace Thrzn41.CiscoSpark.Version1
         /// Event name of the webhook.
         /// </summary>
         [JsonProperty(PropertyName = "event")]
-        public string EventName { get; internal set; }
+        public string EventTypeName { get; internal set; }
 
         /// <summary>
         /// Event of the webhook.
         /// </summary>
         [JsonIgnore]
-        public EventType Event
+        public EventType EventType
         {
             get
             {
-                return EventType.Parse(this.EventName);
+                return EventType.Parse(this.EventTypeName);
             }
         }
 
@@ -124,6 +124,16 @@ namespace Thrzn41.CiscoSpark.Version1
         /// </summary>
         [JsonProperty(PropertyName = "created")]
         public string Created { get; internal set; }
+
+
+        /// <summary>
+        /// Creates <see cref="EventValidator"/>.
+        /// </summary>
+        /// <returns><see cref="EventValidator"/> instance.</returns>
+        public EventValidator CreateEventValidator()
+        {
+            return EventValidator.Create(this.Secret);
+        }
 
     }
 

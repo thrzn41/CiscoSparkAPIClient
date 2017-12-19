@@ -29,45 +29,47 @@ namespace Thrzn41.CiscoSpark.Version1
 {
 
     /// <summary>
-    /// Space sortBy type of Cisco Spark.
+    /// Webhook status of Cisco Spark.
     /// </summary>
-    public class SpaceSortBy
+    public class WebhookStatus
     {
 
         /// <summary>
-        /// Sort by id.
+        /// Webhook is active.
         /// </summary>
-        public static readonly SpaceSortBy Id = new SpaceSortBy("id");
+        public static readonly WebhookStatus Active = new WebhookStatus("active");
 
         /// <summary>
-        /// Sort by lastActivity.
+        /// Webhook is inactive.
         /// </summary>
-        public static readonly SpaceSortBy LastActivity = new SpaceSortBy("lastActivity");
+        public static readonly WebhookStatus Inactive = new WebhookStatus("inactive");
 
         /// <summary>
-        /// Sort by created.
+        /// Webhook is unknown status.
         /// </summary>
-        public static readonly SpaceSortBy Created = new SpaceSortBy("created");
+        public static readonly WebhookStatus Unknown = new WebhookStatus("unknown");
+
 
 
         /// <summary>
-        /// Dictionary for space type.
+        /// Dictionary for webhook status.
         /// </summary>
-        private static readonly Dictionary<string, SpaceSortBy> SPACE_SORT_BY_TYPES;
+        private static readonly Dictionary<string, WebhookStatus> WEBHOOK_STATUSES;
 
         /// <summary>
         /// Static constuctor.
         /// </summary>
-        static SpaceSortBy()
+        static WebhookStatus()
         {
-            SPACE_SORT_BY_TYPES = new Dictionary<string, SpaceSortBy>();
+            WEBHOOK_STATUSES = new Dictionary<string, WebhookStatus>();
 
-            SPACE_SORT_BY_TYPES.Add(Id.Name, Id);
+            WEBHOOK_STATUSES.Add(Active.Name,   Active);
+            WEBHOOK_STATUSES.Add(Inactive.Name, Inactive);
         }
 
 
         /// <summary>
-        /// Name of the space type.
+        /// Name of the webhook status.
         /// </summary>
         public string Name { get; private set; }
 
@@ -77,37 +79,41 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="name">Name of the space type.</param>
-        private SpaceSortBy(string name)
+        /// <param name="name">Name of the webhook status.</param>
+        private WebhookStatus(string name)
         {
             this.Name = name;
         }
 
 
         /// <summary>
-        /// Parse space sortBy type.
+        /// Parse webhook status.
         /// </summary>
-        /// <param name="name">Name of the spaceSortBy type.</param>
-        /// <returns><see cref="SpaceSortBy"/> for the name.</returns>
-        public static SpaceSortBy Parse(string name)
+        /// <param name="name">Name of the webhook status.</param>
+        /// <returns><see cref="WebhookStatus"/> for the name.</returns>
+        public static WebhookStatus Parse(string name)
         {
-            SpaceSortBy spaceSortBy = null;
+            WebhookStatus webhookStatus = null;
 
-            if ( name == null || !SPACE_SORT_BY_TYPES.TryGetValue(name, out spaceSortBy) )
+            if(name == null)
             {
-                spaceSortBy = new SpaceSortBy(name);
+                webhookStatus = WebhookStatus.Unknown;
+            }
+            else if ( !WEBHOOK_STATUSES.TryGetValue(name, out webhookStatus) )
+            {
+                webhookStatus = new WebhookStatus(name);
             }
 
-            return spaceSortBy;
+            return webhookStatus;
         }
 
 
         /// <summary>
-        /// Determines whether this instance and another specified <see cref="SpaceSortBy"/> object have the same value.
+        /// Determines whether this instance and another specified <see cref="WebhookStatus"/> object have the same value.
         /// </summary>
-        /// <param name="value">The space type to compare to this instance.</param>
+        /// <param name="value">The webhook status to compare to this instance.</param>
         /// <returns>true if the value of the parameter is the same as the value of this instance; otherwise, false. If value is null, the method returns false.</returns>
-        public bool Equals(SpaceSortBy value)
+        public bool Equals(WebhookStatus value)
         {
             if ( Object.ReferenceEquals(value, null) )
             {
@@ -123,17 +129,17 @@ namespace Thrzn41.CiscoSpark.Version1
         }
 
         /// <summary>
-        /// Determines whether this instance and a specified object, which must also be a <see cref="SpaceSortBy"/> object, have the same value.
+        /// Determines whether this instance and a specified object, which must also be a <see cref="WebhookStatus"/> object, have the same value.
         /// </summary>
-        /// <param name="obj">The space sortBy type to compare to this instance.</param>
-        /// <returns>true if obj is a <see cref="SpaceSortBy"/> and its value is the same as this instance; otherwise, false. If obj is null, the method returns false.</returns>
+        /// <param name="obj">The webhook status to compare to this instance.</param>
+        /// <returns>true if obj is a <see cref="WebhookStatus"/> and its value is the same as this instance; otherwise, false. If obj is null, the method returns false.</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as SpaceSortBy);
+            return Equals(obj as WebhookStatus);
         }
 
         /// <summary>
-        /// Returns the hash code for this space type.
+        /// Returns the hash code for this webhook status.
         /// </summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
@@ -143,12 +149,12 @@ namespace Thrzn41.CiscoSpark.Version1
 
 
         /// <summary>
-        /// Determines whether two specified space sortBy types have the same value.
+        /// Determines whether two specified webhook status have the same value.
         /// </summary>
         /// <param name="lhs">Left hand side value.</param>
         /// <param name="rhs">Right hand side value.</param>
         /// <returns>true if the two values have the same value.</returns>
-        public static bool operator ==(SpaceSortBy lhs, SpaceSortBy rhs)
+        public static bool operator ==(WebhookStatus lhs, WebhookStatus rhs)
         {
             if ( Object.ReferenceEquals(lhs, null) )
             {
@@ -164,12 +170,12 @@ namespace Thrzn41.CiscoSpark.Version1
         }
 
         /// <summary>
-        /// Determines whether two specified space sortBy types have the different value.
+        /// Determines whether two specified webhook status have the different value.
         /// </summary>
         /// <param name="lhs">Left hand side value.</param>
         /// <param name="rhs">Right hand side value.</param>
         /// <returns>true if the two values have the different value.</returns>
-        public static bool operator !=(SpaceSortBy lhs, SpaceSortBy rhs)
+        public static bool operator !=(WebhookStatus lhs, WebhookStatus rhs)
         {
             return !(lhs == rhs);
         }

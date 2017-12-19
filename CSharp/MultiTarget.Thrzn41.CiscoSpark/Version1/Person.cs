@@ -122,7 +122,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// Timezone info for the person.
         /// </summary>
         [JsonProperty(PropertyName = "timezone")]
-        public string Timezone { get; internal set; }
+        public string TimezoneName { get; internal set; }
 
         /// <summary>
         /// <see cref="DateTime"/> when the person was active last.

@@ -49,6 +49,11 @@ The trackingId may be used on technical support of Cisco Spark API side.
 `result.TrackingId` is available in the Cisco Spark API Client.  
 More details are described later.
 
+### Validates webhook secret
+
+`Webhook.CreateEventValidator()` is available in the Cisco Spark API Client.  
+More details are described later.
+
 
 
 ## Basic Usage
@@ -56,7 +61,7 @@ More details are described later.
 ### Save encrypted token to storage
 
 ``` csharp
-char[] tokens = GetTokensFromUser();
+char[] tokens = GetBotTokenFromUser();
 
 var protectedToken = ProtectedString.FromChars(tokens);
 ProtectedString.ClearChars(tokens);
@@ -193,14 +198,69 @@ var result = await spark.ListSpaces();
 Console.WriteLine("Tracking id is {0}", result.TrackingId);  
 ```
 
+### Validates webhook event data
+
+``` csharp
+var webhook = await spark.GetWebhook("xyz_webhook_id");
+
+var validator = webhook.CreateEventValidator();
+```
+
+When an event is notified on webhook uri,  
+x-Spark-Signature will have hash code.
+
+The validator can be used to validate the data.
+
+``` csharp
+byte[] webhookEventData = GetWebhookEventData();
+
+if( validator.Validate(webhookEventData, "xyz_x_spark_signature_value") )
+{
+  Console.WriteLine("Notified data is valid!");
+}
+```
+
+### Webhook Notification manager
+
+Webhook notification manager manages webhooks and even notification.
+
+
+* Create instance.
+
+``` csharp
+var notificationManager = new WebhookNotificationManager();
+```
+
+* Then, add webhook to manager with notification function.
+
+``` csharp
+var webhook = await spark.GetWebhook("xyz_webhook_id");
+
+notificationManager.AddNotification(
+  webhook,
+  (eventData) =>
+  {
+    Console.WriteLine("Event is notified, id = {0}", eventData.Id);
+  }
+);
+```
+
+* On receiving webhook event.
+
+``` csharp
+byte[] webhookEventData = GetWebhookEventData();
+
+// Signature will be checked and notified to function which is added earlier.
+notificationManager.ValidateAndNotify(webhookEventData, "xyz_x_spark_signature_value", encodingOfData);
+```
+
+
 
 
 ## Planned Features
 
 | Feature | Description |
 | :------ | :---------- |
-| Webhook secret validation | To validate webhook secret. |
-| Webhook manager | To manage webhooks. |
 | Markdown builder | Simple markdown builder to build Cisco Spark API specific markdown. |
 | Gets error code and description | To get error code and description from Cisco Spark Json body on an error. |
 | Admin APIs | Admin and Event APIs. |

@@ -1472,10 +1472,10 @@ namespace Thrzn41.CiscoSpark.Version1
         {
             var webhook = new Webhook();
 
-            webhook.Name         = name;
-            webhook.TargetUrl    = targetUri.AbsoluteUri;
-            webhook.ResourceName = resouce.Name;
-            webhook.EventName    = eventType.Name;
+            webhook.Name          = name;
+            webhook.TargetUrl     = targetUri.AbsoluteUri;
+            webhook.ResourceName  = resouce.Name;
+            webhook.EventTypeName = eventType.Name;
 
             if(filters != null)
             {
@@ -1546,7 +1546,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
         public async Task< SparkResult<Webhook> > GetWebhookAsync(Webhook webhook, CancellationToken? cancellationToken = null)
         {
-            return (await GetWebhookAsync(webhook.id, cancellationToken));
+            return (await GetWebhookAsync(webhook.Id, cancellationToken));
         }
 
 
@@ -1587,7 +1587,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
         public async Task< SparkResult<Webhook> > UpdateWebhookAsync(Webhook webhook, string name, Uri targetUri, CancellationToken? cancellationToken = null)
         {
-            return (await UpdateWebhookAsync(webhook.id, name, targetUri, cancellationToken));
+            return (await UpdateWebhookAsync(webhook.Id, name, targetUri, cancellationToken));
         }
 
 
@@ -1619,7 +1619,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
         public async Task< SparkResult<NoContent> > DeleteWebhookAsync(Webhook webhook, CancellationToken? cancellationToken = null)
         {
-            return (await DeleteWebhookAsync(webhook.id, cancellationToken));
+            return (await DeleteWebhookAsync(webhook.Id, cancellationToken));
         }
 
         #endregion

@@ -50,6 +50,11 @@ trackingIdは、Cisco Spark APIのテクニカルサポートで利用される�
 `result.TrackingId`が、Cisco Spark API Clientで利用可能です。  
 詳細は後述。
 
+### Validates webhook secret
+
+`Webhook.CreateEventValidator()`が、Cisco Spark API Clientで利用可能です。   
+詳細は後述。
+
 
 
 
@@ -196,13 +201,69 @@ Console.WriteLine("Tracking id: {0}", result.TrackingId);
 ```
 
 
+### Webhookに通知されたデータを検証する
+
+``` csharp
+var webhook = await spark.GetWebhook("xyz_webhook_id");
+
+var validator = webhook.CreateEventValidator();
+```
+
+イベントがWebhookのURIに通知された際には、
+x-Spark-Signatureがハッシュ値を持っています。
+
+validatorを利用して、データの整合性を確認できます。
+
+``` csharp
+byte[] webhookEventData = GetWebhookEventData();
+
+if( validator.Validate(webhookEventData, "xyz_x_spark_signature_value") )
+{
+  Console.WriteLine("通知されたイベントデータの検証に成功!");
+}
+```
+
+### Webhookの通知管理
+
+Webhook notification managerを使ってWebhookへの通知を管理します。
+
+
+* インスタンスを作成する。
+
+``` csharp
+var notificationManager = new WebhookNotificationManager();
+```
+
+* 通知用のfunctionを登録します。
+
+``` csharp
+var webhook = await spark.GetWebhook("xyz_webhook_id");
+
+notificationManager.AddNotification(
+  webhook,
+  (eventData) =>
+  {
+    Console.WriteLine("イベントを受信, id = {0}", eventData.Id);
+  }
+);
+```
+
+* イベントの受信時。
+
+``` csharp
+byte[] webhookEventData = GetWebhookEventData();
+
+// Signatureが確認され登録したfunctionにイベントデータが通知されます。
+notificationManager.ValidateAndNotify(webhookEventData, "xyz_x_spark_signature_value", encodingOfData);
+```
+
+
+
 
 ## 計画中の機能
 
 | 機能 | 概要 |
 | :--- | :--- |
-| Webhook secretの整合性検証 | webhook secretの整合性を検証する機能。 |
-| Webhook manager | webhooksを管理する。 |
 | Markdown builder | Cisco Spark API特有のMarkdownのBuilder。 |
 | Error codeとdescriptionの取得 | エラー発生時に、Cisco SparkのJson bodyに含まれるerror codeとdescriptionを取得する。 |
 | Admin APIs | AdminとEvent APIの機能。 |
