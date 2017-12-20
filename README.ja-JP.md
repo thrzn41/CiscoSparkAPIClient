@@ -3,6 +3,7 @@
 ## 現在利用可能な機能
 
 * Cisco Sparkの基本的なAPI(List/Get/Create Message, Spaceなど)
+* Cisco SparkのAdmin API(List/Get Eventなど)
 * ストレージに保存するTokenの暗号化。
 * List API用のPagination機能。
 * Retry-after値の処理とRetry executor。
@@ -22,8 +23,14 @@
 | Webhook         | List/Create/Get/Update/Delete | -                                   |
 | File            | GetInfo/GetData/Upload        | -                                   |
 
-現時点では、Cisco Spark API Clientでは、Admin/Event APIは利用可能ではありません。  
-将来的には実装予定です。
+### Admin機能
+| Sparkのリソース名 | 利用可能な機能                | 説明 |
+| :-------------- | :---------------------------- | :---------------------------------------------- |
+| Person/People   | Create/Update/Delete          | -                                               |
+| Event           | List/Get                      | -                                               |
+| Organization    | List/Get                      | -                                               |
+| License         | List/Get                      | -                                               |
+| Role            | List/Get                      | -                                               |
 
 ### ストレージのTokenの暗号化と復号
 
@@ -348,4 +355,3 @@ listener.Start();
 | :--- | :--- |
 | Markdown builder | Cisco Spark API特有のMarkdownのBuilder。 |
 | Error codeとdescriptionの取得 | エラー発生時に、Cisco SparkのJson bodyに含まれるerror codeとdescriptionを取得する。 |
-| Admin APIs | AdminとEvent APIの機能。 |

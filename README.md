@@ -3,6 +3,7 @@
 ## Available features for now
 
 * Basic Cisco Spark APIs(List/Get/Create Message, Space, etc.).
+* Cisco Spark Admin APIs(List/Get Event, etc.).
 * Encrypt Cisco Spark token in storage.
 * Pagination for list APIs.
 * Retry-after value, Retry executor.
@@ -22,8 +23,15 @@
 | Webhook         | List/Create/Get/Update/Delete | -                                               |
 | File            | GetInfo/GetData/Upload        | -                                               |
 
-For now, Admin or Event APIs are not available in the Cisco Spark API Client.  
-It will be available in the future.
+### Admin features
+
+| Spark Resource | Available Feature | Description |
+| :-------------- | :---------------------------- | :---------------------------------------------- |
+| Person/People   | Create/Update/Delete          | -                                               |
+| Event           | List/Get                      | -                                               |
+| Organization    | List/Get                      | -                                               |
+| License         | List/Get                      | -                                               |
+| Role            | List/Get                      | -                                               |
 
 ### Token encryption in storage
 `ProtectedString` provides token encryption/decryption to/from storage.  
@@ -347,4 +355,3 @@ listener.Start();
 | :------ | :---------- |
 | Markdown builder | Simple markdown builder to build Cisco Spark API specific markdown. |
 | Gets error code and description | To get error code and description from Cisco Spark Json body on an error. |
-| Admin APIs | Admin and Event APIs. |
