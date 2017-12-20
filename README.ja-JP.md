@@ -330,7 +330,7 @@ var result = await spark.CreateWebhookAsync(
 ``` csharp
 var webhook = result.Data;
 
-notificationManager.AddNotification(
+listener.AddNotification(
   webhook,
   async (eventData) =>
   {
