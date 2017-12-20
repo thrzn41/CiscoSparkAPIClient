@@ -166,7 +166,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// </summary>
         /// <param name="webhook">Webhook to be added.</param>
         /// <param name="func">Function to be notified on receiving event.</param>
-        public void AddWebhookNotification(Webhook webhook, Action<WebhookEventData> func)
+        public void AddNotification(Webhook webhook, Action<WebhookEventData> func)
         {
             this.notificationManager.AddNotification(webhook, func);
         }
@@ -176,7 +176,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// </summary>
         /// <param name="webhook">Webhook to be added.</param>
         /// <param name="funcAsync">Async function to be notified on receiving event.</param>
-        public void AddWebhookNotification(Webhook webhook, Func<WebhookEventData, Task> funcAsync)
+        public void AddNotification(Webhook webhook, Func<WebhookEventData, Task> funcAsync)
         {
             this.notificationManager.AddNotification(webhook, funcAsync);
         }
@@ -186,7 +186,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// Removes notification info.
         /// </summary>
         /// <param name="webhook">Webhook to be removed.</param>
-        public void RemoveWebhookNotification(Webhook webhook)
+        public void RemoveNotification(Webhook webhook)
         {
             this.notificationManager.RemoveNotification(webhook);
         }
