@@ -2,6 +2,13 @@
 
 ## Available features for now
 
+* Basic Cisco Spark APIs(List/Get/Create Message, Space, etc.).
+* Encrypt Cisco Spark token in storage.
+* Pagination for list APIs.
+* Retry-after value, Retry executor.
+* Webhook secret validator, Webhook notification manager.
+* Simple Webhook Listener/Server
+
 ### Basic features
 
 | Spark Resource | Available Feature | Description |
@@ -40,6 +47,7 @@ But, currently the client returns Http Status code.
 ### Gets retry-after
 
 `result.HasRetryAfter` and `result.RetryAfter` are available in the Cisco Spark API Client.  
+Also, `RetryExecutor` is available.
 More details are described later.
 
 ### Gets trackingId
@@ -52,7 +60,18 @@ More details are described later.
 ### Validates webhook secret
 
 `Webhook.CreateEventValidator()` is available in the Cisco Spark API Client.  
+Also, `WebhookNotificationManager` is available.
 More details are described later.
+
+### Webhook listner
+
+Webhook listner feature provides simple Webhook server feature.  
+**NOTE: This feature is intended to be used for quick testing purpose.  
+In production environment, more reliable server solution should be used.**
+
+`WebhookListener` is available in the Cisco Spark API Client.  
+More details are described later.
+
 
 
 
@@ -71,7 +90,7 @@ Save("entropy.dat", protectedToken.Entropy);
 ```
 
 **NOTE: ProtectedString does not provide in-memory protection.  
-This is intended to use to save and load encrypted token.**
+This is intended to be used to save and load encrypted token.**
 
 
 ### Load encrypted token from storage
@@ -222,7 +241,7 @@ if( validator.Validate(webhookEventData, "xyz_x_spark_signature_value") )
 
 ### Webhook Notification manager
 
-Webhook notification manager manages webhooks and even notification.
+Webhook notification manager manages webhooks and event notification.
 
 
 * Create instance.
@@ -254,6 +273,71 @@ byte[] webhookEventData = GetWebhookEventData();
 notificationManager.ValidateAndNotify(webhookEventData, "xyz_x_spark_signature_value", encodingOfData);
 ```
 
+### Webhook listener with ngrok
+
+If you do not have global ip address.
+You may be able to use tunneling services such as [ngrok](https://ngrok.com/).
+
+* Get ngrok and start it.
+
+You can downlod ngrok command line tool from [here](https://ngrok.com/).
+
+The following command will start tunneling that will forward to port 8080 of localhost.
+```
+prompt> ngrok http 8080 --bind-tls=true
+```
+
+* Create webhook listener instance.
+
+``` csharp
+var listener = new WebhookListener();
+```
+
+* Add listening host and port.
+
+``` csharp
+var endpointUri = listener.AddListnerEndpoint("localhost", 8080, false);
+```
+
+* Create webhook for the listner.
+
+In this case, a tunneling service is uses with ngrok,  
+The endpointUri returned by listener.AddListnerEndpoint() is uri to be forwarded.  
+
+You should create webhook with ngrok uri.
+
+If ngrok assigns `https://ngrok-xyz.example.com`,  
+You need to create webhook with `String.Format("https://ngrok-xyz.example.com{0}", endpointUri.AbsolutePath)`.
+
+``` csharp
+var result = await spark.CreateWebhookAsync(
+  "my webhook for test",
+  new Uri(String.Format("https://ngrok-xyz.example.com{0}", endpointUri.AbsolutePath)),
+  EventResource.Message,
+  EventType.Created);
+```
+
+* Add webhook to listener with notification function.
+
+``` csharp
+var webhook = result.Data;
+
+notificationManager.AddNotification(
+  webhook,
+  async (eventData) =>
+  {
+    Console.WriteLine("Event is notified, id = {0}", eventData.Id);
+  }
+);
+```
+
+* Start listner.
+
+After starting listener, events will be notified to registered notification function.
+
+``` csharp
+listener.Start();
+```
 
 
 
@@ -264,4 +348,3 @@ notificationManager.ValidateAndNotify(webhookEventData, "xyz_x_spark_signature_v
 | Markdown builder | Simple markdown builder to build Cisco Spark API specific markdown. |
 | Gets error code and description | To get error code and description from Cisco Spark Json body on an error. |
 | Admin APIs | Admin and Event APIs. |
-| Simple Webhook server | A simple webhook server that can be used on test or demo.|

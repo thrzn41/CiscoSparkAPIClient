@@ -155,7 +155,15 @@ namespace Thrzn41.CiscoSpark.Version1
             this.lockForDatabase.ExecuteInWriterLock(
                 () =>
                 {
-                    this.notificationInfoDatabase.Remove(webhook.Id);
+                    NotificationInfo info = null;
+
+                    if( this.notificationInfoDatabase.TryGetValue(webhook.Id, out info) )
+                    {
+                        using (info.Validator)
+                        {
+                            this.notificationInfoDatabase.Remove(webhook.Id);
+                        }
+                    }
                 });
         }
 
@@ -226,6 +234,20 @@ namespace Thrzn41.CiscoSpark.Version1
                 {
                     using (this.lockForDatabase)
                     {
+                        this.lockForDatabase.ExecuteInWriterLock(
+                            () =>
+                            {
+                                foreach (var item in this.notificationInfoDatabase.Keys)
+                                {
+                                    using (this.notificationInfoDatabase[item].Validator)
+                                    {
+                                        // Disposed.
+                                    }
+                                }
+
+                                this.notificationInfoDatabase.Clear();
+                            });
+
                         // Disposed.
                     }
                 }

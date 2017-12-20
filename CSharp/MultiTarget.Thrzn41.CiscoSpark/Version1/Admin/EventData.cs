@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Thrzn41.CiscoSpark.Version1
+namespace Thrzn41.CiscoSpark.Version1.Admin
 {
 
     /// <summary>
