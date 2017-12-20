@@ -2,6 +2,13 @@
 
 ## 現在利用可能な機能
 
+* Cisco Sparkの基本的なAPI(List/Get/Create Message, Spaceなど)
+* ストレージに保存するTokenの暗号化。
+* List API用のPagination機能。
+* Retry-after値の処理とRetry executor。
+* Webhook secretの検証とWebhook notification manager。
+* 簡易Webhookサーバ機能。
+
 ### 基本機能
 
 | Sparkのリソース名 | 利用可能な機能                | 説明 |
@@ -41,6 +48,7 @@ Cisco Spark APIのpaginationに関しては、[ここ](https://developer.ciscosp
 ### Retry-Afterの取得
 
 `result.HasRetryAfter`と `result.RetryAfter`が、Cisco Spark API Clientで利用可能です。  
+また、 `RetryExecutor`が利用可能です。  
 詳細は後述。
 
 ### trackingIdの取得
@@ -55,6 +63,14 @@ trackingIdは、Cisco Spark APIのテクニカルサポートで利用される�
 `Webhook.CreateEventValidator()`が、Cisco Spark API Clientで利用可能です。   
 詳細は後述。
 
+### Webhook listner
+
+Webhook listner機能は、簡易的なWebhookのサーバ機能を提供します。  
+**注意: この機能は、簡単なテスト時の利用を想定しています。  
+運用環境等では、より信頼性のあるサーバをご利用ください。**
+
+`WebhookListener`が、Cisco Spark API Clientで利用可能です。   
+詳細は後述。
 
 
 
@@ -256,7 +272,73 @@ byte[] webhookEventData = GetWebhookEventData();
 // Signatureが確認され登録したfunctionにイベントデータが通知されます。
 notificationManager.ValidateAndNotify(webhookEventData, "xyz_x_spark_signature_value", encodingOfData);
 ```
+### Webhook listenerをngrokと共に利用する
 
+グローバルIPアドレスが利用できない場合、
+[ngrok](https://ngrok.com/)などのトンネリングサービスが便利な場合があります。
+
+* ngrokの入手と起動。
+
+ngrokのコマンドラインツールは、[ここから入手](https://ngrok.com/)できます。
+
+以下のコマンドで、トンネリングサービスを起動して、localhostの8080ポートにフォワードされます。
+
+```
+prompt> ngrok http 8080 --bind-tls=true
+```
+
+* Webhook listenerのインスタンスの作成。
+
+``` csharp
+var listener = new WebhookListener();
+```
+
+* 待ち受けする、ホストとポートを登録する。
+
+``` csharp
+var endpointUri = listener.AddListnerEndpoint("localhost", 8080, false);
+```
+
+* Webhook listener用のWebhookを作成します。
+
+この例では、ngronのトンネリングサービスを利用しています。  
+`listener.AddListnerEndpoint()`が返したUriは、フォワード先のUriです。
+
+Webhookには、ngrok側のUriを指定する必要があります。
+
+ngrokが、`https://ngrok-xyz.example.com`を割り当てた場合、  
+`String.Format("https://ngrok-xyz.example.com{0}", endpointUri.AbsolutePath)`をWebhookの宛先として指定します。
+
+``` csharp
+var result = await spark.CreateWebhookAsync(
+  "テスト用のWebhook",
+  new Uri(String.Format("https://ngrok-xyz.example.com{0}", endpointUri.AbsolutePath)),
+  EventResource.Message,
+  EventType.Created);
+```
+
+* Webhook listenerにWebhookと通知先funcを登録します。
+
+
+``` csharp
+var webhook = result.Data;
+
+notificationManager.AddNotification(
+  webhook,
+  async (eventData) =>
+  {
+    Console.WriteLine("Eventが通知されました, id = {0}", eventData.Id);
+  }
+);
+```
+
+* Listnerの開始。
+
+Listenerを開始すると、イベント発生時に登録したfunctionに通知されます。
+
+``` csharp
+listener.Start();
+```
 
 
 
@@ -267,4 +349,3 @@ notificationManager.ValidateAndNotify(webhookEventData, "xyz_x_spark_signature_v
 | Markdown builder | Cisco Spark API特有のMarkdownのBuilder。 |
 | Error codeとdescriptionの取得 | エラー発生時に、Cisco SparkのJson bodyに含まれるerror codeとdescriptionを取得する。 |
 | Admin APIs | AdminとEvent APIの機能。 |
-| Simple Webhook server | テストやデモで利用できる簡単なWebhookサーバ機能。 |

@@ -177,6 +177,33 @@ namespace Thrzn41.CiscoSpark.Version1
             }
         }
 
+
+
+
+        /// <summary>
+        /// Checks ownership of message.
+        /// </summary>
+        /// <param name="message"><see cref="Message"/> to be checked.</param>
+        /// <returns><see cref="OwnershipStatus"/> that indicates the ownership status.</returns>
+        public OwnershipStatus CheckOwnershipStatus(Message message)
+        {
+            var status = OwnershipStatus.Unknown;
+
+            if( !String.IsNullOrEmpty(this.Id) && !String.IsNullOrEmpty(message.PersonId) )
+            {
+                if(this.Id == message.PersonId)
+                {
+                    status = OwnershipStatus.Hold;
+                }
+                else
+                {
+                    status = OwnershipStatus.NotHold;
+                }
+            }
+
+            return status;
+        }
+
     }
 
 }
