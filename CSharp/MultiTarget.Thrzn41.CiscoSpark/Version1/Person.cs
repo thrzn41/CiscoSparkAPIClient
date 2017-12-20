@@ -128,7 +128,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <see cref="DateTime"/> when the person was active last.
         /// </summary>
         [JsonProperty(PropertyName = "LastActivity")]
-        public DateTime? lastActivity { get; internal set; }
+        public DateTime? LastActivity { get; internal set; }
 
         /// <summary>
         /// Status string of the person.

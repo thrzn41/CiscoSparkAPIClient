@@ -141,7 +141,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// HttpClient for Spark API.
         /// </summary>
-        private readonly SparkHttpClient sparkHttpClient;
+        protected readonly SparkHttpClient sparkHttpClient;
 
 
 

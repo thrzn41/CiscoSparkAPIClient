@@ -38,7 +38,7 @@ namespace Thrzn41.CiscoSpark
     /// <summary>
     /// HttpClient for Cisco Spark API.
     /// </summary>
-    internal class SparkHttpClient : IDisposable
+    public class SparkHttpClient : IDisposable
     {
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Thrzn41.CiscoSpark
         /// </summary>
         /// <param name="sparkToken">Cisco Spark Token.</param>
         /// <param name="sparkAPIUriPattern">Regex pattern to check if the Uri is Cisco Spark API uris.</param>
-        public SparkHttpClient(string sparkToken, Regex sparkAPIUriPattern)
+        internal SparkHttpClient(string sparkToken, Regex sparkAPIUriPattern)
         {
             // HttpClient for Cisco Spark API.
             // Spark Token MUST be sent to only Spark API https URL.
