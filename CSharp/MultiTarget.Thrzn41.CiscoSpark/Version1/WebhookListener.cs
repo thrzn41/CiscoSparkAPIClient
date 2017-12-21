@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrzn41.Util;
 
@@ -100,13 +101,38 @@ namespace Thrzn41.CiscoSpark.Version1
         /// </summary>
         private string pathPrefix;
 
+        /// <summary>
+        /// Thread count that is now active.
+        /// </summary>
+        private int activeThreadCount;
 
 
+        /// <summary>
+        /// Thread count that is now active.
+        /// </summary>
+        public int ActiveThreadCount
+        {
+            get
+            {
+                return this.activeThreadCount;
+            }
+        }
 
         /// <summary>
         /// Path that is listened.
         /// </summary>
         public string Path { get; private set; }
+
+        /// <summary>
+        /// true if the WebhookListener was started; otherwise, false.
+        /// </summary>
+        public bool IsListening
+        {
+            get
+            {
+                return this.httpListener.IsListening;
+            }
+        }
 
 
 
@@ -123,7 +149,8 @@ namespace Thrzn41.CiscoSpark.Version1
 
             this.httpListener.IgnoreWriteExceptions = true;
 
-            this.numberOfThreads = numberOfThreads;
+            this.numberOfThreads   = numberOfThreads;
+            this.activeThreadCount = 0;
             
             this.pathPrefix = String.Format(PATH_PREFIX_PATTERN, Guid.NewGuid().ToString("N"));
             this.Path       = String.Format(PATH_PATTERN,        this.pathPrefix);
@@ -132,6 +159,8 @@ namespace Thrzn41.CiscoSpark.Version1
 
         /// <summary>
         /// Adds listening host and port.
+        /// If you expose the server for public, you should use https.
+        /// You need to bind the host and port with TLS certificates in your environment.
         /// </summary>
         /// <param name="hostnameOrIPAddress">Hostname or IP address of local machine.</param>
         /// <param name="port">Port number of the listening port.</param>
@@ -196,63 +225,86 @@ namespace Thrzn41.CiscoSpark.Version1
         /// Starts listening.
         /// </summary>
         /// <returns><see cref="Task"/>.</returns>
-        private async Task listen()
+        private void startListening()
         {
-            while(this.httpListener.IsListening)
-            {
-                var context = await this.httpListener.GetContextAsync();
-
-                var request  = context.Request;
-                var response = context.Response;
-
-                byte[]   data            = null;
-                string   xSparkSignature = null;
-                Encoding encoding        = null;
-
-                try
+            Task.Run(
+                async () =>
                 {
-                    // Always responds 204 even if there seems to be invalid request.
-                    // Any hints are not provided, because the webhook is open for public.
-                    response.StatusCode = 204;
+                    Interlocked.Increment(ref this.activeThreadCount);
 
-                    // Only "POST" method is allowed.
-                    if(request.HttpMethod == "POST" && request.HasEntityBody)
+                    try
                     {
-                        int contentLength = Convert.ToInt32(request.ContentLength64);
-
-                        using (var memory = new MemoryStream((contentLength > 0) ? contentLength : DEFAULT_DATA_BUFFER_SIZE))
-                        using (var stream = request.InputStream)
+                        while (this.httpListener.IsListening)
                         {
-                            await stream.CopyToAsync(memory);
+                            var context = await this.httpListener.GetContextAsync();
 
-                            data = memory.ToArray();
-                        }
+                            var request  = context.Request;
+                            var response = context.Response;
 
-                        var xSparkSignatureHeaders = request.Headers.GetValues("X-Spark-Signature");
+                            byte[] data            = null;
+                            string xSparkSignature = null;
+                            Encoding encoding      = null;
 
-                        if(xSparkSignatureHeaders != null)
-                        {
-                            foreach (var item in xSparkSignatureHeaders)
+                            try
                             {
-                                xSparkSignature = item;
-                                break;
+                                // Always responds 204 even if there seems to be invalid request.
+                                // Any hints are not provided, because the webhook is open for public.
+                                response.StatusCode = 204;
+
+                                // Only "POST" method is allowed.
+                                if (request.HttpMethod == "POST" && request.HasEntityBody)
+                                {
+                                    long contentLength = request.ContentLength64;
+                                    int  bufferSize    = ((contentLength > 0) && (contentLength <= DEFAULT_DATA_BUFFER_SIZE)) ? Convert.ToInt32(contentLength) : DEFAULT_DATA_BUFFER_SIZE;
+
+                                    using (var memory = new MemoryStream(bufferSize))
+                                    using (var stream = request.InputStream)
+                                    {
+                                        await stream.CopyToAsync(memory);
+
+                                        data = memory.ToArray();
+                                    }
+
+                                    var xSparkSignatureHeaders = request.Headers?.GetValues("X-Spark-Signature");
+
+                                    if (xSparkSignatureHeaders != null)
+                                    {
+                                        foreach (var item in xSparkSignatureHeaders)
+                                        {
+                                            xSparkSignature = item;
+                                            break;
+                                        }
+                                    }
+
+                                    encoding = request.ContentEncoding;
+                                }
+                            }
+                            finally
+                            {
+                                response.Close();
+                            }
+
+
+                            if (data != null && data.Length > 0)
+                            {
+                                try
+                                {
+                                    this.notificationManager.ValidateAndNotify(data, xSparkSignature, ((encoding != null) ? encoding : DEFAULT_ENCODING));
+                                }
+                                catch (Exception)
+                                {
+                                    // Ignores exceptions from notification function.
+                                    // The listener cannot take any action against this exception, bacause this function could be implemented in any manner.
+                                }
                             }
                         }
-
-                        encoding = request.ContentEncoding;
+                    }
+                    finally
+                    {
+                        Interlocked.Decrement(ref this.activeThreadCount);
                     }
                 }
-                finally
-                {
-                    response.Close();
-                }
-
-                
-                if(data != null && data.Length > 0)
-                {
-                    this.notificationManager.ValidateAndNotify(data, xSparkSignature, ((encoding != null) ? encoding : DEFAULT_ENCODING));
-                }
-            }
+                );
         }
 
 
@@ -273,7 +325,7 @@ namespace Thrzn41.CiscoSpark.Version1
 
                     for(int i = 0; i < this.numberOfThreads; i++)
                     {
-                        Task.Run(listen);
+                        startListening();
                     }
                 });
         }

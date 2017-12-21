@@ -73,12 +73,21 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
                     break;
                 }
             }
+
+
+            checkSparkAPIClient();
+            checkUnitTestSpace();
         }
 
 
         [TestCleanup]
         public async Task Clean()
         {
+            if(this.spark == null)
+            {
+                return;
+            }
+
             var r = await spark.ListSpacesAsync(sortBy: SpaceSortBy.Created, max: 50);
 
             while (true)
@@ -102,6 +111,22 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
                 {
                     break;
                 }
+            }
+        }
+
+        private void checkSparkAPIClient()
+        {
+            if (this.spark == null)
+            {
+                Assert.Fail("You need to configure Cisco Spark Token by using UnitTestTool.EncryptCiscoSparkTokenForm.");
+            }
+        }
+
+        private void checkUnitTestSpace()
+        {
+            if (this.unitTestSpace == null)
+            {
+                Assert.Fail("You need to create manually a Space for unit test that contains name '#ciscosparkapiclientunittestspace' in Title, and add bot or integration user that is used in the test.");
             }
         }
 
