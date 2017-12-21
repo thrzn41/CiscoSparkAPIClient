@@ -12,7 +12,16 @@
     <RepositoryUrl>https://github.com/thrzn41/CiscoSparkAPIClient</RepositoryUrl>
     <PackageTags>CiscoSpark</PackageTags>
     <PackageLicenseUrl>https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/LICENSE</PackageLicenseUrl>
-    <Description>Cisco Spark API client.</Description>
+    <Description># Cisco Spark API client.
+
+## Available features for now
+* Basic Cisco Spark APIs(List/Get/Create Message, Space, etc.).
+* Cisco Spark Admin APIs(List/Get Event, etc.).
+* Encrypt Cisco Spark token in storage.
+* Pagination for list APIs.
+* Retry-after value, Retry executor.
+* Webhook secret validator, Webhook notification manager.
+* Simple Webhook Listener/Server</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

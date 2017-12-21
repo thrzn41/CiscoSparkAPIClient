@@ -353,5 +353,6 @@ listener.Start();
 
 | Feature | Description |
 | :------ | :---------- |
+| OAuth2 Helper | OAuth2 Helper to get integration token. |
 | Markdown builder | Simple markdown builder to build Cisco Spark API specific markdown. |
 | Gets error code and description | To get error code and description from Cisco Spark Json body on an error. |

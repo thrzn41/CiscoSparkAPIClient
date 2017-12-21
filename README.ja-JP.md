@@ -353,5 +353,6 @@ listener.Start();
 
 | 機能 | 概要 |
 | :--- | :--- |
+| OAuth2 Helper | Integrationのトークン取得用のOAuth2 Helper。 |
 | Markdown builder | Cisco Spark API特有のMarkdownのBuilder。 |
 | Error codeとdescriptionの取得 | エラー発生時に、Cisco SparkのJson bodyに含まれるerror codeとdescriptionを取得する。 |
