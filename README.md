@@ -1,5 +1,7 @@
 # Cisco Spark API Client
 
+![nuget](https://img.shields.io/nuget/vpre/Thrzn41.CiscoSpark.svg)
+
 ## Available features for now
 
 * Basic Cisco Spark APIs(List/Get/Create Message, Space, etc.).
