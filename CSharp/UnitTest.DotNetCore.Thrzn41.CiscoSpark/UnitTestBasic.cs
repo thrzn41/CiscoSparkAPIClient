@@ -45,8 +45,7 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
                 entropy = memory.ToArray();
             }
 
-
-            spark = SparkAPI.CreateVersion1Client(ProtectedString.FromEncryptedData(encryptedToken, entropy));
+            spark = SparkAPI.CreateVersion1Client(LocalProtectedString.FromEncryptedData(encryptedToken, entropy));
 
             var r = await spark.ListSpacesAsync(sortBy:SpaceSortBy.Created, max:50);
 

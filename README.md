@@ -34,7 +34,7 @@
 | Role            | List/Get                      | -                                               |
 
 ### Token encryption in storage
-`ProtectedString` provides token encryption/decryption to/from storage.  
+`ProtectedString` provides token encryption/decryption.  
 More details are described later.
 
 ### Pagination
@@ -90,14 +90,14 @@ More details are described later.
 ``` csharp
 char[] tokens = GetBotTokenFromUser();
 
-var protectedToken = ProtectedString.FromChars(tokens);
-ProtectedString.ClearChars(tokens);
+var protectedToken = LocalProtectedString.FromChars(tokens);
+LocalProtectedString.ClearChars(tokens);
 
 Save("token.dat",   protectedToken.EncryptedData);
 Save("entropy.dat", protectedToken.Entropy);
 ```
 
-**NOTE: ProtectedString does not provide in-memory protection.  
+**NOTE: LocalProtectedString does not provide in-memory protection.  
 This is intended to be used to save and load encrypted token.**
 
 
@@ -107,7 +107,7 @@ This is intended to be used to save and load encrypted token.**
 byte[] encryptedData = Load("token.dat");
 byte[] entropy       = Load("entropy.dat");
 
-var protectedToken = ProtectedString.FromEncryptedData(encryptedData, entropy);
+var protectedToken = LocalProtectedString.FromEncryptedData(encryptedData, entropy);
 ```
 
 ### Create a Cisco Spark API Client instance
@@ -309,7 +309,7 @@ var endpointUri = listener.AddListnerEndpoint("localhost", 8080, false);
 
 * Create webhook for the listner.
 
-In this case, a tunneling service is uses with ngrok,  
+In this case, a tunneling service is used with ngrok,  
 The endpointUri returned by listener.AddListnerEndpoint() is uri to be forwarded.  
 
 You should create webhook with ngrok uri.

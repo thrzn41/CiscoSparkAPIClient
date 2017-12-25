@@ -34,7 +34,7 @@
 
 ### ストレージのTokenの暗号化と復号
 
-`ProtectedString`が、ストレージへのToken保存時の暗号化と、読み込み時の復号の機能を提供します。  
+`ProtectedString`が、Token保存時の暗号化と、読み込み時の復号の機能を提供します。  
 詳細は後述。
 
 ### Pagination機能
@@ -86,16 +86,16 @@ Webhook listner機能は、簡易的なWebhookのサーバ機能を提供しま�
 ### 暗号化したTokenをストレージに保存する
 
 ``` csharp
-char[] tokens = GetTokensFromUser();
+char[] tokens = GetBotTokensFromUser();
 
-var protectedToken = ProtectedString.FromChars(tokens);
-ProtectedString.ClearChars(tokens);
+var protectedToken = LocalProtectedString.FromChars(tokens);
+LocalProtectedString.ClearChars(tokens);
 
 Save("token.dat",   protectedToken.EncryptedData);
 Save("entropy.dat", protectedToken.Entropy);
 ```
 
-**注意: ProtectedStringはメモリ内での保護は提供していません。  
+**注意: LocalProtectedStringはメモリ内での保護は提供していません。  
 Tokenを保存する際の、暗号化と復号での利用を想定しています。**
 
 
@@ -105,7 +105,7 @@ Tokenを保存する際の、暗号化と復号での利用を想定していま
 byte[] encryptedData = Load("token.dat");
 byte[] entropy       = Load("entropy.dat");
 
-var protectedToken = ProtectedString.FromEncryptedData(encryptedData, entropy);
+var protectedToken = LocalProtectedString.FromEncryptedData(encryptedData, entropy);
 ```
 
 ### Cisco Spark API Clientのインスタンスを作成する

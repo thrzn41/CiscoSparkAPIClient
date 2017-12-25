@@ -35,7 +35,7 @@ namespace UnitTestTool.EncryptCiscoSparkTokenForm
         {
             DirectoryInfo exportDir = this.dirInfo.CreateSubdirectory(".thrzn41").CreateSubdirectory("unittest").CreateSubdirectory("spark");
 
-            ProtectedString ps = ProtectedString.FromString(this.maskedTextBoxToken.Text);
+            LocalProtectedString ps = LocalProtectedString.FromString(this.maskedTextBoxToken.Text);
 
             using (var fs = new FileStream(String.Format("{0}{1}sparktoken.dat", exportDir.FullName, Path.DirectorySeparatorChar), FileMode.Create, FileAccess.Write, FileShare.Read))
             {
