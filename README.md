@@ -1,6 +1,6 @@
 # Cisco Spark API Client
 
-![nuget](https://img.shields.io/nuget/vpre/Thrzn41.CiscoSpark.svg)
+[![nuget](https://img.shields.io/nuget/vpre/Thrzn41.CiscoSpark.svg)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
 
 ## Available features for now
 
