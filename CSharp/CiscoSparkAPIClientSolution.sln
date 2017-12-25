@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest.DotNetCore.Thrzn41.Util", "UnitTest.DotNetCore.Thrzn41.Util\UnitTest.DotNetCore.Thrzn41.Util.csproj", "{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestTool.EncryptCiscoSparkTokenForm", "UnitTestTool.EncryptCiscoSparkTokenForm\UnitTestTool.EncryptCiscoSparkTokenForm.csproj", "{EBF8922C-0489-4467-9C80-624A3FAAFD94}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest.DotNetCore.Thrzn41.CiscoSpark", "UnitTest.DotNetCore.Thrzn41.CiscoSpark\UnitTest.DotNetCore.Thrzn41.CiscoSpark.csproj", "{471FBA6B-C73E-4C82-8B28-DD263307646F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTarget.Thrzn41.Util", "MultiTarget.Thrzn41.Util\MultiTarget.Thrzn41.Util.csproj", "{086B0337-2C29-4A04-8F97-FFAF9A72CF89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiTarget.Thrzn41.CiscoSpark", "MultiTarget.Thrzn41.CiscoSpark\MultiTarget.Thrzn41.CiscoSpark.csproj", "{3A597949-44FB-498E-8453-954E3BB78DE6}"
 EndProject
@@ -19,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0B833BB-BFC8-4FCF-8DA2-F95DF08A7572}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBF8922C-0489-4467-9C80-624A3FAAFD94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBF8922C-0489-4467-9C80-624A3FAAFD94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBF8922C-0489-4467-9C80-624A3FAAFD94}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -31,10 +23,6 @@ Global
 		{471FBA6B-C73E-4C82-8B28-DD263307646F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{471FBA6B-C73E-4C82-8B28-DD263307646F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{471FBA6B-C73E-4C82-8B28-DD263307646F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{086B0337-2C29-4A04-8F97-FFAF9A72CF89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{086B0337-2C29-4A04-8F97-FFAF9A72CF89}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{086B0337-2C29-4A04-8F97-FFAF9A72CF89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{086B0337-2C29-4A04-8F97-FFAF9A72CF89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A597949-44FB-498E-8453-954E3BB78DE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A597949-44FB-498E-8453-954E3BB78DE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A597949-44FB-498E-8453-954E3BB78DE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
