@@ -45,6 +45,7 @@ namespace Thrzn41.CiscoSpark
         private static readonly JsonSerializerSettings SERIALIZER_SETTINGS = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
+            Formatting        = Formatting.None,
         };
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Thrzn41.CiscoSpark
 
 
         /// <summary>
-        /// Indicats the Spark Object has values or not.
+        /// Indicates the Spark Object has values or not.
         /// </summary>
         public bool HasValues { get; internal set; } = true;
 
@@ -68,6 +69,16 @@ namespace Thrzn41.CiscoSpark
         [JsonExtensionData]
         internal protected IDictionary<string, JToken> JsonExtensionData { get; private set; }
 
+        /// <summary>
+        /// Indicates this Spark Object has extension data.
+        /// </summary>
+        public bool HasExtensionData
+        {
+            get
+            {
+                return (this.JsonExtensionData != null && this.JsonExtensionData.Count > 0);
+            }
+        }
 
         /// <summary>
         /// Converts object to Json style string.
@@ -76,6 +87,79 @@ namespace Thrzn41.CiscoSpark
         public virtual string ToJsonString()
         {
             return JsonConvert.SerializeObject(this, SERIALIZER_SETTINGS);
+        }
+
+
+        /// <summary>
+        /// Gets extension data key list.
+        /// </summary>
+        /// <returns>Extension data key list or null.</returns>
+        public string[] GetExtensionDataKeys()
+        {
+            string[] result = null;
+
+            if(this.HasExtensionData)
+            {
+                result = new string[this.JsonExtensionData.Keys.Count];
+
+                this.JsonExtensionData.Keys.CopyTo(result, 0);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets Json extension data that are not deserialized explicitly.
+        /// </summary>
+        /// <typeparam name="T">Type of result.</typeparam>
+        /// <param name="key">The key of Json object.</param>
+        /// <returns>Json extension data.</returns>
+        public T GetExtensionData<T>(string key)
+        {
+            T result = default(T);
+
+            if(this.HasExtensionData && this.JsonExtensionData.ContainsKey(key))
+            {
+                result = this.JsonExtensionData[key].ToObject<T>();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets Json extension data that are not deserialized explicitly.
+        /// </summary>
+        /// <param name="key">The key of Json object.</param>
+        /// <returns>Json extension data.</returns>
+        public string GetExtensionJsonString(string key)
+        {
+            string result = null;
+
+            if (this.HasExtensionData && this.JsonExtensionData.ContainsKey(key))
+            {
+                result = this.JsonExtensionData[key].ToString(Formatting.None);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets Json extension data dictionary that are not deserialized explicitly.
+        /// </summary>
+        /// <returns>Json extension data dictionary.</returns>
+        public Dictionary<string, string> GetExtensionJsonStrings()
+        {
+            var result = new Dictionary<string, string>();
+
+            if (this.HasExtensionData)
+            {
+                foreach (var item in this.JsonExtensionData.Keys)
+                {
+                    result.Add(item, this.JsonExtensionData[item].ToString(Formatting.None));
+                }
+            }
+
+            return result;
         }
 
 

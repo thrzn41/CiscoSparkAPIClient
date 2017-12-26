@@ -14,16 +14,16 @@
 
 ### Basic features
 
-| Spark Resource | Available Feature | Description |
-| :-------------- | :---------------------------- | :---------------------------------------------- |
-| Person/People   | List/Get                      | Get Me is also available                        |
-| Space/Room      | List/Create/Get/Update/Delete | -                                               |
-| SpaceMembership | List/Create/Get/Update/Delete | -                                               |
-| Message         | List/Create/Get/Delete        | Attach file from local stream is also available |
-| Team            | List/Create/Get/Update/Delete | -                                               |
-| TeamMembership  | List/Create/Get/Update/Delete | -                                               |
-| Webhook         | List/Create/Get/Update/Delete | -                                               |
-| File            | GetInfo/GetData/Upload        | -                                               |
+| Spark Resource              | Available Feature             | Description                                     |
+| :-------------------------- | :---------------------------- | :---------------------------------------------- |
+| Person/People               | List/Get                      | Get Me is also available                        |
+| Space(Room)                 | List/Create/Get/Update/Delete | -                                               |
+| SpaceMembership(Membership) | List/Create/Get/Update/Delete | -                                               |
+| Message                     | List/Create/Get/Delete        | Attach file from local stream is also available |
+| Team                        | List/Create/Get/Update/Delete | -                                               |
+| TeamMembership              | List/Create/Get/Update/Delete | -                                               |
+| Webhook                     | List/Create/Get/Update/Delete | -                                               |
+| File                        | GetInfo/GetData/Upload        | -                                               |
 
 ### Admin features
 
@@ -73,9 +73,9 @@ More details are described later.
 Also, `WebhookNotificationManager` is available.
 More details are described later.
 
-### Webhook listner
+### Webhook listener
 
-Webhook listner feature provides simple Webhook server feature.  
+Webhook listener feature provides simple Webhook server feature.  
 **NOTE: This feature is intended to be used for quick testing purpose.  
 In production environment, more reliable server solution should be used.**
 
@@ -90,7 +90,7 @@ More details are described later.
 ### Save encrypted token to storage
 
 ``` csharp
-char[] tokens = GetBotTokenFromUser();
+char[] tokens = GetBotTokenFromBotOwner();
 
 var protectedToken = LocalProtectedString.FromChars(tokens);
 LocalProtectedString.ClearChars(tokens);
@@ -306,13 +306,13 @@ var listener = new WebhookListener();
 * Add listening host and port.
 
 ``` csharp
-var endpointUri = listener.AddListnerEndpoint("localhost", 8080, false);
+var endpointUri = listener.AddListenerEndpoint("localhost", 8080, false);
 ```
 
-* Create webhook for the listner.
+* Create webhook for the listener.
 
 In this case, a tunneling service is used with ngrok,  
-The endpointUri returned by listener.AddListnerEndpoint() is uri to be forwarded.  
+The endpointUri returned by listener.AddListenerEndpoint() is uri to be forwarded.  
 
 You should create webhook with ngrok uri.
 
@@ -341,7 +341,7 @@ listener.AddNotification(
 );
 ```
 
-* Start listner.
+* Start listener.
 
 After starting listener, events will be notified to registered notification function.
 
@@ -357,4 +357,3 @@ listener.Start();
 | :------ | :---------- |
 | OAuth2 Helper | OAuth2 Helper to get integration token. |
 | Markdown builder | Simple markdown builder to build Cisco Spark API specific markdown. |
-| Gets error code and description | To get error code and description from Cisco Spark Json body on an error. |

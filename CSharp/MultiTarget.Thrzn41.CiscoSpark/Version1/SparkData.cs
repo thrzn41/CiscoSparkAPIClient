@@ -48,6 +48,63 @@ namespace Thrzn41.CiscoSpark.Version1
             }
         }
 
+
+        /// <summary>
+        /// Gets Partial Errors.
+        /// </summary>
+        /// <returns>Partial Errors.</returns>
+        public Dictionary<string, PartialErrorData> GetPartialErrors()
+        {
+            var result = new Dictionary<string, PartialErrorData>();
+
+            if(this.HasErrors)
+            {
+                var jtoken = this.JsonExtensionData["errors"];
+
+                if (jtoken.Type == Newtonsoft.Json.Linq.JTokenType.Object)
+                {
+                    var data = this.JsonExtensionData["errors"].ToObject<SparkObject>();
+
+                    if (data.HasExtensionData)
+                    {
+                        foreach (var key in data.JsonExtensionData.Keys)
+                        {
+                            var value = data.JsonExtensionData[key].ToObject<PartialErrorData>();
+
+                            if (value.CodeName != null)
+                            {
+                                result.Add(key, value);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Gets Errors.
+        /// </summary>
+        /// <returns>Errors or null.</returns>
+        public ErrorData[] GetErrors()
+        {
+            ErrorData[] result = null;
+
+            if (this.HasErrors)
+            {
+                var jtoken = this.JsonExtensionData["errors"];
+
+                if (jtoken.Type == Newtonsoft.Json.Linq.JTokenType.Array)
+                {
+                    result = this.JsonExtensionData["errors"].ToObject<ErrorData[]>();
+                }
+            }
+
+            return result;
+        }
+
     }
 
 }

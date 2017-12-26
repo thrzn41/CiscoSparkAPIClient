@@ -16,4 +16,14 @@
     <ProjectReference Include="..\MultiTarget.Thrzn41.CiscoSpark\MultiTarget.Thrzn41.CiscoSpark.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestData\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\thrzn41.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

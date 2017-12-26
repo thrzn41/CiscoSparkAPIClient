@@ -204,7 +204,14 @@ namespace Thrzn41.CiscoSpark
 
                                 if (info != null)
                                 {
-                                    info.FileName      = contentHeaders.ContentDisposition?.FileName;
+                                    string fileName = contentHeaders.ContentDisposition?.FileName;
+
+                                    if(fileName != null && fileName.StartsWith("\"") && fileName.EndsWith("\""))
+                                    {
+                                        fileName = fileName.Substring(1, (fileName.Length - 2));
+                                    }
+
+                                    info.FileName      = fileName;
                                     info.MediaTypeName = contentHeaders.ContentType?.MediaType;
                                     info.Size          = contentHeaders.ContentLength;
                                 }
@@ -457,6 +464,10 @@ namespace Thrzn41.CiscoSpark
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
+        /// <summary>
+        /// Dispose.
+        /// </summary>
+        /// <param name="disposing">disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -484,6 +495,9 @@ namespace Thrzn41.CiscoSpark
         // }
 
         // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Dispose.
+        /// </summary>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

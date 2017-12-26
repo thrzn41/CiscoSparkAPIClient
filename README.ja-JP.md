@@ -14,16 +14,16 @@
 
 ### 基本機能
 
-| Sparkのリソース名 | 利用可能な機能                | 説明 |
-| :-------------- | :---------------------------- | :---------------------------------- |
-| Person/People   | List/Get                      | Get Meも利用可能                     |
-| Space/Room      | List/Create/Get/Update/Delete | -                                   |
-| SpaceMembership | List/Create/Get/Update/Delete | -                                   |
-| Message         | List/Create/Get/Delete        | ローカルのstreamからファイル添付も可能 |
-| Team            | List/Create/Get/Update/Delete | -                                   |
-| TeamMembership  | List/Create/Get/Update/Delete | -                                   |
-| Webhook         | List/Create/Get/Update/Delete | -                                   |
-| File            | GetInfo/GetData/Upload        | -                                   |
+| Sparkのリソース名                  | 利用可能な機能                 | 説明                                 |
+| :-------------------------------- | :---------------------------- | :---------------------------------- |
+| Person/People                     | List/Get                      | Get Meも利用可能                     |
+| Space(Room)                       | List/Create/Get/Update/Delete | -                                   |
+| SpaceMembership(Membership)       | List/Create/Get/Update/Delete | -                                   |
+| Message                           | List/Create/Get/Delete        | ローカルのstreamからファイル添付も可能 |
+| Team                              | List/Create/Get/Update/Delete | -                                   |
+| TeamMembership                    | List/Create/Get/Update/Delete | -                                   |
+| Webhook                           | List/Create/Get/Update/Delete | -                                   |
+| File                              | GetInfo/GetData/Upload        | -                                   |
 
 ### Admin機能
 | Sparkのリソース名 | 利用可能な機能                | 説明 |
@@ -72,9 +72,9 @@ trackingIdは、Cisco Spark APIのテクニカルサポートで利用される�
 `Webhook.CreateEventValidator()`が、Cisco Spark API Clientで利用可能です。   
 詳細は後述。
 
-### Webhook listner
+### Webhook listener
 
-Webhook listner機能は、簡易的なWebhookのサーバ機能を提供します。  
+Webhook listener機能は、簡易的なWebhookのサーバ機能を提供します。  
 **注意: この機能は、簡単なテスト時の利用を想定しています。  
 運用環境等では、より信頼性のあるサーバをご利用ください。**
 
@@ -305,13 +305,13 @@ var listener = new WebhookListener();
 * 待ち受けする、ホストとポートを登録する。
 
 ``` csharp
-var endpointUri = listener.AddListnerEndpoint("localhost", 8080, false);
+var endpointUri = listener.AddListenerEndpoint("localhost", 8080, false);
 ```
 
 * Webhook listener用のWebhookを作成します。
 
 この例では、ngronのトンネリングサービスを利用しています。  
-`listener.AddListnerEndpoint()`が返したUriは、フォワード先のUriです。
+`listener.AddListenerEndpoint()`が返したUriは、フォワード先のUriです。
 
 Webhookには、ngrok側のUriを指定する必要があります。
 
@@ -341,7 +341,7 @@ listener.AddNotification(
 );
 ```
 
-* Listnerの開始。
+* Listenerの開始。
 
 Listenerを開始すると、イベント発生時に登録したfunctionに通知されます。
 
@@ -357,4 +357,3 @@ listener.Start();
 | :--- | :--- |
 | OAuth2 Helper | Integrationのトークン取得用のOAuth2 Helper。 |
 | Markdown builder | Cisco Spark API特有のMarkdownのBuilder。 |
-| Error codeとdescriptionの取得 | エラー発生時に、Cisco SparkのJson bodyに含まれるerror codeとdescriptionを取得する。 |
