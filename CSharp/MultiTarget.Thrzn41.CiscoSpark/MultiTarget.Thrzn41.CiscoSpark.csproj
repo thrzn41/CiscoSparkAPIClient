@@ -7,7 +7,7 @@
     <Copyright>Copyright (c) 2017 thrzn41</Copyright>
     <Company>thrzn41</Company>
     <Authors>thrzn41</Authors>
-    <Version>1.0.2-alpha</Version>
+    <Version>1.0.3-beta</Version>
     <PackageProjectUrl>https://github.com/thrzn41/CiscoSparkAPIClient</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thrzn41/CiscoSparkAPIClient</RepositoryUrl>
     <PackageTags>CiscoSpark</PackageTags>
@@ -31,7 +31,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Thrzn41.Util" Version="1.0.2-alpha" />
+    <PackageReference Include="Thrzn41.Util" Version="1.0.3-beta" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

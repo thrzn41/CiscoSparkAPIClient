@@ -96,7 +96,7 @@ namespace Thrzn41.CiscoSpark.Version1
             /// <summary>
             /// Create an event filter for space type.
             /// </summary>
-            /// <param name="spaceId">Space type to be filtered.</param>
+            /// <param name="spaceType">Space type to be filtered.</param>
             public SpaceTypeFilter(SpaceType spaceType)
                 : base("roomType", spaceType.Name)
             {

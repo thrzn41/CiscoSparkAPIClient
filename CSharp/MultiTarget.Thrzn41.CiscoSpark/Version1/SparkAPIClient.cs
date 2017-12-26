@@ -639,7 +639,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Gets space membership detail.
         /// </summary>
-        /// <param name="membershipId"><see cref="SpaceMembership"/> that the detail info is gotten.</param>
+        /// <param name="membership"><see cref="SpaceMembership"/> that the detail info is gotten.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
         /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
         public async Task< SparkResult<SpaceMembership> > GetSpaceMembershipAsync(SpaceMembership membership, CancellationToken? cancellationToken = null)
@@ -1041,7 +1041,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Deletes message from Cisco Spark.
         /// </summary>
-        /// <param name="message">Message id to be deleted.</param>
+        /// <param name="messageId">Message id to be deleted.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
         /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
         public async Task< SparkResult<NoContent> > DeleteMessageAsync(string messageId, CancellationToken? cancellationToken = null)
@@ -1316,7 +1316,6 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <param name="team">The <see cref="Team"/>.</param>
         /// <param name="person">The <see cref="Person"/>.</param>
         /// <param name="isModerator">Set to true to make the person a room moderator.</param>
-        /// <param name="personIdType"><see cref="PersonIdType"/> for personIdOrEmail parameter.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
         /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
         public async Task< SparkResult<TeamMembership> > CreateTeamMembershipAsync(Team team, Person person, bool? isModerator = null, CancellationToken? cancellationToken = null)
@@ -1673,6 +1672,10 @@ namespace Thrzn41.CiscoSpark.Version1
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
+        /// <summary>
+        /// Dispose.
+        /// </summary>
+        /// <param name="disposing">disposing.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -1699,6 +1702,9 @@ namespace Thrzn41.CiscoSpark.Version1
         // }
 
         // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// Dispose.
+        /// </summary>
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.

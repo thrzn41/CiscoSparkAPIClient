@@ -74,6 +74,17 @@
             <param name="fileName">File name of the file.</param>
             <param name="mediaType"><see cref="T:Thrzn41.CiscoSpark.SparkMediaType"/> of the file.</param>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkFileData.Dispose(System.Boolean)">
+            <summary>
+            Dispose.
+            </summary>
+            <param name="disposing">disposing.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkFileData.Dispose">
+            <summary>
+            Dispose.
+            </summary>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.SparkFileInfo">
             <summary>
             File info to/from Cisco Spark.
@@ -242,6 +253,17 @@
             <param name="fileData">File data list.</param>
             <returns><see cref="T:System.Net.Http.HttpRequestMessage"/> that is created.</returns>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkHttpClient.Dispose(System.Boolean)">
+            <summary>
+            Dispose.
+            </summary>
+            <param name="disposing">disposing.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkHttpClient.Dispose">
+            <summary>
+            Dispose.
+            </summary>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.SparkListResult`1">
             <summary>
             The result of Cisco API list request.
@@ -402,7 +424,7 @@
         </member>
         <member name="P:Thrzn41.CiscoSpark.SparkObject.HasValues">
             <summary>
-            Indicats the Spark Object has values or not.
+            Indicates the Spark Object has values or not.
             </summary>
         </member>
         <member name="P:Thrzn41.CiscoSpark.SparkObject.JsonExtensionData">
@@ -410,11 +432,43 @@
             Extension data which contains non-deserialized json.
             </summary>
         </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkObject.HasExtensionData">
+            <summary>
+            Indicates this Spark Object has extension data.
+            </summary>
+        </member>
         <member name="M:Thrzn41.CiscoSpark.SparkObject.ToJsonString">
             <summary>
             Converts object to Json style string.
             </summary>
             <returns>Json style string that represents this object.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionDataKeys">
+            <summary>
+            Gets extension data key list.
+            </summary>
+            <returns>Extension data key list or null.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionData``1(System.String)">
+            <summary>
+            Gets Json extension data that are not deserialized explicitly.
+            </summary>
+            <typeparam name="T">Type of result.</typeparam>
+            <param name="key">The key of Json object.</param>
+            <returns>Json extension data.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionJsonString(System.String)">
+            <summary>
+            Gets Json extension data that are not deserialized explicitly.
+            </summary>
+            <param name="key">The key of Json object.</param>
+            <returns>Json extension data.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionJsonStrings">
+            <summary>
+            Gets Json extension data dictionary that are not deserialized explicitly.
+            </summary>
+            <returns>Json extension data dictionary.</returns>
         </member>
         <member name="M:Thrzn41.CiscoSpark.SparkObject.FromJsonString``1(System.String)">
             <summary>
@@ -909,6 +963,21 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
         </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.ErrorData">
+            <summary>
+            Cisco Spark Error data object.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.ErrorData.ErrorCode">
+            <summary>
+            Error code.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.ErrorData.Description">
+            <summary>
+            Error description.
+            </summary>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.EventFilter">
             <summary>
             Event filter.
@@ -957,7 +1026,7 @@
             <summary>
             Create an event filter for space type.
             </summary>
-            <param name="spaceId">Space type to be filtered.</param>
+            <param name="spaceType">Space type to be filtered.</param>
         </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.EventFilter.PersonFilter">
             <summary>
@@ -1319,6 +1388,17 @@
             <param name="xSparkSignature">Signature that is notified on event.</param>
             <returns>true if the event is valid, false if the event is invalid.</returns>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.EventValidator.Dispose(System.Boolean)">
+            <summary>
+            Dispose.
+            </summary>
+            <param name="disposing">disposing.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.EventValidator.Dispose">
+            <summary>
+            Dispose.
+            </summary>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.Message">
             <summary>
             Cisco Spark Message object.
@@ -1502,6 +1582,100 @@
         <member name="F:Thrzn41.CiscoSpark.Version1.OwnershipStatus.NotHold">
             <summary>
             Not hold ownership.
+            </summary>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.PartialErrorCode">
+            <summary>
+            Error code for Partial Error.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.PartialErrorCode.KMSFailure">
+            <summary>
+            Failure about Key Management Server.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.PartialErrorCode.PARTIAL_ERROR_CODES">
+            <summary>
+            Dictionary for Partial Error Code.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.#cctor">
+            <summary>
+            Static constuctor.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.PartialErrorCode.Name">
+            <summary>
+            Name of the Partial Error Code.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="name">Name of the Partial Error Code.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.Parse(System.String)">
+            <summary>
+            Parse Partial Error Code.
+            </summary>
+            <param name="name">Name of the Partial Error Code.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.Version1.PartialErrorCode"/> for the name.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.Equals(Thrzn41.CiscoSpark.Version1.PartialErrorCode)">
+            <summary>
+            Determines whether this instance and another specified <see cref="T:Thrzn41.CiscoSpark.Version1.PartialErrorCode"/> object have the same value.
+            </summary>
+            <param name="value">The Partial Error Code to compare to this instance.</param>
+            <returns>true if the value of the parameter is the same as the value of this instance; otherwise, false. If value is null, the method returns false.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.Equals(System.Object)">
+            <summary>
+            Determines whether this instance and a specified object, which must also be a <see cref="T:Thrzn41.CiscoSpark.Version1.PartialErrorCode"/> object, have the same value.
+            </summary>
+            <param name="obj">The Partial Error Code to compare to this instance.</param>
+            <returns>true if obj is a <see cref="T:Thrzn41.CiscoSpark.Version1.PartialErrorCode"/> and its value is the same as this instance; otherwise, false. If obj is null, the method returns false.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.GetHashCode">
+            <summary>
+            Returns the hash code for this Partial Error Code.
+            </summary>
+            <returns>A 32-bit signed integer hash code.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.op_Equality(Thrzn41.CiscoSpark.Version1.PartialErrorCode,Thrzn41.CiscoSpark.Version1.PartialErrorCode)">
+            <summary>
+            Determines whether two specified Partial Error Code have the same value.
+            </summary>
+            <param name="lhs">Left hand side value.</param>
+            <param name="rhs">Right hand side value.</param>
+            <returns>true if the two values have the same value.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.PartialErrorCode.op_Inequality(Thrzn41.CiscoSpark.Version1.PartialErrorCode,Thrzn41.CiscoSpark.Version1.PartialErrorCode)">
+            <summary>
+            Determines whether two specified Partial Error Code have the different value.
+            </summary>
+            <param name="lhs">Left hand side value.</param>
+            <param name="rhs">Right hand side value.</param>
+            <returns>true if the two values have the different value.</returns>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.PartialErrorData">
+            <summary>
+            Cisco Spark Partial Error data.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.PartialErrorData.CodeName">
+            <summary>
+            Code of the error.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.PartialErrorData.Code">
+            <summary>
+            Code of the error.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.PartialErrorData.Reason">
+            <summary>
+            Reason of the error.
             </summary>
         </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.Person">
@@ -2496,7 +2670,7 @@
             <summary>
             Gets space membership detail.
             </summary>
-            <param name="membershipId"><see cref="T:Thrzn41.CiscoSpark.Version1.SpaceMembership"/> that the detail info is gotten.</param>
+            <param name="membership"><see cref="T:Thrzn41.CiscoSpark.Version1.SpaceMembership"/> that the detail info is gotten.</param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
         </member>
@@ -2670,7 +2844,7 @@
             <summary>
             Deletes message from Cisco Spark.
             </summary>
-            <param name="message">Message id to be deleted.</param>
+            <param name="messageId">Message id to be deleted.</param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
         </member>
@@ -2784,7 +2958,6 @@
             <param name="team">The <see cref="T:Thrzn41.CiscoSpark.Version1.Team"/>.</param>
             <param name="person">The <see cref="T:Thrzn41.CiscoSpark.Version1.Person"/>.</param>
             <param name="isModerator">Set to true to make the person a room moderator.</param>
-            <param name="personIdType"><see cref="T:Thrzn41.CiscoSpark.Version1.PersonIdType"/> for personIdOrEmail parameter.</param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
         </member>
@@ -2928,6 +3101,17 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.Dispose(System.Boolean)">
+            <summary>
+            Dispose.
+            </summary>
+            <param name="disposing">disposing.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.Dispose">
+            <summary>
+            Dispose.
+            </summary>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.SparkData">
             <summary>
             Base Object for all Cisco Spark v1 API objects.
@@ -2938,6 +3122,18 @@
             <summary>
             Indicates whether the object has error or not.
             </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkData.GetPartialErrors">
+            <summary>
+            Gets Partial Errors.
+            </summary>
+            <returns>Partial Errors.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkData.GetErrors">
+            <summary>
+            Gets Errors.
+            </summary>
+            <returns>Errors or null.</returns>
         </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.SparkListData`1">
             <summary>
@@ -3353,6 +3549,17 @@
             Stop listening.
             </summary>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.WebhookListener.Dispose(System.Boolean)">
+            <summary>
+            Dispose.
+            </summary>
+            <param name="disposing">disposing.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.WebhookListener.Dispose">
+            <summary>
+            Dispose.
+            </summary>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.WebhookNotificationManager">
             <summary>
             Webhook notification manager.
@@ -3435,6 +3642,17 @@
             <param name="xSparkSignature">Signature that is notified on event.</param>
             <param name="encoding">Encoding of data.</param>
             <returns>true if the data is valid, false if the data is invalid.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.WebhookNotificationManager.Dispose(System.Boolean)">
+            <summary>
+            Dispose.
+            </summary>
+            <param name="disposing">disposing.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.WebhookNotificationManager.Dispose">
+            <summary>
+            Dispose.
+            </summary>
         </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.WebhookStatus">
             <summary>
