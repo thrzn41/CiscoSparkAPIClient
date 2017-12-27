@@ -1,6 +1,6 @@
-# Cisco Spark API Client
+# Cisco Spark API Client(Unofficial)
 
-[![nuget](https://img.shields.io/nuget/vpre/Thrzn41.CiscoSpark.svg)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
+[![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg?style=plastic)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
 
 ## Available features for now
 
@@ -57,7 +57,7 @@ But, currently the client returns Http Status code.
 ### Gets retry-after
 
 `result.HasRetryAfter` and `result.RetryAfter` are available in the Cisco Spark API Client.  
-Also, `RetryExecutor` is available.
+Also, `RetryExecutor` is available.  
 More details are described later.
 
 ### Gets trackingId
@@ -70,7 +70,7 @@ More details are described later.
 ### Validates webhook secret
 
 `Webhook.CreateEventValidator()` is available in the Cisco Spark API Client.  
-Also, `WebhookNotificationManager` is available.
+Also, `WebhookNotificationManager` is available.  
 More details are described later.
 
 ### Webhook listener

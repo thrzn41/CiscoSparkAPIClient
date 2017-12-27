@@ -615,6 +615,20 @@ namespace Thrzn41.CiscoSpark.Version1
             return (await CreateSpaceMembershipAsync(space.Id, person.Id, isModerator, PersonIdType.Id, cancellationToken));
         }
 
+        /// <summary>
+        /// Create a space membership.
+        /// </summary>
+        /// <param name="space"><see cref="Space"/>.</param>
+        /// <param name="personIdOrEmail">The person ID or Email.</param>
+        /// <param name="isModerator">Set to true to make the person a room moderator.</param>
+        /// <param name="personIdType"><see cref="PersonIdType"/> for personIdOrEmail parameter.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
+        /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
+        public async Task< SparkResult<SpaceMembership> > CreateSpaceMembershipAsync(Space space, string personIdOrEmail, bool? isModerator = null, PersonIdType personIdType = PersonIdType.Detect, CancellationToken? cancellationToken = null)
+        {
+            return (await CreateSpaceMembershipAsync(space.Id, personIdOrEmail, isModerator, personIdType, cancellationToken));
+        }
+
 
         /// <summary>
         /// Gets space membership detail.
@@ -1321,6 +1335,20 @@ namespace Thrzn41.CiscoSpark.Version1
         public async Task< SparkResult<TeamMembership> > CreateTeamMembershipAsync(Team team, Person person, bool? isModerator = null, CancellationToken? cancellationToken = null)
         {
             return (await CreateTeamMembershipAsync(team.Id, person.Id, isModerator, PersonIdType.Id, cancellationToken));
+        }
+
+        /// <summary>
+        /// Create a team membership.
+        /// </summary>
+        /// <param name="team"><see cref="Team"/>.</param>
+        /// <param name="personIdOrEmail">The person ID or Email.</param>
+        /// <param name="isModerator">Set to true to make the person a room moderator.</param>
+        /// <param name="personIdType"><see cref="PersonIdType"/> for personIdOrEmail parameter.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
+        /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
+        public async Task< SparkResult<TeamMembership> > CreateTeamMembershipAsync(Team team, string personIdOrEmail, bool? isModerator = null, PersonIdType personIdType = PersonIdType.Detect, CancellationToken? cancellationToken = null)
+        {
+            return (await CreateTeamMembershipAsync(team.Id, personIdOrEmail, isModerator, personIdType, cancellationToken));
         }
 
 

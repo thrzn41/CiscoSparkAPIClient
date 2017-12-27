@@ -100,6 +100,11 @@ namespace Thrzn41.CiscoSpark.Version1
                 {
                     result = this.JsonExtensionData["errors"].ToObject<ErrorData[]>();
                 }
+
+                if(result == null)
+                {
+                    result = new ErrorData[0];
+                }
             }
 
             return result;
