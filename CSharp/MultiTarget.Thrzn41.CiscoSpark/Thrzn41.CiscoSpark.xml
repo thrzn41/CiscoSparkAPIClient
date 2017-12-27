@@ -51,6 +51,45 @@
             <param name="tokenString">spark token of string.</param>
             <returns>Spark Admin API client for v1 API.</returns>
         </member>
+        <member name="T:Thrzn41.CiscoSpark.SparkExtensionObject">
+            <summary>
+            Spark Extension object.
+            This object will be used to get data that is not available in API Client currently.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkExtensionObject.Keys">
+            <summary>
+            Extension data key list.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkExtensionObject.ContainsKey(System.String)">
+            <summary>
+            Determines whether this Json Extension data contains a Json object with the specified key.
+            </summary>
+            <param name="key">The key to be determined.</param>
+            <returns>true if the Json Extension data contains a Json object with the key; otherwise, false.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkExtensionObject.GetExtensionData``1(System.String)">
+            <summary>
+            Gets Json extension data.
+            </summary>
+            <typeparam name="T">Type of result.</typeparam>
+            <param name="key">The key of Json object.</param>
+            <returns>Json extension data.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkExtensionObject.GetExtensionJsonString(System.String)">
+            <summary>
+            Gets Json extension data.
+            </summary>
+            <param name="key">The key of Json object.</param>
+            <returns>Json extension data.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkExtensionObject.GetExtensionJsonStrings">
+            <summary>
+            Gets Json extension data dictionary.
+            </summary>
+            <returns>Json extension data dictionary.</returns>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.SparkFileData">
             <summary>
             File data to/from Cisco Spark.
@@ -443,32 +482,12 @@
             </summary>
             <returns>Json style string that represents this object.</returns>
         </member>
-        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionDataKeys">
+        <member name="M:Thrzn41.CiscoSpark.SparkObject.ToExtensionObject">
             <summary>
-            Gets extension data key list.
+            Converts object to <see cref="T:Thrzn41.CiscoSpark.SparkExtensionObject"/>.
+            <see cref="T:Thrzn41.CiscoSpark.SparkExtensionObject"/> will be used to get data that is not available in API Client currently.
             </summary>
-            <returns>Extension data key list or null.</returns>
-        </member>
-        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionData``1(System.String)">
-            <summary>
-            Gets Json extension data that are not deserialized explicitly.
-            </summary>
-            <typeparam name="T">Type of result.</typeparam>
-            <param name="key">The key of Json object.</param>
-            <returns>Json extension data.</returns>
-        </member>
-        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionJsonString(System.String)">
-            <summary>
-            Gets Json extension data that are not deserialized explicitly.
-            </summary>
-            <param name="key">The key of Json object.</param>
-            <returns>Json extension data.</returns>
-        </member>
-        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetExtensionJsonStrings">
-            <summary>
-            Gets Json extension data dictionary that are not deserialized explicitly.
-            </summary>
-            <returns>Json extension data dictionary.</returns>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkExtensionObject"/>.</returns>
         </member>
         <member name="M:Thrzn41.CiscoSpark.SparkObject.FromJsonString``1(System.String)">
             <summary>
@@ -2658,6 +2677,17 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.CreateSpaceMembershipAsync(Thrzn41.CiscoSpark.Version1.Space,System.String,System.Nullable{System.Boolean},Thrzn41.CiscoSpark.Version1.PersonIdType,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Create a space membership.
+            </summary>
+            <param name="space"><see cref="T:Thrzn41.CiscoSpark.Version1.Space"/>.</param>
+            <param name="personIdOrEmail">The person ID or Email.</param>
+            <param name="isModerator">Set to true to make the person a room moderator.</param>
+            <param name="personIdType"><see cref="T:Thrzn41.CiscoSpark.Version1.PersonIdType"/> for personIdOrEmail parameter.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
         <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.GetSpaceMembershipAsync(System.String,System.Nullable{System.Threading.CancellationToken})">
             <summary>
             Gets space membership detail.
@@ -2958,6 +2988,17 @@
             <param name="team">The <see cref="T:Thrzn41.CiscoSpark.Version1.Team"/>.</param>
             <param name="person">The <see cref="T:Thrzn41.CiscoSpark.Version1.Person"/>.</param>
             <param name="isModerator">Set to true to make the person a room moderator.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.CreateTeamMembershipAsync(Thrzn41.CiscoSpark.Version1.Team,System.String,System.Nullable{System.Boolean},Thrzn41.CiscoSpark.Version1.PersonIdType,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Create a team membership.
+            </summary>
+            <param name="team"><see cref="T:Thrzn41.CiscoSpark.Version1.Team"/>.</param>
+            <param name="personIdOrEmail">The person ID or Email.</param>
+            <param name="isModerator">Set to true to make the person a room moderator.</param>
+            <param name="personIdType"><see cref="T:Thrzn41.CiscoSpark.Version1.PersonIdType"/> for personIdOrEmail parameter.</param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
         </member>

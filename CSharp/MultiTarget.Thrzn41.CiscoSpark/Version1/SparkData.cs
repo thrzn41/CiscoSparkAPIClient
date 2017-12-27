@@ -40,6 +40,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Indicates whether the object has error or not.
         /// </summary>
+        [JsonIgnore]
         public bool HasErrors
         {
             get
@@ -99,6 +100,11 @@ namespace Thrzn41.CiscoSpark.Version1
                 if (jtoken.Type == Newtonsoft.Json.Linq.JTokenType.Array)
                 {
                     result = this.JsonExtensionData["errors"].ToObject<ErrorData[]>();
+                }
+
+                if(result == null)
+                {
+                    result = new ErrorData[0];
                 }
             }
 

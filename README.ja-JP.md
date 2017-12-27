@@ -1,6 +1,6 @@
-# Cisco Spark API Client
+# Cisco Spark API Client(非公式)
 
-[![nuget](https://img.shields.io/nuget/vpre/Thrzn41.CiscoSpark.svg)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
+[![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg?style=plastic)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
 
 ## 現在利用可能な機能
 
@@ -88,7 +88,7 @@ Webhook listener機能は、簡易的なWebhookのサーバ機能を提供しま
 ### 暗号化したTokenをストレージに保存する
 
 ``` csharp
-char[] tokens = GetBotTokensFromUser();
+char[] tokens = GetBotTokenFromBotOwner();
 
 var protectedToken = LocalProtectedString.FromChars(tokens);
 LocalProtectedString.ClearChars(tokens);

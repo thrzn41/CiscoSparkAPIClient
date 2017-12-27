@@ -47,6 +47,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Indicates the object contains items or not.
         /// </summary>
+        [JsonIgnore]
         public bool HasItems
         {
             get
@@ -58,6 +59,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Item count.
         /// </summary>
+        [JsonIgnore]
         public int ItemCount
         {
             get

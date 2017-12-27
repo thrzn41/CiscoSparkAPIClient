@@ -123,7 +123,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <see cref="DateTime"/> when the webhook was created.
         /// </summary>
         [JsonProperty(PropertyName = "created")]
-        public string Created { get; internal set; }
+        public DateTime? Created { get; internal set; }
 
 
         /// <summary>
