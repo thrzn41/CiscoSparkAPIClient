@@ -40,6 +40,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Indicates whether the object has error or not.
         /// </summary>
+        [JsonIgnore]
         public bool HasErrors
         {
             get
