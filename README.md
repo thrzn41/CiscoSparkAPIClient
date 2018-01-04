@@ -10,7 +10,7 @@
 * Pagination for list APIs.
 * Retry-after value, Retry executor.
 * Webhook secret validator, Webhook notification manager.
-* Simple Webhook Listener/Server
+* Simple Webhook Listener/Server(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)
 
 ### Basic features
 
@@ -73,7 +73,9 @@ More details are described later.
 Also, `WebhookNotificationManager` is available.  
 More details are described later.
 
-### Webhook listener
+CreateWebhookAsync() methods in Cisco Spark API Client generates webhook secret dynamically by default.
+
+### Webhook listener(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)
 
 Webhook listener feature provides simple Webhook server feature.  
 **NOTE: This feature is intended to be used for quick testing purpose.  
