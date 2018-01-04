@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+#if !(WEBHOOK_LISTENER_NOT_AVAILABLE)
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -349,7 +350,7 @@ namespace Thrzn41.CiscoSpark.Version1
 
 
 
-        #region IDisposable Support
+#region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
 
         /// <summary>
@@ -394,10 +395,11 @@ namespace Thrzn41.CiscoSpark.Version1
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
-        #endregion
+#endregion
 
 
 
     }
 
 }
+#endif

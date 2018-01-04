@@ -4,13 +4,13 @@
 
 ## 現在利用可能な機能
 
-* Cisco Sparkの基本的なAPI(List/Get/Create Message, Spaceなど)
-* Cisco SparkのAdmin API(List/Get Eventなど)
+* Cisco Sparkの基本的なAPI(List/Get/Create Message, Spaceなど)。
+* Cisco SparkのAdmin API(List/Get Eventなど)。
 * ストレージに保存するTokenの暗号化。
 * List API用のPagination機能。
 * Retry-after値の処理とRetry executor。
 * Webhook secretの検証とWebhook notification manager。
-* 簡易Webhookサーバ機能。
+* 簡易Webhookサーバ機能(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)。
 
 ### 基本機能
 
@@ -72,7 +72,9 @@ trackingIdは、Cisco Spark APIのテクニカルサポートで利用される�
 `Webhook.CreateEventValidator()`が、Cisco Spark API Clientで利用可能です。   
 詳細は後述。
 
-### Webhook listener
+Cisco Spark API ClientのCreateWebhookAsync()メソッドはデフォルトでは、webhook secretを動的に生成します。
+
+### Webhook listener(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)
 
 Webhook listener機能は、簡易的なWebhookのサーバ機能を提供します。  
 **注意: この機能は、簡単なテスト時の利用を想定しています。  
