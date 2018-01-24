@@ -1,18 +1,20 @@
 # Cisco Spark API Client for .NET
----
+
 [![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg?style=plastic)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
 
 `Cisco Spark API Client` is a Library that wraps `Cisco Spark REST API`.   
 Also, some useful features for developers are provided.
 
-## Available Platforms
 ---
+## Available Platforms
+
 * .NET Standard 1.3 or later
 * .NET Core 1.0 or later
 * .NET Framework 4.5.2 or later
 
-## Available Features
 ---
+## Available Features
+
 * Basic Cisco Spark APIs(List/Get/Create Message, Space, etc.).
 * Cisco Spark Admin APIs(List/Get Event, License, etc.).
 * Encrypt/Decrypt Cisco Spark token in storage.
@@ -102,8 +104,8 @@ Webhook listener feature provides simple Webhook server feature.
 `WebhookListener` is available in the Cisco Spark API Client.  
 More details are described later.
 
-## Basic Usage
 ---
+## Basic Usage
 
 ### Install `Cisco Spark API Client`
 
@@ -507,8 +509,8 @@ After starting listener, events will be notified to registered notification func
 listener.Start();
 ```
 
-## Planned Features
 ---
+## Planned Features
 
 | Feature | Description |
 | :------ | :---------- |

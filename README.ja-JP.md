@@ -1,16 +1,17 @@
 # Cisco Spark API Client for .NET
----
+
 [![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg?style=plastic)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
 
 `Cisco Spark API Client`は、`Cisco Spark REST API`を利用しやすくしたライブラリです。  
 基本的な機能のほかに、Cisco SparkのAPIを使いやすくするための機能を実装しています。
 
-## 利用可能なプラットフォーム
 ---
+## 利用可能なプラットフォーム
 * .NET Standard 1.3以降
 * .NET Core 1.0以降
 * .NET Framework 4.5.2以降
 
+---
 ## 利用可能な機能
 
 * Cisco Sparkの基本的なAPI(List/Get/Create Message, Spaceなど)。
@@ -101,8 +102,8 @@ Webhook listener機能は、簡易的なWebhookのサーバ機能を提供しま
 `WebhookListener`が、Cisco Spark API Clientで利用可能です。   
 詳細は後述。
 
-## 基本的な使い方
 ---
+## 基本的な使い方
 
 ### `Cisco Spark API Client`のインストール
 
@@ -329,7 +330,6 @@ var result = await spark.ListSpacesAsync();
 Console.WriteLine("Tracking id: {0}", result.TrackingId);  
 ```
 
-
 ### Webhookに通知されたデータを検証する
 
 ``` csharp
@@ -511,6 +511,7 @@ Listenerを開始すると、イベント発生時に登録したfunctionに通�
 listener.Start();
 ```
 
+---
 ## 計画中の機能
 
 | 機能 | 概要 |
