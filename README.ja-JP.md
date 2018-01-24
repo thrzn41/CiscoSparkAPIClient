@@ -1,15 +1,25 @@
-# Cisco Spark API Client(非公式)
-
+# Cisco Spark API Client for .NET
+---
 [![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg?style=plastic)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
 
-## 現在利用可能な機能
+`Cisco Spark API Client`は、`Cisco Spark REST API`を利用しやすくしたライブラリです。  
+基本的な機能のほかに、Cisco SparkのAPIを使いやすくするための機能を実装しています。
+
+## 利用可能なプラットフォーム
+---
+* .NET Standard 1.3以降
+* .NET Core 1.0以降
+* .NET Framework 4.5.2以降
+
+## 利用可能な機能
 
 * Cisco Sparkの基本的なAPI(List/Get/Create Message, Spaceなど)。
-* Cisco SparkのAdmin API(List/Get Eventなど)。
-* ストレージに保存するTokenの暗号化。
+* Cisco SparkのAdmin API(List/Get Event, Licenseなど)。
+* ストレージに保存するTokenの暗号化と復号。
 * List API用のPagination機能。
 * Retry-after値の処理とRetry executor。
-* Webhook secretの検証とWebhook notification manager。
+* エラーコードや詳細の取得。
+* Webhook secretの検証とWebhook notification manager、Webhook event handler。
 * 簡易Webhookサーバ機能(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)。
 
 ### 基本機能
@@ -46,19 +56,27 @@ Cisco Spark APIのpaginationに関しては、[ここ](https://developer.ciscosp
 `result.HasNext`と`result.ListNextAsync()`が、Cisco Spark API Clientで利用可能です。  
 詳細は後述。
 
-### HTTP Statusコードの取得
-
-`result.HttpStatusCode`が、Cisco Spark API Clientで利用可能です。  
-詳細は後述。
-
-よりプログラマが利用しやすいステータスコードを検討中ですが、  
-現時点では、HTTP Statusコードを返します。
-
 ### Retry-Afterの取得
 
 `result.HasRetryAfter`と `result.RetryAfter`が、Cisco Spark API Clientで利用可能です。  
 また、 `RetryExecutor`が利用可能です。  
 詳細は後述。
+
+### HTTP Statusコードの取得
+
+`result.HttpStatusCode`が、Cisco Spark API Clientで利用可能です。  
+詳細は後述。
+
+### エラーコードと詳細の取得
+
+Cisco Spark APIは、エラーコードと詳細を返す場合があります。  
+`result.Data.HasErrors`と`result.Data.GetErrors()`が、Cisco Spark API Clientで利用可能です。
+
+### 部分エラーの取得
+
+Cisco Spark APIは、部分的なエラーを返す場合があります。  
+部分エラーの詳細に関しては、[ここ](https://developer.ciscospark.com/errors.html)を参照。  
+`Item.HasErrors`と`Item.GetPartialErrors()`が、Cisco Spark API Clientで利用可能です。
 
 ### trackingIdの取得
 
@@ -72,20 +90,70 @@ trackingIdは、Cisco Spark APIのテクニカルサポートで利用される�
 `Webhook.CreateEventValidator()`が、Cisco Spark API Clientで利用可能です。   
 詳細は後述。
 
-Cisco Spark API ClientのCreateWebhookAsync()メソッドはデフォルトでは、webhook secretを動的に生成します。
+Cisco Spark API Clientの`CreateWebhookAsync()`メソッドはデフォルトでは、webhook secretを動的に生成します。
 
 ### Webhook listener(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)
 
 Webhook listener機能は、簡易的なWebhookのサーバ機能を提供します。  
-**注意: この機能は、簡単なテスト時の利用を想定しています。  
-運用環境等では、より信頼性のあるサーバをご利用ください。**
+> **注記: この機能は、簡単なテスト時の利用を想定しています。  
+> 運用環境等では、より信頼性のあるサーバをご利用ください。**
 
 `WebhookListener`が、Cisco Spark API Clientで利用可能です。   
 詳細は後述。
 
-
-
 ## 基本的な使い方
+---
+
+### `Cisco Spark API Client`のインストール
+
+`Cisco Spark API Client`は、以下のいずれかの方法で、`NuGet` package manager経由で入手できます。
+
+* NuGet Package ManagerのGUI  
+"`Thrzn41.CiscoSpark`"を検索してインストール。
+
+* NuGet Package ManagerのCLI  
+```
+PM> Install-Package Thrzn41.CiscoSpark
+```
+
+* .NET Client  
+```
+> dotnet add package Thrzn41.CiscoSpark
+```
+
+### `Cisco Spark API Client`関連のusingディレクティブ
+
+usingディレクティブを利用する場合は、以下の名前空間を指定します。
+
+``` csharp
+using Thrzn41.Util
+using Thrzn41.CiscoSpark
+using Thrzn41.CiscoSpark.Version1
+```
+
+必要に応じて、`Thrzn41.CiscoSpark.Version1.Admin`も利用可能です。
+
+### Cisco Spark API Clientインスタンスの作成
+
+Cisco Spark API Clientのインスタンスは可能な限り長い期間使いまわすようにします。
+
+``` csharp
+/// 基本API利用時。
+SparkAPIClient spark = SparkAPI.CreateVersion1Client(token);
+```
+
+Admin APIを利用する場合は、Admin API用のインスタンスを作成する必要があります。  
+`SparkAdminAPIClient`は、`SparkAPIClient`の全機能に加えて、Adminの機能が利用できます。  
+``` csharp
+/// Admin API利用時。
+SparkAdminAPIClient spark = SparkAPI.CreateVersion1AdminClient(token);
+```
+
+> **注記: 'token'は、Cisco Spark APIでは、非常にセンシティブな情報です。  
+> 'token'は、慎重に保護する必要があります。  
+> ソースコード中に直接記載したり、安全ではない方法で保存しないようにします。  
+> `Cisco Spark API Client`では、トークンを暗号化したり復号する方法を、いくつか提供しています。  
+> 独自の方法で暗号化や復号、保護を実装する場合は、インスタンス作成時に、復号されたトークン文字列を利用することができます。**
 
 ### 暗号化したTokenをストレージに保存する
 
@@ -99,26 +167,23 @@ Save("token.dat",   protectedToken.EncryptedData);
 Save("entropy.dat", protectedToken.Entropy);
 ```
 
-**注意: LocalProtectedStringはメモリ内での保護は提供していません。  
+**注記: LocalProtectedStringはメモリ内での保護は提供していません。  
 Tokenを保存する際の、暗号化と復号での利用を想定しています。**
 
 
-### 暗号化したTokenをストレージから読み込む
+### 暗号化したTokenをストレージから読み込んで、Cisco Spark API Clientのインスタンスを作成する
 
 ``` csharp
 byte[] encryptedData = Load("token.dat");
 byte[] entropy       = Load("entropy.dat");
 
 var protectedToken = LocalProtectedString.FromEncryptedData(encryptedData, entropy);
-```
 
-### Cisco Spark API Clientのインスタンスを作成する
-
-Cisco Spark API Clientのインスタンスは可能な限り再利用してください。
-
-``` csharp
+/// 基本API利用時。
 SparkAPIClient spark = SparkAPI.CreateVersion1Client(protectedToken);
 ```
+
+> **注記: オプションに応じて、暗号化されたデータは、暗号化したときと同じローカルユーザまたはローカルマシン上でのみ復号できます。**
 
 ### Cisco Sparkのスペースにメッセージを投稿する
 
@@ -160,7 +225,7 @@ if(result.IsSuccessStatus)
 ### スペースの一覧を取得する
 
 ``` csharp
-var result = await spark.ListSpaces();
+var result = await spark.ListSpacesAsync();
 
 if(result.IsSuccessStatus && result.Data.HasItems)
 {
@@ -170,10 +235,47 @@ if(result.IsSuccessStatus && result.Data.HasItems)
 }
 ```
 
+### ファイルの情報やデータを取得する
+
+ダウンロードせずにファイルの情報だけ入手する。
+
+``` csharp
+var result = await spark.GetFileInfoAsync(new Uri("https://api.example.com/path/to/file.png"));
+
+if(result.IsSuccessStatus)
+{
+  var file = result.Data;
+
+  Console.WriteLine("File: Name = {0}, Size = {1}, Type = {2}", file.Name, file.Size?.Value, file.MediaType?.Name);
+}
+```
+
+ファイルをダウンロードする。
+``` csharp
+var result = await spark.GetFileDataAsync(new Uri("https://api.example.com/path/to/file.png"));
+
+if(result.IsSuccessStatus)
+{
+  var file = result.Data;
+
+  if(result.IsSuccessStatus)
+  {
+    var file = result.Data;
+
+    Console.WriteLine("File: Name = {0}, Size = {1}, Type = {2}", file.Name, file.Size?.Value, file.MediaType?.Name);
+
+    using(var stream = file.Stream)
+    {
+      // streamにファイルのデータが含まれる。
+    }
+  }
+}
+```
+
 ### Pagenation機能を利用する
 
 ``` csharp
-var result = await spark.ListSpaces();
+var result = await spark.ListSpacesAsync();
 
 if(result.IsSuccessStatus)
 {
@@ -197,7 +299,7 @@ if(result.IsSuccessStatus)
 ### Http status codeを取得する
 
 ``` csharp
-var result = await spark.ListSpaces();
+var result = await spark.ListSpacesAsync();
 
 Console.WriteLine("Status is {0}", result.HttpStatusCode);
 ```
@@ -205,7 +307,7 @@ Console.WriteLine("Status is {0}", result.HttpStatusCode);
 ### Retry afterを取得する.
 
 ``` csharp
-var result = await spark.ListSpaces();
+var result = await spark.ListSpacesAsync();
 
 if(result.IsSuccessStatus)
 {
@@ -215,14 +317,14 @@ if(result.IsSuccessStatus)
 }
 else if(result.HasRetryAfter)
 {
-  Console.WriteLine("{0}にリトライしなきゃ!!", result.RetryAfter.Date);  
+  Console.WriteLine("{0}後にリトライしなきゃ!!", result.RetryAfter.Delta);  
 }
 ```
 
 ### TrackingIdを取得する
 
 ``` csharp
-var result = await spark.ListSpaces();
+var result = await spark.ListSpacesAsync();
 
 Console.WriteLine("Tracking id: {0}", result.TrackingId);  
 ```
@@ -231,7 +333,7 @@ Console.WriteLine("Tracking id: {0}", result.TrackingId);
 ### Webhookに通知されたデータを検証する
 
 ``` csharp
-var webhook = await spark.GetWebhook("xyz_webhook_id");
+var webhook = await spark.GetWebhookAsync("xyz_webhook_id");
 
 var validator = webhook.CreateEventValidator();
 ```
@@ -264,7 +366,7 @@ var notificationManager = new WebhookNotificationManager();
 * 通知用のfunctionを登録します。
 
 ``` csharp
-var webhook = await spark.GetWebhook("xyz_webhook_id");
+var webhook = await spark.GetWebhookAsync("xyz_webhook_id");
 
 notificationManager.AddNotification(
   webhook,
@@ -283,6 +385,60 @@ byte[] webhookEventData = GetWebhookEventData();
 // Signatureが確認され登録したfunctionにイベントデータが通知されます。
 notificationManager.ValidateAndNotify(webhookEventData, "xyz_x_spark_signature_value", encodingOfData);
 ```
+
+### Webhook Listener
+
+* Webhook listenerのインスタンスの作成。
+
+``` csharp
+var listener = new WebhookListener();
+```
+
+* 待ち受けする、ホストとポートを登録する。
+
+``` csharp
+var endpointUri = listener.AddListenerEndpoint("yourwebhookserver.example.com", 8443);
+```
+
+* Webhook listener用のWebhookを作成します。
+
+`listener.AddListenerEndpoint()`が返す`endpointUri`がWebhookの通知先Uriになります。  
+
+``` csharp
+var result = await spark.CreateWebhookAsync(
+  "my webhook for test",
+  endpointUri,
+  EventResource.Message,
+  EventType.Created);
+```
+
+* Webhook listenerにWebhookと通知先funcを登録します。
+
+``` csharp
+var webhook = result.Data;
+
+listener.AddNotification(
+  webhook,
+  async (eventData) =>
+  {
+    Console.WriteLine("Eventが通知されました, id = {0}", eventData.Id);
+
+    if(eventData.Resouce == EventResouce.Message)
+    {
+      Console.WriteLine("Message, id = {0}", eventData.MessageData.Id);
+    }
+  }
+);
+```
+
+* Listenerの開始。
+
+Listenerを開始すると、イベント発生時に登録したfunctionに通知されます。
+
+``` csharp
+listener.Start();
+```
+
 ### Webhook listenerをngrokと共に利用する
 
 グローバルIPアドレスが利用できない場合、
@@ -330,7 +486,6 @@ var result = await spark.CreateWebhookAsync(
 
 * Webhook listenerにWebhookと通知先funcを登録します。
 
-
 ``` csharp
 var webhook = result.Data;
 
@@ -339,6 +494,11 @@ listener.AddNotification(
   async (eventData) =>
   {
     Console.WriteLine("Eventが通知されました, id = {0}", eventData.Id);
+
+    if(eventData.Resouce == EventResouce.Message)
+    {
+      Console.WriteLine("Message, id = {0}", eventData.MessageData.Id);
+    }
   }
 );
 ```
@@ -350,8 +510,6 @@ Listenerを開始すると、イベント発生時に登録したfunctionに通�
 ``` csharp
 listener.Start();
 ```
-
-
 
 ## 計画中の機能
 
