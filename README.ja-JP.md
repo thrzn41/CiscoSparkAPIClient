@@ -19,8 +19,10 @@
 * ストレージに保存するTokenの暗号化と復号。
 * List API用のPagination機能。
 * Retry-after値の処理とRetry executor。
+* Markdown builder
 * エラーコードや詳細の取得。
 * Webhook secretの検証とWebhook notification manager、Webhook event handler。
+* OAuth2 helper
 * 簡易Webhookサーバ機能(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)。
 
 ### 基本機能
@@ -330,6 +332,19 @@ var result = await spark.ListSpacesAsync();
 Console.WriteLine("Tracking id: {0}", result.TrackingId);  
 ```
 
+### Markdown Builder.
+
+``` csharp
+var md = new MarkdownBuilder();
+
+md.Append("こんにちは、").AppendMentionToPerson("xyz_person_id", "〇〇さん").AppendLine();
+md.AppendOrderdList("Item1");
+md.AppendOrderdList("Item2");
+md.AppendOrderdList("Item3");
+
+var result = await spark.CreateMessageAsync("xyz_space_id", md.ToString());
+```
+
 ### Webhookに通知されたデータを検証する
 
 ``` csharp
@@ -510,11 +525,3 @@ Listenerを開始すると、イベント発生時に登録したfunctionに通�
 ``` csharp
 listener.Start();
 ```
-
----
-## 計画中の機能
-
-| 機能 | 概要 |
-| :--- | :--- |
-| OAuth2 Helper | Integrationのトークン取得用のOAuth2 Helper。 |
-| Markdown builder | Cisco Spark API特有のMarkdownのBuilder。 |
