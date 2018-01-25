@@ -51,6 +51,30 @@
             <param name="tokenString">spark token of string.</param>
             <returns>Spark Admin API client for v1 API.</returns>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkAPI.CreateVersion1OAuth2Client(Thrzn41.Util.ProtectedString,System.String)">
+            <summary>
+            Creates Spark OAuth2 client for v1 API.
+            </summary>
+            <param name="clientSecretProtected">Client secret of <see cref="T:Thrzn41.Util.ProtectedString"/>.</param>
+            <param name="clientId">Client id.</param>
+            <returns>Spark OAuth2 client for v1 API.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkAPI.CreateVersion1OAuth2Client(System.Char[],System.String)">
+            <summary>
+            Creates Spark OAuth2 client for v1 API.
+            </summary>
+            <param name="clientSecretChars">Client secret of char array.</param>
+            <param name="clientId">Client id.</param>
+            <returns>Spark OAuth2 client for v1 API.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkAPI.CreateVersion1OAuth2Client(System.String,System.String)">
+            <summary>
+            Creates Spark OAuth2 client for v1 API.
+            </summary>
+            <param name="clientSecretString">Client secret of string.</param>
+            <param name="clientId">Client id.</param>
+            <returns>Spark OAuth2 client for v1 API.</returns>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.SparkExtensionObject">
             <summary>
             Spark Extension object.
@@ -262,6 +286,19 @@
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> that represents result of API request.</returns>
         </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkHttpClient.RequestFormDataAsync``2(System.Net.Http.HttpMethod,System.Uri,System.Collections.Specialized.NameValueCollection,System.Collections.Specialized.NameValueCollection,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Requests FormData to Cisco Spark API.
+            </summary>
+            <typeparam name="TSparkResult">Type of SparkResult to be returned.</typeparam>
+            <typeparam name="TSparkObject">Type of SparkObject to be returned.</typeparam>
+            <param name="method"><see cref="T:System.Net.Http.HttpMethod"/> to be used on requesting.</param>
+            <param name="uri">Uri to be requested.</param>
+            <param name="queryParameters">Query parameter collection.</param>
+            <param name="stringData">String data collection.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> that represents result of API request.</returns>
+        </member>
         <member name="M:Thrzn41.CiscoSpark.SparkHttpClient.CreateJsonRequest(System.Net.Http.HttpMethod,System.Uri,System.Collections.Specialized.NameValueCollection,Thrzn41.CiscoSpark.SparkObject)">
             <summary>
             Creates <see cref="T:System.Net.Http.HttpRequestMessage"/> to use for Json request.
@@ -290,6 +327,16 @@
             <param name="queryParameters">Query parameter collection.</param>
             <param name="stringData">String data collection.</param>
             <param name="fileData">File data list.</param>
+            <returns><see cref="T:System.Net.Http.HttpRequestMessage"/> that is created.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkHttpClient.CreateFormDataRequest(System.Net.Http.HttpMethod,System.Uri,System.Collections.Specialized.NameValueCollection,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            Creates <see cref="T:System.Net.Http.HttpRequestMessage"/> to use for FormData request.
+            </summary>
+            <param name="method"><see cref="T:System.Net.Http.HttpMethod"/> to be used on requesting.</param>
+            <param name="uri">Uri to be requested.</param>
+            <param name="queryParameters">Query parameter collection.</param>
+            <param name="stringData">String data collection.</param>
             <returns><see cref="T:System.Net.Http.HttpRequestMessage"/> that is created.</returns>
         </member>
         <member name="M:Thrzn41.CiscoSpark.SparkHttpClient.Dispose(System.Boolean)">
@@ -981,6 +1028,16 @@
             <param name="eventData"><see cref="T:Thrzn41.CiscoSpark.Version1.Admin.EventData"/> that the detail info is gotten.</param>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.CachedPerson">
+            <summary>
+            Cisco Spark Person object that is chached in memory.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.CachedPerson.CachedAt">
+            <summary>
+            <see cref="T:System.DateTime"/> when the person is cached in memory.
+            </summary>
         </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.ErrorData">
             <summary>
@@ -1840,6 +1897,149 @@
         <member name="M:Thrzn41.CiscoSpark.Version1.NoContent.#ctor">
             <summary>
             Creates empty object.
+            </summary>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.OAuth2.Oauth2TokenInfo">
+            <summary>
+            OAuth2 token info object.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.Oauth2TokenInfo.AccessToken">
+            <summary>
+            Access token.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.Oauth2TokenInfo.ExpiresIn">
+            <summary>
+            Access token will expire in this time from refreshed date time.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.Oauth2TokenInfo.RefreshToken">
+            <summary>
+            Refresh token.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.Oauth2TokenInfo.RefreshTokenExpiresIn">
+            <summary>
+            Refresh token will expire in this time from refreshed date time.
+            </summary>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client">
+            <summary>
+            Cisco Spark OAuth2 Client for API version 1.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.SPARK_ACCESS_TOKEN_API_PATH">
+            <summary>
+            Spark access token API Path.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.SPARK_ACCESS_TOKEN_API_URI">
+            <summary>
+            Spark access token API Uri.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.sparkHttpClient">
+            <summary>
+            HttpClient for Spark API.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.clientSecret">
+            <summary>
+            Client secret.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.clientId">
+            <summary>
+            Client id.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.#ctor(System.String,System.String)">
+            <summary>
+            Constuctor of SparkOAuth2Client.
+            </summary>
+            <param name="clientSecret">Client secret key.</param>
+            <param name="clientId">Client id.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.convert(Thrzn41.CiscoSpark.SparkResult{Thrzn41.CiscoSpark.Version1.OAuth2.Oauth2TokenInfo},System.DateTime)">
+            <summary>
+            Converts OAuth2 result to Spark token result.
+            </summary>
+            <param name="source">Source result.</param>
+            <param name="refreshedAt"><see cref="T:System.DateTime"/> when the token refreshed.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.getTokenInfoAsync(System.Collections.Specialized.NameValueCollection,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Gets token info.
+            </summary>
+            <param name="parameters">Query parameters.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.GetTokenInfoAsync(System.String,System.String,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Gets token info.
+            </summary>
+            <param name="code">Authorization Code.</param>
+            <param name="redirectUri">Redirect uri.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.RefreshTokenInfoAsync(System.String,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Refreshed token info.
+            </summary>
+            <param name="refreshToken">Refresh Code.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client.RefreshTokenInfoAsync(Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Refreshed token info.
+            </summary>
+            <param name="tokenInfo">Refresh Code.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo">
+            <summary>
+            Cisco Spark token info object.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo.AccessToken">
+            <summary>
+            Access token.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo.AccessTokenExpiresIn">
+            <summary>
+            Access token will expire in this time from refreshed date time.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo.AccessTokenExpiresAt">
+            <summary>
+            <see cref="T:System.DateTime"/> when the access token will expire.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo.RefreshToken">
+            <summary>
+            Refresh token.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo.RefreshTokenExpiresIn">
+            <summary>
+            Refresh token will expire in this time from refreshed date time.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo.RefreshTokenExpiresAt">
+            <summary>
+            <see cref="T:System.DateTime"/> when the refresh token will expire.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.OAuth2.TokenInfo.RefreshedAt">
+            <summary>
+            <see cref="T:System.DateTime"/> when the token info is refreshed.
             </summary>
         </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.OwnershipStatus">
@@ -2753,9 +2953,19 @@
             Random generator.
             </summary>
         </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.SparkAPIClient.lockForMyOwnPersonInfo">
+            <summary>
+            <see cref="T:Thrzn41.Util.SlimLock"/> for my own person info.
+            </summary>
+        </member>
         <member name="F:Thrzn41.CiscoSpark.Version1.SparkAPIClient.sparkHttpClient">
             <summary>
             HttpClient for Spark API.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.SparkAPIClient.cachedMe">
+            <summary>
+            My own info cache.
             </summary>
         </member>
         <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.#ctor(System.String)">
@@ -2764,7 +2974,7 @@
             </summary>
             <param name="token">token of Spark API.</param>
         </member>
-        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.getAPIPath(System.String)">
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.GetAPIPath(System.String)">
             <summary>
             Gets API path for each api.
             </summary>
@@ -2827,6 +3037,28 @@
         <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.GetMeAsync(System.Nullable{System.Threading.CancellationToken})">
             <summary>
             Get my own detail.
+            </summary>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.getCachedPersonAsync(System.String,System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Get cached person detail.
+            </summary>
+            <param name="personId">Person id that the detail info is gotten.</param>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.RefreshCachedMeAsync(System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Refreshes my own info in cache.
+            </summary>
+            <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
+            <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkAPIClient.GetMeFromCacheAsync(System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Get my own detail from cache.
             </summary>
             <param name="cancellationToken"><see cref="T:System.Threading.CancellationToken"/> to be used for cancellation.</param>
             <returns><see cref="T:Thrzn41.CiscoSpark.SparkResult`1"/> to get result.</returns>

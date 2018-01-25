@@ -96,6 +96,40 @@ namespace Thrzn41.CiscoSpark
             return new Thrzn41.CiscoSpark.Version1.Admin.SparkAdminAPIClient(tokenString);
         }
 
+
+        /// <summary>
+        /// Creates Spark OAuth2 client for v1 API.
+        /// </summary>
+        /// <param name="clientSecretProtected">Client secret of <see cref="ProtectedString"/>.</param>
+        /// <param name="clientId">Client id.</param>
+        /// <returns>Spark OAuth2 client for v1 API.</returns>
+        public static Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client CreateVersion1OAuth2Client(ProtectedString clientSecretProtected, string clientId)
+        {
+            return new Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client(clientSecretProtected.DecryptToString(), clientId);
+        }
+
+        /// <summary>
+        /// Creates Spark OAuth2 client for v1 API.
+        /// </summary>
+        /// <param name="clientSecretChars">Client secret of char array.</param>
+        /// <param name="clientId">Client id.</param>
+        /// <returns>Spark OAuth2 client for v1 API.</returns>
+        public static Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client CreateVersion1OAuth2Client(char[] clientSecretChars, string clientId)
+        {
+            return new Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client(new string(clientSecretChars), clientId);
+        }
+
+        /// <summary>
+        /// Creates Spark OAuth2 client for v1 API.
+        /// </summary>
+        /// <param name="clientSecretString">Client secret of string.</param>
+        /// <param name="clientId">Client id.</param>
+        /// <returns>Spark OAuth2 client for v1 API.</returns>
+        public static Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client CreateVersion1OAuth2Client(string clientSecretString, string clientId)
+        {
+            return new Thrzn41.CiscoSpark.Version1.OAuth2.SparkOAuth2Client(clientSecretString, clientId);
+        }
+
     }
 
 }

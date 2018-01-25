@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Thrzn41.CiscoSpark;
 using Thrzn41.CiscoSpark.Version1;
+using Thrzn41.CiscoSpark.Version1.OAuth2;
 using Thrzn41.Util;
 
 namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
@@ -282,6 +283,18 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
             var r = await this.spark.GetMeAsync();
 
             Assert.IsTrue(r.IsSuccessStatus);
+
+            var r2 = await this.spark.GetMeFromCacheAsync();
+            Assert.IsTrue(r2.IsSuccessStatus);
+
+            var r3 = await this.spark.GetMeFromCacheAsync();
+            Assert.IsTrue(r3.IsSuccessStatus);
+            Assert.AreEqual(r2.Data, r3.Data);
+
+            var r4 = await this.spark.GetMeFromCacheAsync();
+            Assert.IsTrue(r4.IsSuccessStatus);
+            Assert.AreEqual(r2.Data, r4.Data);
+            Assert.AreEqual(r3.Data, r4.Data);
         }
 
 

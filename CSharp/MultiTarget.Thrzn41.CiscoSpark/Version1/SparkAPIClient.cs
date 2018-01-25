@@ -49,37 +49,37 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Spark person API Path.
         /// </summary>
-        protected static readonly string SPARK_PERSON_API_PATH = getAPIPath("people");
+        protected static readonly string SPARK_PERSON_API_PATH = GetAPIPath("people");
 
         /// <summary>
         /// Spark spaces API Path.
         /// </summary>
-        protected static readonly string SPARK_SPACES_API_PATH = getAPIPath("rooms");
+        protected static readonly string SPARK_SPACES_API_PATH = GetAPIPath("rooms");
 
         /// <summary>
         /// Spark memberships API Path.
         /// </summary>
-        protected static readonly string SPARK_SPACE_MEMBERSHIPS_API_PATH = getAPIPath("memberships");
+        protected static readonly string SPARK_SPACE_MEMBERSHIPS_API_PATH = GetAPIPath("memberships");
 
         /// <summary>
         /// Spark messages API Path.
         /// </summary>
-        protected static readonly string SPARK_MESSAGES_API_PATH = getAPIPath("messages");
+        protected static readonly string SPARK_MESSAGES_API_PATH = GetAPIPath("messages");
 
         /// <summary>
         /// Spark teams API Path.
         /// </summary>
-        protected static readonly string SPARK_TEAMS_API_PATH = getAPIPath("teams");
+        protected static readonly string SPARK_TEAMS_API_PATH = GetAPIPath("teams");
 
         /// <summary>
         /// Spark team memberships API Path.
         /// </summary>
-        protected static readonly string SPARK_TEAM_MEMBERSHIPS_API_PATH = getAPIPath("team/memberships");
+        protected static readonly string SPARK_TEAM_MEMBERSHIPS_API_PATH = GetAPIPath("team/memberships");
 
         /// <summary>
         /// Spark webhooks API Path.
         /// </summary>
-        protected static readonly string SPARK_WEBHOOKS_API_PATH = getAPIPath("webhooks");
+        protected static readonly string SPARK_WEBHOOKS_API_PATH = GetAPIPath("webhooks");
 
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <summary>
         /// Uri pattern of Spark API.
         /// </summary>
-        private readonly static Regex SPARK_API_URI_PATTERN = new Regex(String.Format("^{0}", SPARK_API_PATH), RegexOptions.Compiled, TimeSpan.FromSeconds(60.0f));
+        internal readonly static Regex SPARK_API_URI_PATTERN = new Regex(String.Format("^{0}", SPARK_API_PATH), RegexOptions.Compiled, TimeSpan.FromSeconds(60.0f));
 
         /// <summary>
         /// Person email pattern.
@@ -137,6 +137,11 @@ namespace Thrzn41.CiscoSpark.Version1
         private readonly static CryptoRandom RAND = new CryptoRandom();
 
 
+        /// <summary>
+        /// <see cref="SlimLock"/> for my own person info.
+        /// </summary>
+        private readonly SlimLock lockForMyOwnPersonInfo;
+
 
         /// <summary>
         /// HttpClient for Spark API.
@@ -144,6 +149,11 @@ namespace Thrzn41.CiscoSpark.Version1
         protected readonly SparkHttpClient sparkHttpClient;
 
 
+        /// <summary>
+        /// My own info cache.
+        /// </summary>
+        private SparkResult<CachedPerson> cachedMe = null;
+        
 
 
         /// <summary>
@@ -152,6 +162,8 @@ namespace Thrzn41.CiscoSpark.Version1
         /// <param name="token">token of Spark API.</param>
         internal SparkAPIClient(string token)
         {
+            this.lockForMyOwnPersonInfo = new SlimLock();
+
             this.sparkHttpClient = new SparkHttpClient(token, SPARK_API_URI_PATTERN);
         }
 
@@ -161,7 +173,7 @@ namespace Thrzn41.CiscoSpark.Version1
         /// </summary>
         /// <param name="apiPath">Each api path.</param>
         /// <returns>Full path for the api.</returns>
-        protected static string getAPIPath(string apiPath)
+        internal static string GetAPIPath(string apiPath)
         {
             return String.Format("{0}{1}", SPARK_API_PATH, apiPath);
         }
@@ -309,6 +321,76 @@ namespace Thrzn41.CiscoSpark.Version1
         public async Task< SparkResult<Person> > GetMeAsync(CancellationToken? cancellationToken = null)
         {
             return (await GetPersonAsync("me", cancellationToken));
+        }
+
+        /// <summary>
+        /// Get cached person detail.
+        /// </summary>
+        /// <param name="personId">Person id that the detail info is gotten.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
+        /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
+        private async Task< SparkResult<CachedPerson> > getCachedPersonAsync(string personId, CancellationToken? cancellationToken = null)
+        {
+            var result = await this.sparkHttpClient.RequestJsonAsync<SparkResult<CachedPerson>, CachedPerson>(
+                                    HttpMethod.Get,
+                                    new Uri(String.Format("{0}/{1}", SPARK_PERSON_API_URI, Uri.EscapeDataString(personId))),
+                                    null,
+                                    null,
+                                    cancellationToken);
+
+            result.IsSuccessStatus = (result.IsSuccessStatus && (result.HttpStatusCode == System.Net.HttpStatusCode.OK));
+
+            if(result.IsSuccessStatus)
+            {
+                result.Data.CachedAt = DateTime.UtcNow;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Refreshes my own info in cache.
+        /// </summary>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
+        /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
+        public async Task< SparkResult<CachedPerson> > RefreshCachedMeAsync(CancellationToken? cancellationToken = null)
+        {
+            var result = await getCachedPersonAsync("me", cancellationToken);
+
+            this.lockForMyOwnPersonInfo.ExecuteInWriterLock(
+                () =>
+                {
+                    var me = this.cachedMe;
+
+                    if(me == null || !me.IsSuccessStatus || result.IsSuccessStatus)
+                    {
+                        this.cachedMe = result;
+                    }
+                });
+
+            return result; 
+        }
+
+        /// <summary>
+        /// Get my own detail from cache.
+        /// </summary>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
+        /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
+        public async Task< SparkResult<CachedPerson> > GetMeFromCacheAsync(CancellationToken? cancellationToken = null)
+        {
+            var me = this.lockForMyOwnPersonInfo.ExecuteInReaderLock(
+                () =>
+                {
+                    return this.cachedMe;
+                }
+                );
+
+            if(me == null || !me.IsSuccessStatus)
+            {
+                me = await RefreshCachedMeAsync();
+            }
+
+            return me;
         }
 
         #endregion
@@ -1710,6 +1792,7 @@ namespace Thrzn41.CiscoSpark.Version1
             {
                 if (disposing)
                 {
+                    using (this.lockForMyOwnPersonInfo)
                     using (this.sparkHttpClient)
                     {
                         // disposed.
