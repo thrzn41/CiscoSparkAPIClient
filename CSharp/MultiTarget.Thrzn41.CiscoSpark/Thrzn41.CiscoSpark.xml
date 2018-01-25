@@ -1418,6 +1418,260 @@
             Dispose.
             </summary>
         </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.MarkdownBuilder">
+            <summary>
+            Simple markdown builder.
+            This class provides limited feature of markdown that is supported on Cisco Spark API.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.markdown">
+            <summary>
+            <see cref="T:System.Text.StringBuilder"/> for markdown.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.#ctor">
+            <summary>
+            Creates <see cref="T:Thrzn41.CiscoSpark.Version1.MarkdownBuilder"/> instance.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.#ctor(System.Int32)">
+            <summary>
+            Creates <see cref="T:Thrzn41.CiscoSpark.Version1.MarkdownBuilder"/> instance with initial capacity.
+            </summary>
+            <param name="capacity">Initial capatity.</param>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendLine">
+            <summary>
+            Appends line break.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendParagraphSeparater">
+            <summary>
+            Appends line break.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.Append(System.String)">
+            <summary>
+            Appends string.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendFormat(System.String,System.Object[])">
+            <summary>
+            Appends formatted string.
+            </summary>
+            <param name="format">string format.</param>
+            <param name="args">Arguments for format.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.BeginBold">
+            <summary>
+            Begins Bold.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.EndBold">
+            <summary>
+            Ends Bold.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendBold(System.String)">
+            <summary>
+            Appends Bold string.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendBoldFormat(System.String,System.Object[])">
+            <summary>
+            Appends Bold string with format.
+            </summary>
+            <param name="format">string format.</param>
+            <param name="args">Arguments for format.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.BeginItalic">
+            <summary>
+            Begins Italic.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.EndItalic">
+            <summary>
+            Ends Italic.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendItalic(System.String)">
+            <summary>
+            Appends Italic string.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendItalicFormat(System.String,System.Object[])">
+            <summary>
+            Appends Italic string with format.
+            </summary>
+            <param name="format">string format.</param>
+            <param name="args">Arguments for format.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendLink(System.String,System.Uri)">
+            <summary>
+            Appends link.
+            </summary>
+            <param name="text">Link text.</param>
+            <param name="uri">Link uri.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.BeginOrderedList">
+            <summary>
+            Begins Ordered List.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.EndOrderedList">
+            <summary>
+            Ends Ordered List.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendOrderdList(System.String)">
+            <summary>
+            Appends Ordered List.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendOrderdListFormat(System.String,System.Object[])">
+            <summary>
+            Appends Orderd List with format.
+            </summary>
+            <param name="format">string format.</param>
+            <param name="args">Arguments for format.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.BeginUnorderedList">
+            <summary>
+            Begins Unordered List.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.EndUnorderedList">
+            <summary>
+            Ends Unordered List.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendUnorderdList(System.String)">
+            <summary>
+            Appends Unordered List.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendUnorderdListFormat(System.String,System.Object[])">
+            <summary>
+            Appends Unorderd List with format.
+            </summary>
+            <param name="format">string format.</param>
+            <param name="args">Arguments for format.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.BeginBlockQuote">
+            <summary>
+            Begins Block Quote.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.EndBlockQuote">
+            <summary>
+            Ends Block Quote.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendBlockQuote(System.String)">
+            <summary>
+            Appends Block Quote.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendBlockQuoteFormat(System.String,System.Object[])">
+            <summary>
+            Appends Block Quote with format.
+            </summary>
+            <param name="format">string format.</param>
+            <param name="args">Arguments for format.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendInLineCode(System.String)">
+            <summary>
+            Appends In-Line Code.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.BeginCodeBlock">
+            <summary>
+            Begins Code Block.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.EndCodeBlock">
+            <summary>
+            Ends Code Block.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendCodeBlock(System.String)">
+            <summary>
+            Appends Code Block.
+            </summary>
+            <param name="value">string value to be appended.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.encodeHtml(System.String)">
+            <summary>
+            Encodes html string.
+            </summary>
+            <param name="value">string value to be escaped.</param>
+            <returns>Escaped string.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendMentionToPerson(System.String,System.String,Thrzn41.CiscoSpark.Version1.PersonIdType)">
+            <summary>
+            Appends mention to a person.
+            </summary>
+            <param name="personIdOrEmail">PersonId or PersonEmail to be mentioned.</param>
+            <param name="name">Mentioned name.</param>
+            <param name="personIdType"><see cref="T:Thrzn41.CiscoSpark.Version1.PersonIdType"/> of personIdOrEmail parameter.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.AppendMentionToPerson(Thrzn41.CiscoSpark.Version1.Person,Thrzn41.CiscoSpark.Version1.PersonNameType)">
+            <summary>
+            Appends mention to a person.
+            </summary>
+            <param name="person"><see cref="T:Thrzn41.CiscoSpark.Version1.Person"/> to be mentioned.</param>
+            <param name="nameType"><see cref="T:Thrzn41.CiscoSpark.Version1.PersonNameType"/> to be used on mention.</param>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.Clear">
+            <summary>
+            Clears the markdown.
+            </summary>
+            <returns>A reference to this instance after the append operation has completed.</returns>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.MarkdownBuilder.ToString">
+            <summary>
+            Gets markdown string.
+            </summary>
+            <returns>Markdown string.</returns>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.Message">
             <summary>
             Cisco Spark Message object.
@@ -1456,6 +1710,11 @@
         <member name="P:Thrzn41.CiscoSpark.Version1.Message.Text">
             <summary>
             Text of the message.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.Version1.Message.HasText">
+            <summary>
+            Indicates this message has text or not.
             </summary>
         </member>
         <member name="P:Thrzn41.CiscoSpark.Version1.Message.Markdown">
@@ -1832,6 +2091,31 @@
         <member name="T:Thrzn41.CiscoSpark.Version1.PersonList">
             <summary>
             <see cref="T:Thrzn41.CiscoSpark.Version1.Person"/> list.
+            </summary>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.Version1.PersonNameType">
+            <summary>
+            Person name type enum.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.PersonNameType.DisplayName">
+            <summary>
+            Person name is DisplayName.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.PersonNameType.NickName">
+            <summary>
+            Person name is NickName.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.PersonNameType.FirstName">
+            <summary>
+            Person name is FirstName.
+            </summary>
+        </member>
+        <member name="F:Thrzn41.CiscoSpark.Version1.PersonNameType.LastName">
+            <summary>
+            Person name is LastName.
             </summary>
         </member>
         <member name="T:Thrzn41.CiscoSpark.Version1.PersonStatus">

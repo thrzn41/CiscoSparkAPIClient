@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Reflection;
@@ -160,6 +160,60 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
 
         }
 
+        [TestMethod]
+        public async Task TestMarkdownBuilder()
+        {
+            var md = new MarkdownBuilder();
+
+            md.AppendBold("Hello, Markdown").AppendLine().AppendFormat("12{0}4", 3);
+            md.AppendParagraphSeparater();
+            md.Append("Hi ").AppendMentionToPerson("xyz_person_id", "Person").Append(", How are you?");
+
+            Assert.AreEqual("**Hello, Markdown**  \n1234\n\nHi <@personId:xyz_person_id|Person>, How are you?", md.ToString());
+
+
+            md.Clear();
+
+            md.AppendBold("Hello, Bold");
+            md.AppendLine();
+
+            int a = 411522630;
+            int b = 3;
+
+            md.AppendBoldFormat("{0} * {1} = {2}", a, b, a * b);
+            md.AppendLine();
+            md.AppendItalic("Hello, Italic");
+            md.AppendParagraphSeparater();
+            md.Append("Hello, New Paragraph!!").AppendLine().AppendBold("Hello, Bold again!").AppendLine();
+
+            md.Append("Link: ").AppendLink("this is link", new Uri("https://www.example.com/path?p1=v1&p2=v2")).AppendLine();
+
+            md.AppendBold("Orderd List:").AppendLine();
+            md.AppendOrderdList("item-1").AppendOrderdList("item-2").AppendOrderdListFormat("item-{0}", 3).AppendParagraphSeparater();
+
+            md.AppendBold("Unorderd List:").AppendLine();
+            md.AppendUnorderdList("item-1").AppendUnorderdList("item-2").AppendUnorderdListFormat("item-{0}", 3).AppendParagraphSeparater();
+
+            md.AppendBlockQuote("This is block quote.").AppendLine();
+            md.Append("Code: ").AppendInLineCode("printf(\"Hello, World!\");").Append("is very famous!").AppendLine();
+
+            md.BeginCodeBlock()
+              .Append("#include <stdio.h>\n")
+              .Append("\n")
+              .Append("int main(void)\n")
+              .Append("{\n")
+              .Append("    printf(\"Hello, World!!\\n\");\n")
+              .Append("\n")
+              .Append("    return 0;\n")
+              .Append("}\n")
+              .EndCodeBlock();
+
+            md.Append("OK!");
+
+            var r = await this.spark.CreateMessageAsync(unitTestSpace.Id, md.ToString());
+
+            Assert.IsTrue(r.IsSuccessStatus);
+        }
 
         [TestMethod]
         public async Task TestCreateAndDeleteMessage()
@@ -220,6 +274,14 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
                 Assert.AreEqual(34991, data.Length);
             }
 
+        }
+
+        [TestMethod]
+        public async Task TestGetMe()
+        {
+            var r = await this.spark.GetMeAsync();
+
+            Assert.IsTrue(r.IsSuccessStatus);
         }
 
 
