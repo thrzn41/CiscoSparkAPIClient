@@ -85,6 +85,18 @@ namespace Thrzn41.CiscoSpark.Version1
         public string Text { get; internal set; }
 
         /// <summary>
+        /// Indicates this message has text or not.
+        /// </summary>
+        [JsonIgnore]
+        public bool HasText
+        {
+            get
+            {
+                return (this.Text != null);
+            }
+        }
+
+        /// <summary>
         /// Markdonw text to be posted.
         /// </summary>
         [JsonProperty(PropertyName = "markdown")]
