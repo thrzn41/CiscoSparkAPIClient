@@ -101,6 +101,13 @@ namespace Thrzn41.CiscoSpark
         /// <param name="sparkAPIUriPattern">Regex pattern to check if the Uri is Cisco Spark API uris.</param>
         internal SparkHttpClient(string sparkToken, Regex sparkAPIUriPattern)
         {
+            bool preAuthenticate = false;
+
+            if(sparkToken != null)
+            {
+                preAuthenticate = true;
+            }
+
             // HttpClient for Cisco Spark API.
             // Spark Token MUST be sent to only Spark API https URL.
             // NEVER SEND Token to other URLs or non-secure http URL.
@@ -108,7 +115,7 @@ namespace Thrzn41.CiscoSpark
                     new HttpClientHandler
                     {
                         AllowAutoRedirect = false,
-                        PreAuthenticate   = true,
+                        PreAuthenticate   = preAuthenticate,
                     },
                     true
                 );
@@ -125,8 +132,11 @@ namespace Thrzn41.CiscoSpark
                 );
 
 
-            // For Cisco Spark API https path, the token is added.
-            this.httpClientForSparkAPI.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", sparkToken);
+            if (sparkToken != null)
+            {
+                // For Cisco Spark API https path, the token is added.
+                this.httpClientForSparkAPI.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", sparkToken);
+            }
 
             this.sparkAPIUriPattern = sparkAPIUriPattern;
 
@@ -354,6 +364,25 @@ namespace Thrzn41.CiscoSpark
             return (await RequestAsync<TSparkResult, TSparkObject>(CreateMultipartFormDataRequest(method, uri, queryParameters, stringData, fileData), cancellationToken));
         }
 
+        /// <summary>
+        /// Requests FormData to Cisco Spark API.
+        /// </summary>
+        /// <typeparam name="TSparkResult">Type of SparkResult to be returned.</typeparam>
+        /// <typeparam name="TSparkObject">Type of SparkObject to be returned.</typeparam>
+        /// <param name="method"><see cref="HttpMethod"/> to be used on requesting.</param>
+        /// <param name="uri">Uri to be requested.</param>
+        /// <param name="queryParameters">Query parameter collection.</param>
+        /// <param name="stringData">String data collection.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used cancellation.</param>
+        /// <returns><see cref="SparkResult{TSparkObject}"/> that represents result of API request.</returns>
+        public async Task<TSparkResult> RequestFormDataAsync<TSparkResult, TSparkObject>(HttpMethod method, Uri uri, NameValueCollection queryParameters = null, NameValueCollection stringData = null, CancellationToken? cancellationToken = null)
+            where TSparkResult : SparkResult<TSparkObject>, new()
+            where TSparkObject : SparkObject, new()
+        {
+            return (await RequestAsync<TSparkResult, TSparkObject>(CreateFormDataRequest(method, uri, queryParameters, stringData), cancellationToken));
+        }
+
+
 
         /// <summary>
         /// Creates <see cref="HttpRequestMessage"/> to use for Json request.
@@ -458,7 +487,48 @@ namespace Thrzn41.CiscoSpark
             return request;
         }
 
+        /// <summary>
+        /// Creates <see cref="HttpRequestMessage"/> to use for FormData request.
+        /// </summary>
+        /// <param name="method"><see cref="HttpMethod"/> to be used on requesting.</param>
+        /// <param name="uri">Uri to be requested.</param>
+        /// <param name="queryParameters">Query parameter collection.</param>
+        /// <param name="stringData">String data collection.</param>
+        /// <returns><see cref="HttpRequestMessage"/> that is created.</returns>
+        public HttpRequestMessage CreateFormDataRequest(HttpMethod method, Uri uri, NameValueCollection queryParameters = null, NameValueCollection stringData = null)
+        {
+            var request = new HttpRequestMessage(method, HttpUtils.BuildUri(uri, queryParameters));
 
+            var headers = request.Headers;
+
+            headers.AcceptCharset.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue(ENCODING.WebName));
+            headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue(MEDIA_TYPE_APPLICATION_JSON));
+
+            var list = new List< KeyValuePair<string, string> >();
+
+            if (stringData != null)
+            {
+                foreach (var key in stringData.AllKeys)
+                {
+                    var values = stringData.GetValues(key);
+
+                    if (values != null)
+                    {
+                        foreach (var item in values)
+                        {
+                            if (item != null)
+                            {
+                                list.Add(new KeyValuePair<string, string>(key, item));
+                            }
+                        }
+                    }
+                }
+            }
+
+            request.Content = new FormUrlEncodedContent(list);
+
+            return request;
+        }
 
 
         #region IDisposable Support

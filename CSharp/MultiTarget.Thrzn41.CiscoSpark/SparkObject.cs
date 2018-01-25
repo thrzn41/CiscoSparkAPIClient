@@ -68,7 +68,7 @@ namespace Thrzn41.CiscoSpark
         /// Extension data which contains non-deserialized json.
         /// </summary>
         [JsonExtensionData]
-        internal protected IDictionary<string, JToken> JsonExtensionData { get; private set; }
+        internal protected IDictionary<string, JToken> JsonExtensionData { get; internal set; }
 
         /// <summary>
         /// Indicates this Spark Object has extension data.

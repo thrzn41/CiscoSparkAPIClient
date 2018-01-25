@@ -41,22 +41,22 @@ namespace Thrzn41.CiscoSpark.Version1.Admin
         /// <summary>
         /// Spark organizations API Path.
         /// </summary>
-        protected static readonly string SPARK_ORGANIZATION_API_PATH = getAPIPath("organizations");
+        protected static readonly string SPARK_ORGANIZATION_API_PATH = GetAPIPath("organizations");
 
         /// <summary>
         /// Spark licenses API Path.
         /// </summary>
-        protected static readonly string SPARK_LICENSE_API_PATH = getAPIPath("licenses");
+        protected static readonly string SPARK_LICENSE_API_PATH = GetAPIPath("licenses");
 
         /// <summary>
         /// Spark roles API Path.
         /// </summary>
-        protected static readonly string SPARK_ROLE_API_PATH = getAPIPath("roles");
+        protected static readonly string SPARK_ROLE_API_PATH = GetAPIPath("roles");
 
         /// <summary>
         /// Spark events API Path.
         /// </summary>
-        protected static readonly string SPARK_EVENT_API_PATH = getAPIPath("events");
+        protected static readonly string SPARK_EVENT_API_PATH = GetAPIPath("events");
         
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Thrzn41.CiscoSpark.Version1.Admin
             var result = await this.sparkHttpClient.RequestJsonAsync<SparkListResult<LicenseList>, LicenseList>(
                                     HttpMethod.Get,
                                     SPARK_LICENSE_API_URI,
-                                    null,
+                                    queryParameters,
                                     null,
                                     cancellationToken);
 
@@ -417,7 +417,7 @@ namespace Thrzn41.CiscoSpark.Version1.Admin
             var result = await this.sparkHttpClient.RequestJsonAsync<SparkListResult<RoleList>, RoleList>(
                                     HttpMethod.Get,
                                     SPARK_ROLE_API_URI,
-                                    null,
+                                    queryParameters,
                                     null,
                                     cancellationToken);
 
@@ -474,7 +474,7 @@ namespace Thrzn41.CiscoSpark.Version1.Admin
         /// <param name="max">Limit the maximum number of entries in the response.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> to be used for cancellation.</param>
         /// <returns><see cref="SparkResult{TSparkObject}"/> to get result.</returns>
-        public async Task<SparkListResult<EventDataList>> ListEventsAsync(EventResource resource = null, EventType type = null, string actorId = null, DateTime? from = null, DateTime? to = null, int? max = null, CancellationToken? cancellationToken = null)
+        public async Task< SparkListResult<EventDataList> > ListEventsAsync(EventResource resource = null, EventType type = null, string actorId = null, DateTime? from = null, DateTime? to = null, int? max = null, CancellationToken? cancellationToken = null)
         {
             var queryParameters = new NameValueCollection();
 
@@ -488,7 +488,7 @@ namespace Thrzn41.CiscoSpark.Version1.Admin
             var result = await this.sparkHttpClient.RequestJsonAsync<SparkListResult<EventDataList>, EventDataList>(
                                     HttpMethod.Get,
                                     SPARK_EVENT_API_URI,
-                                    null,
+                                    queryParameters,
                                     null,
                                     cancellationToken);
 
