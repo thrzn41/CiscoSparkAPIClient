@@ -20,8 +20,10 @@ Also, some useful features for developers are provided.
 * Encrypt/Decrypt Cisco Spark token in storage.
 * Pagination for list APIs.
 * Retry-after value, Retry executor.
+* Markdown builder
 * Error code, error description.
 * Webhook secret validator, Webhook notification manager, Webhook event handler.
+* OAuth2 helper
 * Simple Webhook Listener/Server(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)
 
 ### Basic Features
@@ -94,6 +96,15 @@ Also, `WebhookNotificationManager` is available to facilicate event handling.
 More details are described later.
 
 CreateWebhookAsync() method in the Cisco Spark API Client generates `webhook secret` dynamically by default option.
+
+### Markdonw builder
+
+`MarkdownBuilder` is available in the Cisco Spark API Client.  
+More details are described later.
+
+### OAuth2 Helper
+
+`SparkOauth2Client` is available in the Cisco Spark API Client.  
 
 ### Webhook Listener(.NET Standard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+)
 
@@ -330,6 +341,19 @@ var result = await spark.ListSpacesAsync();
 Console.WriteLine("Tracking id is {0}", result.TrackingId);  
 ```
 
+### Markdown Builder.
+
+``` csharp
+var md = new MarkdownBuilder();
+
+md.Append("Hi ").AppendMentionToPerson("xyz_person_id", "PersonName").AppendLine();
+md.AppendOrderdList("Item1");
+md.AppendOrderdList("Item2");
+md.AppendOrderdList("Item3");
+
+var result = await spark.CreateMessageAsync("xyz_space_id", md.ToString());
+```
+
 ### Validates webhook event data
 
 ``` csharp
@@ -508,11 +532,3 @@ After starting listener, events will be notified to registered notification func
 ``` csharp
 listener.Start();
 ```
-
----
-## Planned Features
-
-| Feature | Description |
-| :------ | :---------- |
-| OAuth2 Helper | OAuth2 Helper to get integration token. |
-| Markdown builder | Simple markdown builder to build Cisco Spark API specific markdown. |

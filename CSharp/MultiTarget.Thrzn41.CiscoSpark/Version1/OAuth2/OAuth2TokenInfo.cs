@@ -33,7 +33,7 @@ namespace Thrzn41.CiscoSpark.Version1.OAuth2
     /// OAuth2 token info object.
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public class Oauth2TokenInfo : SparkData
+    internal class Oauth2TokenInfo : SparkData
     {
 
         /// <summary>
