@@ -1,9 +1,12 @@
 # Cisco Spark API Client for .NET
 
-[![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg?style=plastic)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
+[![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg)](https://www.nuget.org/packages/Thrzn41.CiscoSpark) [![MIT license](https://img.shields.io/github/license/thrzn41/CiscoSparkAPIClient.svg)](https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/LICENSE)
 
 `Cisco Spark API Client`は、`Cisco Spark REST API`を利用しやすくしたライブラリです。  
 基本的な機能のほかに、Cisco SparkのAPIを使いやすくするための機能を実装しています。
+
+#### ほかの言語のREADME
+* [English README](https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/README.md) ([英語のREADME](https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/README.md))
 
 ---
 ## 利用可能なプラットフォーム
@@ -107,7 +110,7 @@ Webhook listener機能は、簡易的なWebhookのサーバ機能を提供しま
 ---
 ## 基本的な使い方
 
-### `Cisco Spark API Client`のインストール
+### Cisco Spark API Clientのインストール
 
 `Cisco Spark API Client`は、以下のいずれかの方法で、`NuGet` package manager経由で入手できます。
 
@@ -124,7 +127,7 @@ PM> Install-Package Thrzn41.CiscoSpark
 > dotnet add package Thrzn41.CiscoSpark
 ```
 
-### `Cisco Spark API Client`関連のusingディレクティブ
+### Cisco Spark API Client関連のusingディレクティブ
 
 usingディレクティブを利用する場合は、以下の名前空間を指定します。
 
@@ -337,10 +340,11 @@ Console.WriteLine("Tracking id: {0}", result.TrackingId);
 ``` csharp
 var md = new MarkdownBuilder();
 
+// メンションと番号付きリストでMarkdownを作成。
 md.Append("こんにちは、").AppendMentionToPerson("xyz_person_id", "〇〇さん").AppendLine();
-md.AppendOrderdList("Item1");
-md.AppendOrderdList("Item2");
-md.AppendOrderdList("Item3");
+md.AppendOrderedList("Item1");
+md.AppendOrderedList("Item2");
+md.AppendOrderedList("Item3");
 
 var result = await spark.CreateMessageAsync("xyz_space_id", md.ToString());
 ```
@@ -411,6 +415,11 @@ var listener = new WebhookListener();
 
 * 待ち受けする、ホストとポートを登録する。
 
+待ち受けには、TLS/httpsを利用すべきです。  
+そのためには、まず、実行環境側で`netsh`ツールなどを利用して、有効な証明書をバインドしておく必要があります。
+
+バインドされたアドレスとポート番号で、エンドポイントを追加します。
+
 ``` csharp
 var endpointUri = listener.AddListenerEndpoint("yourwebhookserver.example.com", 8443);
 ```
@@ -476,6 +485,8 @@ var listener = new WebhookListener();
 ```
 
 * 待ち受けする、ホストとポートを登録する。
+
+ngrokは、`localhost`へフォワードします。
 
 ``` csharp
 var endpointUri = listener.AddListenerEndpoint("localhost", 8080, false);

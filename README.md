@@ -1,9 +1,12 @@
 # Cisco Spark API Client for .NET
 
-[![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg?style=plastic)](https://www.nuget.org/packages/Thrzn41.CiscoSpark)
+[![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg)](https://www.nuget.org/packages/Thrzn41.CiscoSpark) [![MIT license](https://img.shields.io/github/license/thrzn41/CiscoSparkAPIClient.svg)](https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/LICENSE)
 
 `Cisco Spark API Client` is a Library that wraps `Cisco Spark REST API`.   
 Also, some useful features for developers are provided.
+
+#### README in other language
+* [日本語のREADME](https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/README.ja-JP.md) ([Japanese README](https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/README.ja-JP.md))
 
 ---
 ## Available Platforms
@@ -118,7 +121,7 @@ More details are described later.
 ---
 ## Basic Usage
 
-### Install `Cisco Spark API Client`
+### Install Cisco Spark API Client
 
 You can install `Cisco Spark API Client` from `NuGet` package manager by any of the following methods.
 
@@ -135,7 +138,7 @@ PM> Install-Package Thrzn41.CiscoSpark
 > dotnet add package Thrzn41.CiscoSpark
 ```
 
-### using Directive to import `Cisco Spark API Client` related types
+### using Directive to import Cisco Spark API Client related types
 
 If you want to use using directive, the following namespaces could be used.
 
@@ -333,7 +336,7 @@ else if(result.HasRetryAfter)
 }
 ```
 
-### Gets TrackingId.
+### Gets TrackingId
 
 ``` csharp
 var result = await spark.ListSpacesAsync();
@@ -341,15 +344,16 @@ var result = await spark.ListSpacesAsync();
 Console.WriteLine("Tracking id is {0}", result.TrackingId);  
 ```
 
-### Markdown Builder.
+### Markdown Builder
 
 ``` csharp
 var md = new MarkdownBuilder();
 
+// Creates markdown with mention and ordered list.
 md.Append("Hi ").AppendMentionToPerson("xyz_person_id", "PersonName").AppendLine();
-md.AppendOrderdList("Item1");
-md.AppendOrderdList("Item2");
-md.AppendOrderdList("Item3");
+md.AppendOrderedList("Item1");
+md.AppendOrderedList("Item2");
+md.AppendOrderedList("Item3");
 
 var result = await spark.CreateMessageAsync("xyz_space_id", md.ToString());
 ```
@@ -419,6 +423,11 @@ var listener = new WebhookListener();
 
 * Add listening host and port.
 
+The TLS/https connection SHOULD be used for listening port.  
+To do this, a valid certificate for the listener SHOULD be bound in your environment first by `netsh` tools or related tools.
+
+Add listening endpoint with the bound address and port.
+
 ``` csharp
 var endpointUri = listener.AddListenerEndpoint("yourwebhookserver.example.com", 8443);
 ```
@@ -483,6 +492,8 @@ var listener = new WebhookListener();
 ```
 
 * Add listening host and port.
+
+The ngrok will forward to `localhost`.
 
 ``` csharp
 var endpointUri = listener.AddListenerEndpoint("localhost", 8080, false);
