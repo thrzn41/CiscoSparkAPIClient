@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using Thrzn41.CiscoSpark.ResourceMessage;
 
 namespace Thrzn41.CiscoSpark
 {
@@ -82,6 +83,46 @@ namespace Thrzn41.CiscoSpark
             get
             {
                 return (this.RetryAfter != null);
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Gets the Spark Object data that is returned on the API request.
+        /// The <see cref="Data"/> property can be used to get the same data if you checked <see cref="IsSuccessStatus"/> property by yourself.
+        /// This method throws <see cref="SparkResultException"/> when <see cref="IsSuccessStatus"/> is false and throwSparkResultExceptionOnErrors parameter is true.
+        /// </summary>
+        /// <param name="throwSparkResultExceptionOnErrors">true to throw <see cref="SparkResultException"/> when <see cref="IsSuccessStatus"/> is true.</param>
+        /// <returns>The Spark Object data that is returned on the API request.</returns>
+        /// <exception cref="SparkResultException"><see cref="IsSuccessStatus"/> is false.</exception>
+        public TSparkObject GetData(bool throwSparkResultExceptionOnErrors = true)
+        {
+            if(throwSparkResultExceptionOnErrors)
+            {
+                ThrowSparkResultExceptionOnErrors();
+            }
+
+            return this.Data;
+        }
+
+        /// <summary>
+        /// Throws <see cref="SparkResultException"/> if <see cref="IsSuccessStatus"/> is false.
+        /// </summary>
+        /// <exception cref="SparkResultException"><see cref="IsSuccessStatus"/> is false.</exception>
+        public void ThrowSparkResultExceptionOnErrors()
+        {
+            if( !this.IsSuccessStatus )
+            {
+                string message = this.Data.GetErrorMessage();
+
+                if(message == null)
+                {
+                    message = ErrorMessages.SparkResultError;
+                }
+
+                throw new SparkResultException(message, this.HttpStatusCode, this.TrackingId, this.RetryAfter);
             }
         }
 

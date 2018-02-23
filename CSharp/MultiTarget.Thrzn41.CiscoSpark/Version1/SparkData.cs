@@ -25,6 +25,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Thrzn41.CiscoSpark.ResourceMessage;
 
 namespace Thrzn41.CiscoSpark.Version1
 {
@@ -41,12 +42,49 @@ namespace Thrzn41.CiscoSpark.Version1
         /// Indicates whether the object has error or not.
         /// </summary>
         [JsonIgnore]
-        public bool HasErrors
+        public override bool HasErrors
         {
             get
             {
                 return (this.JsonExtensionData != null && this.JsonExtensionData.ContainsKey("errors"));
             }
+        }
+
+
+        /// <summary>
+        /// Get error message.
+        /// </summary>
+        /// <returns>Error message.</returns>
+        public override string GetErrorMessage()
+        {
+            if(this.HasErrors)
+            {
+                var errors = GetErrors();
+
+                if(errors != null && errors.Length > 0)
+                {
+                    int?   errorCode   = errors[0].ErrorCode;
+                    string description = errors[0].Description;
+
+                    string message = null;
+
+                    if(errorCode.HasValue)
+                    {
+                        message = String.Format(ErrorMessages.Version1SparkResultErrorWithCode, description, errorCode.Value);
+                    }
+                    else if( !String.IsNullOrEmpty(description) )
+                    {
+                        message = String.Format(ErrorMessages.Version1SparkResultError, description);
+                    }
+
+                    if(message != null)
+                    {
+                        return message;
+                    }
+                }
+            }
+
+            return base.GetErrorMessage();
         }
 
 

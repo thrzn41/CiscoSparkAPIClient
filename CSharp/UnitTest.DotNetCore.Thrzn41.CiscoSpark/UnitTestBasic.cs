@@ -355,5 +355,40 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
         }
 
 
+
+        [TestMethod]
+        public async Task TestSparkResultException()
+        {
+
+            try
+            {
+                var spark = SparkAPI.CreateVersion1Client("this token does not exist");
+
+                var result = await spark.GetMeAsync();
+
+                var me = result.GetData();
+            }
+            catch(SparkResultException sre)
+            {
+                Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, sre.HttpStatusCode);
+                Assert.AreEqual("The request requires a valid access token set in the Authorization request header.", sre.Message);
+                Assert.IsNotNull(sre.TrackingId);
+            }
+
+            try
+            {
+                var result = await this.spark.CreateMessageAsync("this space id does not exist", "hello");
+
+                var m = result.GetData();
+            }
+            catch (SparkResultException sre)
+            {
+                Assert.AreEqual(System.Net.HttpStatusCode.NotFound, sre.HttpStatusCode);
+                Assert.AreEqual("The requested resource could not be found.(ErrorCode:1)", sre.Message);
+                Assert.IsNotNull(sre.TrackingId);
+            }
+
+        }
+
     }
 }
