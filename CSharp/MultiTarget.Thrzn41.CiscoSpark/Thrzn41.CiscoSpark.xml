@@ -4,6 +4,37 @@
         <name>Thrzn41.CiscoSpark</name>
     </assembly>
     <members>
+        <member name="T:Thrzn41.CiscoSpark.ResourceMessage.ErrorMessages">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.ResourceMessage.ErrorMessages.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.ResourceMessage.ErrorMessages.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.ResourceMessage.ErrorMessages.SparkResultError">
+            <summary>
+              Looks up a localized string similar to Cisco Spark API Service returned an error..
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.ResourceMessage.ErrorMessages.Version1SparkResultError">
+            <summary>
+              Looks up a localized string similar to {0}.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.ResourceMessage.ErrorMessages.Version1SparkResultErrorWithCode">
+            <summary>
+              Looks up a localized string similar to {0}(ErrorCode:{1}).
+            </summary>
+        </member>
         <member name="T:Thrzn41.CiscoSpark.SparkAPI">
             <summary>
             Class to create Spark API clients.
@@ -74,6 +105,17 @@
             <param name="clientSecretString">Client secret of string.</param>
             <param name="clientId">Client id.</param>
             <returns>Spark OAuth2 client for v1 API.</returns>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.SparkException">
+            <summary>
+            Represents errors that occur during Cisco Spark specified execution.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkException.#ctor(System.String)">
+            <summary>
+            Creates <see cref="T:Thrzn41.CiscoSpark.SparkException"/>.
+            </summary>
+            <param name="message">A message that indicates the error.</param>
         </member>
         <member name="T:Thrzn41.CiscoSpark.SparkExtensionObject">
             <summary>
@@ -523,6 +565,17 @@
             Indicates this Spark Object has extension data.
             </summary>
         </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkObject.HasErrors">
+            <summary>
+            Indicates this Spark Object has errors.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkObject.GetErrorMessage">
+            <summary>
+            Gets error message.
+            </summary>
+            <returns>Error message.</returns>
+        </member>
         <member name="M:Thrzn41.CiscoSpark.SparkObject.ToJsonString">
             <summary>
             Converts object to Json style string.
@@ -585,6 +638,62 @@
             <summary>
             Indicates the request has Retry-After header value.
             </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkResult`1.GetData(System.Boolean)">
+            <summary>
+            Gets the Spark Object data that is returned on the API request.
+            The <see cref="P:Thrzn41.CiscoSpark.SparkResult`1.Data"/> property can be used to get the same data if you checked <see cref="P:Thrzn41.CiscoSpark.SparkResult`1.IsSuccessStatus"/> property by yourself.
+            This method throws <see cref="T:Thrzn41.CiscoSpark.SparkResultException"/> when <see cref="P:Thrzn41.CiscoSpark.SparkResult`1.IsSuccessStatus"/> is false and throwSparkResultExceptionOnErrors parameter is true.
+            </summary>
+            <param name="throwSparkResultExceptionOnErrors">true to throw <see cref="T:Thrzn41.CiscoSpark.SparkResultException"/> when <see cref="P:Thrzn41.CiscoSpark.SparkResult`1.IsSuccessStatus"/> is true.</param>
+            <returns>The Spark Object data that is returned on the API request.</returns>
+            <exception cref="T:Thrzn41.CiscoSpark.SparkResultException"><see cref="P:Thrzn41.CiscoSpark.SparkResult`1.IsSuccessStatus"/> is false.</exception>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkResult`1.ThrowSparkResultExceptionOnErrors">
+            <summary>
+            Throws <see cref="T:Thrzn41.CiscoSpark.SparkResultException"/> if <see cref="P:Thrzn41.CiscoSpark.SparkResult`1.IsSuccessStatus"/> is false.
+            </summary>
+            <exception cref="T:Thrzn41.CiscoSpark.SparkResultException"><see cref="P:Thrzn41.CiscoSpark.SparkResult`1.IsSuccessStatus"/> is false.</exception>
+        </member>
+        <member name="T:Thrzn41.CiscoSpark.SparkResultException">
+            <summary>
+            Represents errors that occur during a Cisco Spark REST API request.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkResultException.HttpStatusCode">
+            <summary>
+            Http status code returned on the API request.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkResultException.TrackingId">
+            <summary>
+            Tracking id of the request.
+            This id can be used for technical support.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkResultException.HasTrackingId">
+            <summary>
+            Indicates whether the result has tracking id or not.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkResultException.RetryAfter">
+            <summary>
+            Retry-After header value.
+            </summary>
+        </member>
+        <member name="P:Thrzn41.CiscoSpark.SparkResultException.HasRetryAfter">
+            <summary>
+            Indicates the request has Retry-After header value.
+            </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.SparkResultException.#ctor(System.String,System.Net.HttpStatusCode,System.String,System.Net.Http.Headers.RetryConditionHeaderValue)">
+            <summary>
+            Creates <see cref="T:Thrzn41.CiscoSpark.SparkResultException"/>.
+            </summary>
+            <param name="message">A message that indicates this error.</param>
+            <param name="httpStatusCode">Http status code returned on the API request.</param>
+            <param name="trackingId">Tracking id of the request.</param>
+            <param name="retryAfter">Retry-After header value.</param>
         </member>
         <member name="T:Thrzn41.CiscoSpark.SparkRetry">
             <summary>
@@ -3679,6 +3788,12 @@
             <summary>
             Indicates whether the object has error or not.
             </summary>
+        </member>
+        <member name="M:Thrzn41.CiscoSpark.Version1.SparkData.GetErrorMessage">
+            <summary>
+            Get error message.
+            </summary>
+            <returns>Error message.</returns>
         </member>
         <member name="M:Thrzn41.CiscoSpark.Version1.SparkData.GetPartialErrors">
             <summary>

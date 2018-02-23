@@ -82,6 +82,23 @@ namespace Thrzn41.CiscoSpark
             }
         }
 
+
+        /// <summary>
+        /// Indicates this Spark Object has errors.
+        /// </summary>
+        [JsonIgnore]
+        public virtual bool HasErrors { get; internal set; } = false;
+
+
+        /// <summary>
+        /// Gets error message.
+        /// </summary>
+        /// <returns>Error message.</returns>
+        public virtual string GetErrorMessage()
+        {
+            return null;
+        }
+
         /// <summary>
         /// Converts object to Json style string.
         /// </summary>

@@ -98,6 +98,7 @@ namespace Thrzn41.CiscoSpark.Version1.OAuth2
             result.RetryAfter      = source.RetryAfter;
             result.TrackingId      = source.TrackingId;
 
+
             var tokenInfo = new TokenInfo();
 
             var data = source.Data;
@@ -127,6 +128,8 @@ namespace Thrzn41.CiscoSpark.Version1.OAuth2
             {
                 tokenInfo.JsonExtensionData = data.JsonExtensionData;
             }
+
+            tokenInfo.HasValues = data.HasValues;
 
             result.Data = tokenInfo;
 
