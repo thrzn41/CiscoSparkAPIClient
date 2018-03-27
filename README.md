@@ -15,6 +15,9 @@ Also, some useful features for developers are provided.
 * .NET Core 1.0 or later
 * .NET Framework 4.5.2 or later
 
+> NOTE: If you use Simple Webhook Listener/Server feature,  
+> .NET Stardard 2.0+, .NET Core 2.0+ or .NET Framework 4.5.2+ is required.
+
 ---
 ## Available Features
 
@@ -33,24 +36,24 @@ Also, some useful features for developers are provided.
 
 | Spark Resource              | Available Feature             | Description                                     |
 | :-------------------------- | :---------------------------- | :---------------------------------------------- |
-| Person/People               | List/Get                      | Get Me is also available                        |
-| Space(Room)                 | List/Create/Get/Update/Delete | -                                               |
-| SpaceMembership(Membership) | List/Create/Get/Update/Delete | -                                               |
-| Message                     | List/Create/Get/Delete        | Attach file from local stream is also available |
-| Team                        | List/Create/Get/Update/Delete | -                                               |
-| TeamMembership              | List/Create/Get/Update/Delete | -                                               |
-| Webhook                     | List/Create/Get/Update/Delete | -                                               |
-| File                        | GetInfo/GetData/Upload        | -                                               |
+| Person/People               | List/Get                      | Available. Get Me is also available                        |
+| Space(Room)                 | List/Create/Get/Update/Delete | Available. Room is called 'Space' in this API Client.   |
+| SpaceMembership(Membership) | List/Create/Get/Update/Delete | Available. Membership is called 'SpaceMembership' in this API Client.                                               |
+| Message                     | List/Create/Get/Delete        | Available. Attach file from local stream is also available |
+| Team                        | List/Create/Get/Update/Delete | Available.                                      |
+| TeamMembership              | List/Create/Get/Update/Delete | Available.                                      |
+| Webhook                     | List/Create/Get/Update/Delete | Available.                                      |
+| File                        | GetInfo/GetData/Upload        | Available.                                      |
 
 ### Admin Features
 
 | Spark Resource | Available Feature | Description |
 | :-------------- | :---------------------------- | :---------------------------------------------- |
-| Person/People   | Create/Update/Delete          | -                                               |
-| Event           | List/Get                      | -                                               |
-| Organization    | List/Get                      | -                                               |
-| License         | List/Get                      | -                                               |
-| Role            | List/Get                      | -                                               |
+| Person/People   | Create/Update/Delete          | Available.                                      |
+| Event           | List/Get                      | Available.                                      |
+| Organization    | List/Get                      | Available.                                      |
+| License         | List/Get                      | Available.                                      |
+| Role            | List/Get                      | Available.                                      |
 
 ### Token encryption/decryption in storage
 `ProtectedString` provides token encryption/decryption.  
@@ -212,6 +215,47 @@ if(result.IsSuccessStatus)
 }
 ```
 
+### Success, fail, error handling
+
+You can use `result.IsSuccessStatus` to check if the request is succeeded or not.
+You can also use `result.Data.HasErrors` and `result.Data.GetErrorMessage()` to retrieve error code value of error description from Cisco Spark API service.
+``` csharp
+var result = await spark.CreateMessageAsync("xyz_space_id", "Hello, Spark!");
+
+if(result.IsSuccessStatus)
+{
+   Console.WriteLine("Message was posted: id = {0}", result.Data.Id);
+}
+else
+{
+  Console.WriteLine("Failed to post a message: status = {0}, trackingId = {1}", result.HttpStatusCode, result.TrackingId);
+
+  if(result.Data.HasErrors)
+  {
+    Console.WriteLine( result.Data.GetErrorMessage() );
+  }
+}
+```
+
+If you preferred to catch Exception, you can use `result.GetData()`.  
+The `result.GetData()` will throw `SparkResultException` on request error.
+
+``` csharp
+try
+{
+  var result = await spark.CreateMessageAsync("xyz_space_id", "Hello, Spark!");
+
+  var message = result.GetData();
+
+  Console.WriteLine("Message was posted: id = {0}", message.Id);
+}
+catch(SparkResultException sre)
+{
+  Console.WriteLine("Failed to post a message: status = {0}, trackingId = {1}, description = {2}",
+                      sre.HttpStatusCode, sre.TrackingId, sre.Message);
+}
+```
+
 ### Post a message with attachment to a Cisco Spark Space
 
 ``` csharp
@@ -334,6 +378,32 @@ else if(result.HasRetryAfter)
 {
   Console.WriteLine("Let's retry: {0}", result.RetryAfter.Delta);  
 }
+```
+
+### Retry Executor
+
+`RetryExecutor` facilitates retry.
+
+``` csharp
+// RetryExecutor.One requests with 1 time retry at most.
+var result = await RetryExecutor.One.ListAsync(
+  () =>
+  {
+      // This function will be executed again if needed.
+      return spark.ListSpacesAsync();
+  },
+
+  (r, retryCount) =>
+  {
+      // This function will be executed before evry retry request.
+
+      // You can output logs or other things at this point.
+      Log.Info("Retry is requied: delta = {0}, counter = {0}", r.RetryAfter.Delta, retryCount);
+
+      // Returns 'true' when you want to proceed retry.
+      return true;
+  }
+);
 ```
 
 ### Gets TrackingId

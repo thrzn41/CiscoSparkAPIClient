@@ -14,6 +14,10 @@
 * .NET Core 1.0以降
 * .NET Framework 4.5.2以降
 
+> 注記: 簡易Webhookサーバ機能を利用する場合は、  
+> .NET Stardard 2.0+, .NET Core 2.0+, .NET Framework 4.5.2+が必要です。
+
+
 ---
 ## 利用可能な機能
 
@@ -32,23 +36,23 @@
 
 | Sparkのリソース名                  | 利用可能な機能                 | 説明                                 |
 | :-------------------------------- | :---------------------------- | :---------------------------------- |
-| Person/People                     | List/Get                      | Get Meも利用可能                     |
-| Space(Room)                       | List/Create/Get/Update/Delete | -                                   |
-| SpaceMembership(Membership)       | List/Create/Get/Update/Delete | -                                   |
-| Message                           | List/Create/Get/Delete        | ローカルのstreamからファイル添付も可能 |
-| Team                              | List/Create/Get/Update/Delete | -                                   |
-| TeamMembership                    | List/Create/Get/Update/Delete | -                                   |
-| Webhook                           | List/Create/Get/Update/Delete | -                                   |
-| File                              | GetInfo/GetData/Upload        | -                                   |
+| Person/People                     | List/Get                      | 利用可能。Get Meも利用可能                     |
+| Space(Room)                       | List/Create/Get/Update/Delete | 利用可能。Roomは、API Clientでは、Spaceと呼ばれる。                                  |
+| SpaceMembership(Membership)       | List/Create/Get/Update/Delete | 利用可能。Membershipは、API Clientでは、SpaceMembershipと呼ばれる。        |
+| Message                           | List/Create/Get/Delete        | 利用可能。ローカルのstreamからファイル添付も可能 |
+| Team                              | List/Create/Get/Update/Delete | 利用可能。                                   |
+| TeamMembership                    | List/Create/Get/Update/Delete | 利用可能。                                   |
+| Webhook                           | List/Create/Get/Update/Delete | 利用可能。                                   |
+| File                              | GetInfo/GetData/Upload        | 利用可能。                                   |
 
 ### Admin機能
 | Sparkのリソース名 | 利用可能な機能                | 説明 |
 | :-------------- | :---------------------------- | :---------------------------------------------- |
-| Person/People   | Create/Update/Delete          | -                                               |
-| Event           | List/Get                      | -                                               |
-| Organization    | List/Get                      | -                                               |
-| License         | List/Get                      | -                                               |
-| Role            | List/Get                      | -                                               |
+| Person/People   | Create/Update/Delete          | 利用可能。                                       |
+| Event           | List/Get                      | 利用可能。                                       |
+| Organization    | List/Get                      | 利用可能。                                       |
+| License         | List/Get                      | 利用可能。                                       |
+| Role            | List/Get                      | 利用可能。                                       |
 
 ### ストレージのTokenの暗号化と復号
 
@@ -202,6 +206,48 @@ if(result.IsSuccessStatus)
 }
 ```
 
+### 成功, 失敗, エラーのハンドリング
+
+`result.IsSuccessStatus`を使って成功したかどうか確認できます。  
+`result.Data.HasErrors`や`result.Data.GetErrorMessage()`を使ってCisco Spark APIサービスからエラーコード、エラーメッセージを受け取ることができます。
+
+``` csharp
+var result = await spark.CreateMessageAsync("xyz_space_id", "こんにちは, Spark!");
+
+if(result.IsSuccessStatus)
+{
+   Console.WriteLine("メッセージが投稿されました: id = {0}", result.Data.Id);
+}
+else
+{
+  Console.WriteLine("メッセージの投稿に失敗しました: status = {0}, trackingId = {1}", result.HttpStatusCode, result.TrackingId);
+
+  if(result.Data.HasErrors)
+  {
+    Console.WriteLine( result.Data.GetErrorMessage() );
+  }
+}
+```
+
+例外を捕捉したい場合は、`result.GetData()`を利用することができます。  
+`result.GetData()`は、リクエスト失敗時に`SparkResultException`をスローします。
+
+``` csharp
+try
+{
+  var result = await spark.CreateMessageAsync("xyz_space_id", "こんにちは, Spark!");
+
+  var message = result.GetData();
+
+  Console.WriteLine("メッセージが投稿されました: id = {0}", message.Id);
+}
+catch(SparkResultException sre)
+{
+  Console.WriteLine("メッセージの投稿に失敗しました: status = {0}, trackingId = {1}, description = {2}",
+                      sre.HttpStatusCode, sre.TrackingId, sre.Message);
+}
+```
+
 ### Cisco Sparkのスペースに添付ファイル付きでメッセージを投稿する
 
 ``` csharp
@@ -325,6 +371,32 @@ else if(result.HasRetryAfter)
 {
   Console.WriteLine("{0}後にリトライしなきゃ!!", result.RetryAfter.Delta);  
 }
+```
+
+### Retry Executor
+
+`RetryExecutor`を利用してリトライ処理を容易にします。
+
+``` csharp
+// RetryExecutor.Oneは最大で1回のリトライを試みます。
+var result = RetryExecutor.One.ListAsync(
+  () =>
+  {
+      // このメソッドは必要に応じて、リトライされます。
+      return spark.ListSpacesAsync();
+  },
+
+  (r, retryCount) =>
+  {
+      // ここは、リトライが実行される前に呼び出されます。
+
+      // ここでリトライ時のログの出力等の処理が可能です。
+      Log.Info("Retry is requied: delta = {0}, counter = {0}", r.RetryAfter.Delta, retryCount);
+
+      // 'true'を返すとリトライが実行されます。
+      return true;
+  }
+);
 ```
 
 ### TrackingIdを取得する
