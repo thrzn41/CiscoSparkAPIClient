@@ -384,7 +384,8 @@ namespace UnitTest.DotNetCore.Thrzn41.CiscoSpark
             catch (SparkResultException sre)
             {
                 Assert.AreEqual(System.Net.HttpStatusCode.NotFound, sre.HttpStatusCode);
-                Assert.AreEqual("The requested resource could not be found.(ErrorCode:1)", sre.Message);
+                //Assert.AreEqual("The requested resource could not be found.(ErrorCode:1)", sre.Message);
+                Assert.IsTrue(sre.Message.StartsWith("The requested resource could not be found."));
                 Assert.IsNotNull(sre.TrackingId);
             }
 
