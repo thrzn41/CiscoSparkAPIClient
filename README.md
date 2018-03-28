@@ -237,8 +237,9 @@ else
 }
 ```
 
-If you preferred to catch Exception, you can use `result.GetData()`.  
-The `result.GetData()` will throw `SparkResultException` on request error.
+If you preferred to catch Exception, you can use `result.GetData()` to get data.  
+The `result.GetData()` will throw `SparkResultException` on request error.  
+(On the other hand, `result.Data` does not throw `SparkResultException`.)
 
 ``` csharp
 try
@@ -317,16 +318,11 @@ if(result.IsSuccessStatus)
 {
   var file = result.Data;
 
-  if(result.IsSuccessStatus)
+  Console.WriteLine("File: Name = {0}, Size = {1}, Type = {2}", file.Name, file.Size?.Value, file.MediaType?.Name);
+
+  using(var stream = file.Stream)
   {
-    var file = result.Data;
-
-    Console.WriteLine("File: Name = {0}, Size = {1}, Type = {2}", file.Name, file.Size?.Value, file.MediaType?.Name);
-
-    using(var stream = file.Stream)
-    {
-      // File data will be contained in the stream...
-    }
+    // File data will be contained in the stream...
   }
 }
 ```
@@ -398,9 +394,9 @@ var result = await RetryExecutor.One.ListAsync(
       // This function will be executed before evry retry request.
 
       // You can output logs or other things at this point.
-      Log.Info("Retry is requied: delta = {0}, counter = {0}", r.RetryAfter.Delta, retryCount);
+      Log.Info("Retry is required: delta = {0}, counter = {1}", r.RetryAfter.Delta, retryCount);
 
-      // Returns 'true' when you want to proceed retry.
+      // Return 'true' when you want to proceed retry.
       return true;
   }
 );
