@@ -229,8 +229,9 @@ else
 }
 ```
 
-例外を捕捉したい場合は、`result.GetData()`を利用することができます。  
-`result.GetData()`は、リクエスト失敗時に`SparkResultException`をスローします。
+例外を捕捉したい場合は、データ取得時に、`result.GetData()`を利用することができます。  
+`result.GetData()`は、リクエスト失敗時に`SparkResultException`をスローします。  
+(一方、`result.Data`は、`SparkResultException`を送出しません。)
 
 ``` csharp
 try
@@ -310,16 +311,11 @@ if(result.IsSuccessStatus)
 {
   var file = result.Data;
 
-  if(result.IsSuccessStatus)
+  Console.WriteLine("File: Name = {0}, Size = {1}, Type = {2}", file.Name, file.Size?.Value, file.MediaType?.Name);
+
+  using(var stream = file.Stream)
   {
-    var file = result.Data;
-
-    Console.WriteLine("File: Name = {0}, Size = {1}, Type = {2}", file.Name, file.Size?.Value, file.MediaType?.Name);
-
-    using(var stream = file.Stream)
-    {
-      // streamにファイルのデータが含まれる。
-    }
+    // streamにファイルのデータが含まれる。
   }
 }
 ```
@@ -391,7 +387,7 @@ var result = RetryExecutor.One.ListAsync(
       // ここは、リトライが実行される前に呼び出されます。
 
       // ここでリトライ時のログの出力等の処理が可能です。
-      Log.Info("Retry is requied: delta = {0}, counter = {0}", r.RetryAfter.Delta, retryCount);
+      Log.Info("Retry is required: delta = {0}, counter = {1}", r.RetryAfter.Delta, retryCount);
 
       // 'true'を返すとリトライが実行されます。
       return true;
