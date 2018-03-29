@@ -387,7 +387,7 @@ namespace Thrzn41.CiscoSpark.Version1
 
             if(me == null || !me.IsSuccessStatus)
             {
-                me = await RefreshCachedMeAsync();
+                me = await RefreshCachedMeAsync(cancellationToken);
             }
 
             return me;
