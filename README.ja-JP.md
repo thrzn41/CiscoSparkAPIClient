@@ -1,4 +1,17 @@
-# Cisco Spark API Client for .NET
+# ※重要な告知※
+
+Cisco Sparkに別れを告げて、**Cisco Webex Teams**を始めてみよう。
+
+Cisco Sparkは、**Cisco Webex Teams**になりました。
+
+`Thrzn41.CiscoSpark`も、`Thrzn41.WebexTeams`になりました。  
+リポジトリは、 [WebexTeamsAPIClient](https://github.com/thrzn41/WebexTeamsAPIClient)へ移行しています。
+
+https://github.com/thrzn41/WebexTeamsAPIClient
+
+> branchやforkではなく、完全に移行することにしました。
+
+# [Obsoleted] Cisco Spark API Client for .NET
 
 [![nuget](https://img.shields.io/nuget/v/Thrzn41.CiscoSpark.svg)](https://www.nuget.org/packages/Thrzn41.CiscoSpark) [![MIT license](https://img.shields.io/github/license/thrzn41/CiscoSparkAPIClient.svg)](https://github.com/thrzn41/CiscoSparkAPIClient/blob/master/LICENSE)
 
